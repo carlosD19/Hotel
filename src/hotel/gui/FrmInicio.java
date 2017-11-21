@@ -25,7 +25,6 @@ public class FrmInicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
-        //sdsdsdsdsds
     }
 
     /**
@@ -113,6 +112,9 @@ public class FrmInicio extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblSignInMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblSignInMousePressed(evt);
+            }
         });
         getContentPane().add(lblSignIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, -1, -1));
 
@@ -151,12 +153,19 @@ public class FrmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSignInMouseExited
 
     private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
-        enviarCorreo();
+        enviarCorreo();//Envia la Contraseña
     }//GEN-LAST:event_lblPassMousePressed
 
     private void txtUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMousePressed
         lblMensaje.setText("");
     }//GEN-LAST:event_txtUserMousePressed
+
+    private void lblSignInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMousePressed
+        FrmSignIn frm = new FrmSignIn();
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_lblSignInMousePressed
 
     public void enviarCorreo() {
         try {
