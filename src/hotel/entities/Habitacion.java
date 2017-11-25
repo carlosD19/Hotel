@@ -17,17 +17,17 @@ public class Habitacion {
     private int capacidad;
     private boolean estado;
     private float tamaño;
-    private TipoCama tipoCama;
+    private TipoHabitacion tipoHabitacion;
 
     public Habitacion() {
     }
 
-    public Habitacion(Image foto, int capacidad, boolean estado, float tamaño, TipoCama tipoCama) {
+    public Habitacion(Image foto, int capacidad, boolean estado, float tamaño, TipoHabitacion tipoHabitacion) {
         this.foto = foto;
         this.capacidad = capacidad;
         this.estado = estado;
         this.tamaño = tamaño;
-        this.tipoCama = tipoCama;
+        this.tipoHabitacion = tipoHabitacion;
     }
 
     public Image getFoto() {
@@ -62,17 +62,18 @@ public class Habitacion {
         this.tamaño = tamaño;
     }
 
-    public TipoCama getTipoCama() {
-        return tipoCama;
+    public TipoHabitacion getTipoHabitacion() {
+        return tipoHabitacion;
     }
 
-    public void setTipoCama(TipoCama tipoCama) {
-        this.tipoCama = tipoCama;
+    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+        this.tipoHabitacion = tipoHabitacion;
     }
 
     @Override
     public String toString() {
-        return "Habitacion{" + "foto=" + foto + ", capacidad=" + capacidad + ", estado=" + estado + ", tama\u00f1o=" + tamaño + ", tipoCama=" + tipoCama + '}';
+        return "Habitacion{" + "foto=" + foto + ", capacidad=" + capacidad + ", estado=" + estado + ", tama\u00f1o=" + tamaño + ", tipoHabitacion=" + tipoHabitacion + '}';
     }
 
+    
 }

@@ -14,20 +14,28 @@ public class Reserva {
     private int codigo;
     private String fechaInicio;
     private String fechaFinal;
+    private String fechaReserva;
+    private boolean desayuno;
+    private int cantPersona;
     private Habitacion habitacion;
     private Cliente cliente;
-    private TipoReserva tipo;
+    private String agencia;
+    private float precio;
 
     public Reserva() {
     }
 
-    public Reserva(int codigo, String fechaInicio, String fechaFinal, Habitacion habitacion, Cliente cliente, TipoReserva tipo) {
+    public Reserva(int codigo, String fechaInicio, String fechaFinal, String fechaReserva, boolean desayuno, int cantPersona, Habitacion habitacion, Cliente cliente, String agencia, float precio) {
         this.codigo = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
+        this.fechaReserva = fechaReserva;
+        this.desayuno = desayuno;
+        this.cantPersona = cantPersona;
         this.habitacion = habitacion;
         this.cliente = cliente;
-        this.tipo = tipo;
+        this.agencia = agencia;
+        this.precio = precio;
     }
 
     public int getCodigo() {
@@ -54,6 +62,30 @@ public class Reserva {
         this.fechaFinal = fechaFinal;
     }
 
+    public String getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(String fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public boolean isDesayuno() {
+        return desayuno;
+    }
+
+    public void setDesayuno(boolean desayuno) {
+        this.desayuno = desayuno;
+    }
+
+    public int getCantPersona() {
+        return cantPersona;
+    }
+
+    public void setCantPersona(int cantPersona) {
+        this.cantPersona = cantPersona;
+    }
+
     public Habitacion getHabitacion() {
         return habitacion;
     }
@@ -70,17 +102,26 @@ public class Reserva {
         this.cliente = cliente;
     }
 
-    public TipoReserva getTipo() {
-        return tipo;
+    public String getAgencia() {
+        return agencia;
     }
 
-    public void setTipo(TipoReserva tipo) {
-        this.tipo = tipo;
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "codigo=" + codigo + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", habitacion=" + habitacion + ", cliente=" + cliente + ", tipo=" + tipo + '}';
+        return "Reserva{" + "codigo=" + codigo + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", fechaReserva=" + fechaReserva + ", desayuno=" + desayuno + ", cantPersona=" + cantPersona + ", habitacion=" + habitacion + ", cliente=" + cliente + ", agencia=" + agencia + ", precio=" + precio + '}';
     }
-
+    
+    
 }

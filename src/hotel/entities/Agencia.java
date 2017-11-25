@@ -15,17 +15,15 @@ public class Agencia {
     private int telefono;
     private String email;
     private String paginaWeb;
-    private Comision comision;
 
     public Agencia() {
     }
 
-    public Agencia(String nombre, int telefono, String email, String paginaWeb, Comision comision) {
+    public Agencia(String nombre, int telefono, String email, String paginaWeb) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
         this.paginaWeb = paginaWeb;
-        this.comision = comision;
     }
 
     public String getNombre() {
@@ -60,17 +58,9 @@ public class Agencia {
         this.paginaWeb = paginaWeb;
     }
 
-    public Comision getComision() {
-        return comision;
-    }
-
-    public void setComision(Comision comision) {
-        this.comision = comision;
-    }
-
     @Override
     public String toString() {
-        return "Agencia{" + "nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + ", paginaWeb=" + paginaWeb + ", comision=" + comision + '}';
+        return "Agencia{" + "nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + ", paginaWeb=" + paginaWeb + '}';
     }
 
 }

@@ -17,10 +17,10 @@ public class Persona {
     private String email;
     private int telefono;
 
-    public Persona(String nombre, String cedula, String nacionalida, String email, int telefono) {
+    public Persona(String nombre, String cedula, String nacionalidad, String email, int telefono) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.nacionalidad = nacionalida;
+        this.nacionalidad = nacionalidad;
         this.email = email;
         this.telefono = telefono;
     }
@@ -44,12 +44,12 @@ public class Persona {
         this.cedula = cedula;
     }
 
-    public String getNacionalida() {
+    public String getNacionalidad() {
         return nacionalidad;
     }
 
-    public void setNacionalida(String nacionalida) {
-        this.nacionalidad = nacionalida;
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
     }
 
     public String getEmail() {

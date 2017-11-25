@@ -12,7 +12,6 @@ package hotel.entities;
 public class Cliente extends Persona{
     
     private int tarjeta;
-    private int codigo;
     private String pais;
     private String provincia;
     private String canton;
@@ -21,10 +20,9 @@ public class Cliente extends Persona{
     public Cliente() {
     }
 
-    public Cliente(int tarjeta, int codigo, String pais, String provincia, String canton, String direccion, String nombre, String cedula, String nacionalida, String email, int telefono) {
+    public Cliente(int tarjeta, String pais, String provincia, String canton, String direccion, String nombre, String cedula, String nacionalida, String email, int telefono) {
         super(nombre, cedula, nacionalida, email, telefono);
         this.tarjeta = tarjeta;
-        this.codigo = codigo;
         this.pais = pais;
         this.provincia = provincia;
         this.canton = canton;
@@ -37,14 +35,6 @@ public class Cliente extends Persona{
 
     public void setTarjeta(int tarjeta) {
         this.tarjeta = tarjeta;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public String getPais() {
@@ -81,7 +71,7 @@ public class Cliente extends Persona{
 
     @Override
     public String toString() {
-        return "Cliente{" + "tarjeta=" + tarjeta + ", codigo=" + codigo + ", pais=" + pais + ", provincia=" + provincia + ", canton=" + canton + ", direccion=" + direccion + '}';
+        return "Cliente{" + "tarjeta=" + tarjeta + ", pais=" + pais + ", provincia=" + provincia + ", canton=" + canton + ", direccion=" + direccion + '}';
     }
  
 }

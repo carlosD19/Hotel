@@ -5,6 +5,7 @@
  */
 package hotel.gui;
 
+import hotel.bo.UsuarioBo;
 import hotel.dao.Controlador;
 import hotel.entities.Correo;
 import hotel.entities.MiError;
@@ -15,16 +16,18 @@ import javax.swing.JOptionPane;
  *
  * @author pc
  */
-public class FrmInicio extends javax.swing.JFrame {
+public class FrmLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmInicio
      */
-    public FrmInicio() {
+    private boolean bus;
+
+    public FrmLogin() {
         initComponents();
         setLocationRelativeTo(null);
-        btnExit.setContentAreaFilled(false);
-        btnExit.setBorder(null);
+        setButtons();
+        bus = true;
     }
 
     /**
@@ -36,29 +39,21 @@ public class FrmInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnExit = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
         txtPass = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        lblPass = new javax.swing.JLabel();
+        lblPassForgot = new javax.swing.JLabel();
         lblSignIn = new javax.swing.JLabel();
         lblMensaje = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
-        btnExit.setFocusable(false);
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 50, 40));
 
         txtUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUser.setOpaque(false);
@@ -83,24 +78,29 @@ public class FrmInicio extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("GO");
         jButton2.setFocusable(false);
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 80, -1));
-
-        lblPass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblPass.setForeground(new java.awt.Color(255, 255, 255));
-        lblPass.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblPass.setText("Forgot Password?");
-        lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblPassMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblPassMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblPassMousePressed(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 100, 20));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 80, -1));
+
+        lblPassForgot.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblPassForgot.setForeground(new java.awt.Color(255, 255, 255));
+        lblPassForgot.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPassForgot.setText("Forgot Password?");
+        lblPassForgot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblPassForgotMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblPassForgotMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblPassForgotMousePressed(evt);
+            }
+        });
+        getContentPane().add(lblPassForgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 100, 20));
 
         lblSignIn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblSignIn.setForeground(new java.awt.Color(255, 102, 0));
@@ -121,9 +121,21 @@ public class FrmInicio extends javax.swing.JFrame {
         lblMensaje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 340, 20));
 
+        lblInfo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblInfo.setText("Correo Electronico:");
+        getContentPane().add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 120, 20));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.jpg"))); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 340, 320));
+
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 40, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoI.jpg"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
@@ -132,17 +144,13 @@ public class FrmInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
+    private void lblPassForgotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassForgotMouseEntered
+        lblPassForgot.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lblPassForgotMouseEntered
 
-    private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
-        lblPass.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblPassMouseEntered
-
-    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
-        lblPass.setForeground(Color.WHITE);
-    }//GEN-LAST:event_lblPassMouseExited
+    private void lblPassForgotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassForgotMouseExited
+        lblPassForgot.setForeground(Color.WHITE);
+    }//GEN-LAST:event_lblPassForgotMouseExited
 
     private void lblSignInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMouseEntered
         lblSignIn.setForeground(Color.BLACK);
@@ -152,9 +160,11 @@ public class FrmInicio extends javax.swing.JFrame {
         lblSignIn.setForeground(Color.ORANGE);
     }//GEN-LAST:event_lblSignInMouseExited
 
-    private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
-        enviarCorreo();//Envia la Contraseña
-    }//GEN-LAST:event_lblPassMousePressed
+    private void lblPassForgotMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassForgotMousePressed
+        lblInfo.setVisible(true);
+        txtPass.setEnabled(false);
+        bus = false;
+    }//GEN-LAST:event_lblPassForgotMousePressed
 
     private void txtUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMousePressed
         lblMensaje.setText("");
@@ -167,6 +177,34 @@ public class FrmInicio extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_lblSignInMousePressed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (bus) {
+            try {
+                UsuarioBo ubo = new UsuarioBo();
+                if (ubo.verificarLogin(txtUser.getText().trim(), txtPass.getText().trim())) {
+                    //Abrir la ventana
+                }else{
+                    lblMensaje.setText("Intente nuevamenta.");
+                }
+            } catch (MiError e) {
+                lblMensaje.setText(e.getMessage());
+            }
+        } else {
+            try {
+                UsuarioBo ubo = new UsuarioBo();
+                if (ubo.verificarCorreo(txtUser.getText().trim())) {
+                    enviarCorreo();//Envia la Contraseña
+                }
+            } catch (MiError e) {
+                lblMensaje.setText(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void enviarCorreo() {
         try {
             Correo c = new Correo();
@@ -178,16 +216,25 @@ public class FrmInicio extends javax.swing.JFrame {
             c.setMensaje("Hola, Carlos:\n\n"
                     + "Recibimos una solicitud para recordar tu contraseña de Great Falls Hotel.\n\n"
                     + "Contraseña: GreatFalls\n\n");
-            c.setDestino("carlos.d.m.s@hotmail.com");
+            c.setDestino(txtUser.getText().trim());
             Controlador co = new Controlador();
             if (co.enviarCorreo(c)) {
                 lblMensaje.setText("Correo enviado.");
+                lblInfo.setVisible(false);
+                txtPass.setEnabled(true);
+                bus = true;
             } else {
                 lblMensaje.setText("Error al enviar correo.");
             }
         } catch (MiError ex) {
             lblMensaje.setText(ex.getMessage());
         }
+    }
+
+    public void setButtons() {
+        btnExit.setContentAreaFilled(false);
+        btnExit.setBorder(null);
+        lblInfo.setVisible(false);
     }
 
     /**
@@ -207,20 +254,21 @@ public class FrmInicio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmInicio().setVisible(true);
+                new FrmLogin().setVisible(true);
             }
         });
     }
@@ -231,8 +279,9 @@ public class FrmInicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblMensaje;
-    private javax.swing.JLabel lblPass;
+    private javax.swing.JLabel lblPassForgot;
     private javax.swing.JLabel lblSignIn;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
