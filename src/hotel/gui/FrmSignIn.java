@@ -16,7 +16,9 @@ import javax.swing.border.Border;
  * @author pc
  */
 public class FrmSignIn extends javax.swing.JFrame {
-    private Border line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
+    private Border line;
+    private Usuario u;
+    private int funcion;
     /**
      * Creates new form FrmSignIn
      */
@@ -24,8 +26,18 @@ public class FrmSignIn extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setButtons();
+        u = new Usuario();
+        funcion = 0;
+        line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
     }
-
+    public FrmSignIn(Usuario u1, int num) {
+        initComponents();
+        setLocationRelativeTo(null);
+        setButtons();
+        u = u1;
+        funcion = num;
+        line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +69,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         lblError = new javax.swing.JLabel();
         txtReContrasena = new javax.swing.JPasswordField();
         btnExit = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JTextField();
+        btnAtras = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,12 +88,12 @@ public class FrmSignIn extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
 
         cbxPuesto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbxPuesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Recepcionista", "Mucama" }));
+        cbxPuesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recepcionista", "Mucama" }));
         cbxPuesto.setFocusable(false);
         getContentPane().add(cbxPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 190, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Nombre Completo:");
+        jLabel4.setText("Nombre:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -86,46 +101,46 @@ public class FrmSignIn extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Cedula:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
 
         txtCedula.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 190, -1));
+        getContentPane().add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 190, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Nacionalidad:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
 
         txtNacionalidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 190, -1));
+        getContentPane().add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 190, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Email:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, 190, -1));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, 190, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Teléfono:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 190, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, 190, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Nombre de Usuario:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, -1, -1));
 
         txtUserName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, 190, -1));
+        getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 190, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Contraseña:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Re-Contraseña:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, -1, -1));
 
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
@@ -145,13 +160,13 @@ public class FrmSignIn extends javax.swing.JFrame {
         getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 80, -1));
 
         txtContrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 190, -1));
+        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 190, -1));
 
         lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 394, 420, 20));
 
         txtReContrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(txtReContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 190, -1));
+        getContentPane().add(txtReContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 190, -1));
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +175,21 @@ public class FrmSignIn extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(585, 0, 40, 40));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Apellido:");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
+
+        txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 190, -1));
+
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoI.jpg"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
@@ -208,11 +238,20 @@ public class FrmSignIn extends javax.swing.JFrame {
         btnRegistrar.setBorder(null);
     }//GEN-LAST:event_btnRegistrarMouseExited
 
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        FrmPrincipal frm = new FrmPrincipal(u);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.setBorder(null);
+        btnAtras.setContentAreaFilled(false);
+        btnAtras.setBorder(null);
     }
 
     /**
@@ -251,12 +290,14 @@ public class FrmSignIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbxPuesto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -266,6 +307,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblError;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JTextField txtEmail;

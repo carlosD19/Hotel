@@ -44,7 +44,6 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         lblPassForgot = new javax.swing.JLabel();
-        lblSignIn = new javax.swing.JLabel();
         lblMensaje = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -102,22 +101,6 @@ public class FrmLogin extends javax.swing.JFrame {
         });
         getContentPane().add(lblPassForgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 100, 20));
 
-        lblSignIn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblSignIn.setForeground(new java.awt.Color(255, 102, 0));
-        lblSignIn.setText("Sign In");
-        lblSignIn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSignInMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSignInMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblSignInMousePressed(evt);
-            }
-        });
-        getContentPane().add(lblSignIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, -1, -1));
-
         lblMensaje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 340, 20));
 
@@ -152,14 +135,6 @@ public class FrmLogin extends javax.swing.JFrame {
         lblPassForgot.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblPassForgotMouseExited
 
-    private void lblSignInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMouseEntered
-        lblSignIn.setForeground(Color.BLACK);
-    }//GEN-LAST:event_lblSignInMouseEntered
-
-    private void lblSignInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMouseExited
-        lblSignIn.setForeground(Color.ORANGE);
-    }//GEN-LAST:event_lblSignInMouseExited
-
     private void lblPassForgotMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassForgotMousePressed
         lblInfo.setVisible(true);
         txtPass.setEnabled(false);
@@ -169,13 +144,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private void txtUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMousePressed
         lblMensaje.setText("");
     }//GEN-LAST:event_txtUserMousePressed
-
-    private void lblSignInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMousePressed
-        FrmSignIn frm = new FrmSignIn();
-        frm.setVisible(true);
-        frm.setLocationRelativeTo(null);
-        dispose();
-    }//GEN-LAST:event_lblSignInMousePressed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
@@ -282,7 +250,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassForgot;
-    private javax.swing.JLabel lblSignIn;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
