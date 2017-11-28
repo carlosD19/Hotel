@@ -21,7 +21,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     private Border line;
     private Usuario u;
     private int funcion;
-
+    private String cedula;
     /**
      * Creates new form FrmSignIn
      */
@@ -30,9 +30,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         u = new Usuario();
-        funcion = 3;
+        funcion = 1;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
-//        lblBuscar.setVisible(false);
+        lblBuscar.setVisible(false);
     }
 
     public FrmSignIn(Usuario u1, int num) {
@@ -258,6 +258,7 @@ public class FrmSignIn extends javax.swing.JFrame {
                 Usuario u = udao.cargarDatos(txtCedula.getText().trim());
                 if (!(u == null)) {
                     cargarDatos(u);
+                    cedula = u.getCedula();
                 } else {
                     lblError.setText("El Usuario no Existe.");
                 }
@@ -281,7 +282,7 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
 
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()))) {
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()),funcion,cedula)) {
                 lblError.setText("Usuario Registrado con Éxito.");
             } else {
                 lblError.setText("Intente Nuevamenta.");
@@ -308,8 +309,7 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setTelefono(Integer.valueOf(txtTelefono.getText()));
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
-
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()))) {
+             if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()),funcion,cedula))  {
                 lblError.setText("Usuario Actualizado con Éxito.");
             } else {
                 lblError.setText("Intente Nuevamenta.");
@@ -326,7 +326,6 @@ public class FrmSignIn extends javax.swing.JFrame {
     public void eliminar() {
         try {
             UsuarioDAO udao = new UsuarioDAO();
-
             if (udao.eliminarUsu(txtCedula.getText().trim())) {
                 lblError.setText("Usuario Eliminado.");
             } else {

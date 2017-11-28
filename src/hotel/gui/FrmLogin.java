@@ -9,6 +9,7 @@ import hotel.bo.UsuarioBo;
 import hotel.dao.Controlador;
 import hotel.entities.Correo;
 import hotel.entities.MiError;
+import hotel.entities.Usuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -106,6 +107,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPass.setOpaque(false);
+        txtPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtPassMousePressed(evt);
+            }
+        });
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 200, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.jpg"))); // NOI18N
@@ -158,7 +164,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     frm.setVisible(true);
                     frm.setLocationRelativeTo(null);
                     dispose();
-                }else{
+                } else {
                     lblMensaje.setText("Intente nuevamenta.");
                 }
             } catch (MiError e) {
@@ -167,16 +173,24 @@ public class FrmLogin extends javax.swing.JFrame {
         } else {
             try {
                 UsuarioBo ubo = new UsuarioBo();
-                if (ubo.verificarCorreo(txtUser.getText().trim())) {
-                    enviarCorreo();//Envia la Contraseña
+                Usuario u = ubo.verificarCorreo(txtUser.getText().trim());
+                if (!(u == null)) {
+                    enviarCorreo(u);//Envia la Contraseña
+                } else {
+                    lblMensaje.setText("El Usuario no Existe.");
                 }
+
             } catch (MiError e) {
                 lblMensaje.setText(e.getMessage());
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void enviarCorreo() {
+    private void txtPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPassMousePressed
+        lblMensaje.setText("");
+    }//GEN-LAST:event_txtPassMousePressed
+
+    public void enviarCorreo(Usuario u) {
         try {
             Correo c = new Correo();
             c.setNombreArchivo("tarjeta.jpg");
@@ -184,9 +198,9 @@ public class FrmLogin extends javax.swing.JFrame {
             c.setContraseña("hqexpdqyexxcslnn");
             c.setUsuarioCorreo("greatfallshotel@gmail.com");
             c.setAsunto("Recuperar contraseña");
-            c.setMensaje("Hola, Carlos:\n\n"
+            c.setMensaje("Hola, " + u.getNombre() + " " + u.getApellido() + ":\n\n"
                     + "Recibimos una solicitud para recordar tu contraseña de Great Falls Hotel.\n\n"
-                    + "Contraseña: GreatFalls\n\n");
+                    + "Contraseña: "+ u.getContrasena() +"\n\n");
             c.setDestino(txtUser.getText().trim());
             Controlador co = new Controlador();
             if (co.enviarCorreo(c)) {

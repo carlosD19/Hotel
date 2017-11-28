@@ -25,7 +25,8 @@ public class UsuarioBo {
         UsuarioDAO udao = new UsuarioDAO();
         return udao.verificarLogin(userName, pass);
     }
-    public boolean verificarRegistro(Usuario u, String reContrasena) {
+
+    public boolean verificarRegistro(Usuario u, String reContrasena, int funcion, String cedula) {
         if (u.getNombre().isEmpty()) {
             throw new MiError("Nombre Completo Requerido.");
         }
@@ -44,21 +45,24 @@ public class UsuarioBo {
         if (u.getPuesto().isEmpty()) {
             throw new MiError("Nombre de Usuario Requerido.");
         }
-        if(u.getContrasena().isEmpty()){
+        if (u.getContrasena().isEmpty()) {
             throw new MiError("Contraseña Requerida.");
         }
-        if(reContrasena.isEmpty()){
+        if (reContrasena.isEmpty()) {
             throw new MiError("Re-Contraseña Requerida.");
         }
-        if(!u.getContrasena().equals(reContrasena)){
+        if (!u.getContrasena().equals(reContrasena)) {
             throw new MiError("Las contraseñas no coinciden");
         }
-        
+
         UsuarioDAO udao = new UsuarioDAO();
+        if (funcion == 2) {
+            return udao.modificarUsu(u, cedula);
+        }
         return udao.insertarUsu(u);
     }
-    
-    public boolean verificarCorreo(String userName) {
+
+    public Usuario verificarCorreo(String userName) {
         if (userName.isEmpty()) {
             throw new MiError("Nombre de Usuario Requerido.");
         }
