@@ -20,8 +20,8 @@ public class Cliente extends Persona{
     public Cliente() {
     }
 
-    public Cliente(int tarjeta, String pais, String provincia, String canton, String direccion, String nombre, String cedula, String nacionalida, String email, int telefono) {
-        super(nombre, cedula, nacionalida, email, telefono);
+    public Cliente(int tarjeta, String pais, String provincia, String canton, String direccion, String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
+        super(nombre, cedula, nacionalidad, email, telefono, apellido);
         this.tarjeta = tarjeta;
         this.pais = pais;
         this.provincia = provincia;

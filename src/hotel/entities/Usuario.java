@@ -18,12 +18,14 @@ public class Usuario extends Persona{
     public Usuario() {
     }
 
-    public Usuario(String nombreUsu, String contrasena, String puesto, String nombre, String cedula, String nacionalida, String email, int telefono) {
-        super(nombre, cedula, nacionalida, email, telefono);
+    public Usuario(String nombreUsu, String contrasena, String puesto, String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
+        super(nombre, cedula, nacionalidad, email, telefono, apellido);
         this.nombreUsu = nombreUsu;
         this.contrasena = contrasena;
         this.puesto = puesto;
     }
+
+  
 
     public String getNombreUsu() {
         return nombreUsu;

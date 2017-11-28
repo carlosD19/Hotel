@@ -40,12 +40,12 @@ public class FrmLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         lblPassForgot = new javax.swing.JLabel();
         lblMensaje = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -62,10 +62,6 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 200, 30));
-
-        txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtPass.setOpaque(false);
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -107,6 +103,10 @@ public class FrmLogin extends javax.swing.JFrame {
         lblInfo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblInfo.setText("Correo Electronico:");
         getContentPane().add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 120, 20));
+
+        txtPass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPass.setOpaque(false);
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 200, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.jpg"))); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -153,8 +153,11 @@ public class FrmLogin extends javax.swing.JFrame {
         if (bus) {
             try {
                 UsuarioBo ubo = new UsuarioBo();
-                if (ubo.verificarLogin(txtUser.getText().trim(), txtPass.getText().trim())) {
-                    //Abrir la ventana
+                if (ubo.verificarLogin(txtUser.getText().trim(), String.valueOf(txtPass.getPassword()).trim())) {
+                    FrmPrincipal frm = new FrmPrincipal();
+                    frm.setVisible(true);
+                    frm.setLocationRelativeTo(null);
+                    dispose();
                 }else{
                     lblMensaje.setText("Intente nuevamenta.");
                 }
@@ -250,7 +253,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassForgot;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

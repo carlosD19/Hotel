@@ -16,17 +16,28 @@ public class Persona {
     private String nacionalidad;
     private String email;
     private int telefono;
+    private String apellido;
 
-    public Persona(String nombre, String cedula, String nacionalidad, String email, int telefono) {
+    public Persona(String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.nacionalidad = nacionalidad;
         this.email = email;
         this.telefono = telefono;
+        this.apellido = apellido;
     }
 
     public Persona() {
     }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
 
     public String getNombre() {
         return nombre;
@@ -70,7 +81,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" + "nombre=" + nombre + ", cedula=" + cedula + ", nacionalida=" + nacionalidad + ", email=" + email + ", telefono=" + telefono + '}';
+        return "Persona{" + "nombre=" + nombre + ", cedula=" + cedula + ", nacionalidad=" + nacionalidad + ", email=" + email + ", telefono=" + telefono + ", apellido=" + apellido + '}';
     }
 
 }

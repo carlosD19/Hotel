@@ -55,8 +55,9 @@ public class UsuarioBo {
         }
         
         UsuarioDAO udao = new UsuarioDAO();
-        return udao.verificarRegistro(u);
+        return udao.insertarUsu(u);
     }
+    
     public boolean verificarCorreo(String userName) {
         if (userName.isEmpty()) {
             throw new MiError("Nombre de Usuario Requerido.");

@@ -6,6 +6,7 @@
 package hotel.gui;
 
 import hotel.bo.UsuarioBo;
+import hotel.dao.UsuarioDAO;
 import hotel.entities.MiError;
 import hotel.entities.Usuario;
 import javax.swing.BorderFactory;
@@ -16,9 +17,11 @@ import javax.swing.border.Border;
  * @author pc
  */
 public class FrmSignIn extends javax.swing.JFrame {
+
     private Border line;
     private Usuario u;
     private int funcion;
+
     /**
      * Creates new form FrmSignIn
      */
@@ -27,9 +30,11 @@ public class FrmSignIn extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         u = new Usuario();
-        funcion = 0;
+        funcion = 3;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
+//        lblBuscar.setVisible(false);
     }
+
     public FrmSignIn(Usuario u1, int num) {
         initComponents();
         setLocationRelativeTo(null);
@@ -37,7 +42,13 @@ public class FrmSignIn extends javax.swing.JFrame {
         u = u1;
         funcion = num;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
+        if (funcion == 2 || funcion == 3) {
+            lblBuscar.setVisible(true);
+        } else {
+            lblBuscar.setVisible(false);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,6 +83,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtApellido = new javax.swing.JTextField();
         btnAtras = new javax.swing.JButton();
+        lblBuscar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -191,6 +203,14 @@ public class FrmSignIn extends javax.swing.JFrame {
         });
         getContentPane().add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 50));
 
+        lblBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
+        lblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblBuscarMousePressed(evt);
+            }
+        });
+        getContentPane().add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, -1, 40));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoI.jpg"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -203,30 +223,16 @@ public class FrmSignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        try {
-            Usuario u = new Usuario();
-            u.setCedula(txtCedula.getText().trim());
-            u.setEmail(txtEmail.getText().trim());
-            u.setNacionalidad(txtNacionalidad.getText().trim());
-            u.setNombre(txtNombre.getText().trim());
-            u.setPuesto(cbxPuesto.getSelectedItem().toString());
-            u.setNombreUsu(txtUserName.getText().trim());
-            u.setContrasena(String.valueOf(txtContrasena.getPassword()));
-            u.setTelefono(Integer.valueOf(txtTelefono.getText()));
-
-            UsuarioBo ubo = new UsuarioBo();
-            
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()))) {
-                lblError.setText("Usuario Registrado con Éxito.");
-            } else {
-                lblError.setText("Intente Nuevamenta.");
-            }
-        } catch (NumberFormatException ex) {
-            lblError.setText("Formato de telefono incorrecto.");
-        } catch (MiError ex) {
-            lblError.setText(ex.getMessage());
-        } catch (Exception ex) {
-            System.out.println("Error!!!");
+        switch (funcion) {
+            case 1:
+                registrar();
+                break;
+            case 2:
+                modificar();
+                break;
+            case 3:
+                eliminar();
+                break;
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -244,6 +250,110 @@ public class FrmSignIn extends javax.swing.JFrame {
         frm.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void lblBuscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMousePressed
+        try {
+            if (!txtCedula.getText().trim().equals("")) {
+                UsuarioDAO udao = new UsuarioDAO();
+                Usuario u = udao.cargarDatos(txtCedula.getText().trim());
+                if (!(u == null)) {
+                    cargarDatos(u);
+                } else {
+                    lblError.setText("El Usuario no Existe.");
+                }
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_lblBuscarMousePressed
+
+    public void registrar() {
+        try {
+            Usuario u = new Usuario();
+            u.setCedula(txtCedula.getText().trim());
+            u.setEmail(txtEmail.getText().trim());
+            u.setNacionalidad(txtNacionalidad.getText().trim());
+            u.setNombre(txtNombre.getText().trim());
+            u.setPuesto(cbxPuesto.getSelectedItem().toString());
+            u.setNombreUsu(txtUserName.getText().trim());
+            u.setContrasena(String.valueOf(txtContrasena.getPassword()));
+            u.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            u.setApellido(txtApellido.getText().trim());
+            UsuarioBo ubo = new UsuarioBo();
+
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()))) {
+                lblError.setText("Usuario Registrado con Éxito.");
+            } else {
+                lblError.setText("Intente Nuevamenta.");
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de telefono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error!!!");
+        }
+    }
+
+    public void modificar() {
+        try {
+            Usuario u = new Usuario();
+            u.setCedula(txtCedula.getText().trim());
+            u.setEmail(txtEmail.getText().trim());
+            u.setNacionalidad(txtNacionalidad.getText().trim());
+            u.setNombre(txtNombre.getText().trim());
+            u.setPuesto(cbxPuesto.getSelectedItem().toString());
+            u.setNombreUsu(txtUserName.getText().trim());
+            u.setContrasena(String.valueOf(txtContrasena.getPassword()));
+            u.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            u.setApellido(txtApellido.getText().trim());
+            UsuarioBo ubo = new UsuarioBo();
+
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()))) {
+                lblError.setText("Usuario Actualizado con Éxito.");
+            } else {
+                lblError.setText("Intente Nuevamenta.");
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de telefono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error!!!");
+        }
+    }
+
+    public void eliminar() {
+        try {
+            UsuarioDAO udao = new UsuarioDAO();
+
+            if (udao.eliminarUsu(txtCedula.getText().trim())) {
+                lblError.setText("Usuario Eliminado.");
+            } else {
+                lblError.setText("Intente Nuevamente.");
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+        }
+    }
+
+    public void cargarDatos(Usuario u) {
+        txtApellido.setText(u.getApellido());
+        txtCedula.setText(u.getCedula());
+        txtContrasena.setText(u.getContrasena());
+        txtEmail.setText(u.getEmail());
+        txtNacionalidad.setText(u.getNacionalidad());
+        txtNombre.setText(u.getNombre());
+        txtReContrasena.setText(u.getContrasena());
+        txtTelefono.setText(String.valueOf(u.getTelefono()));
+        txtUserName.setText(u.getNombreUsu());
+        if (u.getPuesto().equals("Recepcionista")) {
+            cbxPuesto.setSelectedIndex(0);
+        } else {
+            cbxPuesto.setSelectedIndex(1);
+        }
+    }
 
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
@@ -306,6 +416,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblError;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
