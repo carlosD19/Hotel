@@ -12,16 +12,30 @@ package hotel.entities;
 public class TipoHabitacion {
 
     private String nombre; //Matrimonial, Sencilla, Delux...
-    private Descripcion descripcion;
-    private Tarifa tarifa;
+    private boolean baño;
+    private boolean tv;
+    private boolean reloj;
+    private boolean refri;
+    private boolean telefono;
+    private boolean cajaFuerte;
+    private boolean aireAcondicionado;
+    private boolean vistaMar;
+    private int precio;
 
     public TipoHabitacion() {
     }
 
-    public TipoHabitacion(String nombre, Descripcion descripcion, Tarifa tarifa) {
+    public TipoHabitacion(String nombre, boolean baño, boolean tv, boolean reloj, boolean refri, boolean telefono, boolean cajaFuerte, boolean aireAcondicionado, boolean vistaMar, int precio) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.tarifa = tarifa;
+        this.baño = baño;
+        this.tv = tv;
+        this.reloj = reloj;
+        this.refri = refri;
+        this.telefono = telefono;
+        this.cajaFuerte = cajaFuerte;
+        this.aireAcondicionado = aireAcondicionado;
+        this.vistaMar = vistaMar;
+        this.precio = precio;
     }
 
     public String getNombre() {
@@ -32,25 +46,81 @@ public class TipoHabitacion {
         this.nombre = nombre;
     }
 
-    public Descripcion getDescripcion() {
-        return descripcion;
+    public boolean isBaño() {
+        return baño;
     }
 
-    public void setDescripcion(Descripcion descripcion) {
-        this.descripcion = descripcion;
+    public void setBaño(boolean baño) {
+        this.baño = baño;
     }
 
-    public Tarifa getTarifa() {
-        return tarifa;
+    public boolean isTv() {
+        return tv;
     }
 
-    public void setTarifa(Tarifa tarifa) {
-        this.tarifa = tarifa;
+    public void setTv(boolean tv) {
+        this.tv = tv;
+    }
+
+    public boolean isReloj() {
+        return reloj;
+    }
+
+    public void setReloj(boolean reloj) {
+        this.reloj = reloj;
+    }
+
+    public boolean isRefri() {
+        return refri;
+    }
+
+    public void setRefri(boolean refri) {
+        this.refri = refri;
+    }
+
+    public boolean isTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(boolean telefono) {
+        this.telefono = telefono;
+    }
+
+    public boolean isCajaFuerte() {
+        return cajaFuerte;
+    }
+
+    public void setCajaFuerte(boolean cajaFuerte) {
+        this.cajaFuerte = cajaFuerte;
+    }
+
+    public boolean isAireAcondicionado() {
+        return aireAcondicionado;
+    }
+
+    public void setAireAcondicionado(boolean aireAcondicionado) {
+        this.aireAcondicionado = aireAcondicionado;
+    }
+
+    public boolean isVistaMar() {
+        return vistaMar;
+    }
+
+    public void setVistaMar(boolean vistaMar) {
+        this.vistaMar = vistaMar;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 
     @Override
     public String toString() {
-        return "TipoHabitacion{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", tarifa=" + tarifa + '}';
+        return "TipoHabitacion{" + "nombre=" + nombre + ", ba\u00f1o=" + baño + ", tv=" + tv + ", reloj=" + reloj + ", refri=" + refri + ", telefono=" + telefono + ", cajaFuerte=" + cajaFuerte + ", aireAcondicionado=" + aireAcondicionado + ", vistaMar=" + vistaMar + ", precio=" + precio + '}';
     }
 
 }
