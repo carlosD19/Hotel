@@ -42,8 +42,9 @@ public class TipoHabitacionDAO {
     public ArrayList<TipoHabitacion> cargarTipoHabitacion() {
         ArrayList<TipoHabitacion> tipos = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
-            String sql = "select * from tipo_habitacion";
+            String sql = "select * from tipo_habitacion where activo = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, true);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 tipos.add(cargarUsuario(rs));
@@ -57,7 +58,9 @@ public class TipoHabitacionDAO {
 
     private TipoHabitacion cargarUsuario(ResultSet rs) throws SQLException {
         TipoHabitacion th = new TipoHabitacion();
+        th.setId(rs.getInt("id"));
         th.setAireAcondicionado(rs.getBoolean("aire"));
+        th.setActivo(rs.getBoolean("activo"));
         th.setTv(rs.getBoolean("tv"));
         th.setRefri(rs.getBoolean("refri"));
         th.setCajaFuerte(rs.getBoolean("caja_fuerte"));

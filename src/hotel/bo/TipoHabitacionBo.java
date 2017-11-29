@@ -8,6 +8,7 @@ package hotel.bo;
 import hotel.dao.TipoHabitacionDAO;
 import hotel.entities.MiError;
 import hotel.entities.TipoHabitacion;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,5 +22,10 @@ public class TipoHabitacionBo {
         }
         TipoHabitacionDAO thdao = new TipoHabitacionDAO();
         return thdao.registrar(th);
+    }
+    
+    public ArrayList<TipoHabitacion> cargarTodo(){
+        TipoHabitacionDAO udao = new TipoHabitacionDAO();
+        return udao.cargarTipoHabitacion();
     }
 }

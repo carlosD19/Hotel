@@ -22,15 +22,16 @@ public class FrmSignIn extends javax.swing.JFrame {
     private Usuario u;
     private int funcion;
     private String cedula;
+
     /**
      * Creates new form FrmSignIn
      */
     public FrmSignIn() {
         initComponents();
         setLocationRelativeTo(null);
+        funcion = 1;
         setButtons();
         u = new Usuario();
-        funcion = 1;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
         lblBuscar.setVisible(false);
     }
@@ -38,15 +39,11 @@ public class FrmSignIn extends javax.swing.JFrame {
     public FrmSignIn(Usuario u1, int num) {
         initComponents();
         setLocationRelativeTo(null);
+        funcion = num;
+        setIcon();
         setButtons();
         u = u1;
-        funcion = num;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
-        if (funcion == 2 || funcion == 3) {
-            lblBuscar.setVisible(true);
-        } else {
-            lblBuscar.setVisible(false);
-        }
     }
 
     /**
@@ -155,7 +152,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, -1, -1));
 
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/addU.png"))); // NOI18N
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRegistrarMouseEntered(evt);
@@ -169,7 +166,7 @@ public class FrmSignIn extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 80, -1));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 80, -1));
 
         txtContrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 190, -1));
@@ -254,8 +251,8 @@ public class FrmSignIn extends javax.swing.JFrame {
     private void lblBuscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMousePressed
         try {
             if (!txtCedula.getText().trim().equals("")) {
-                UsuarioDAO udao = new UsuarioDAO();
-                Usuario u = udao.cargarDatos(txtCedula.getText().trim());
+                UsuarioBo udao = new UsuarioBo();
+                Usuario u = udao.cargarUsuario(txtCedula.getText().trim());
                 if (!(u == null)) {
                     cargarDatos(u);
                     cedula = u.getCedula();
@@ -282,7 +279,8 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
 
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()),funcion,cedula)) {
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, cedula)) {
+                setTxt();
                 lblError.setText("Usuario Registrado con Éxito.");
             } else {
                 lblError.setText("Intente Nuevamenta.");
@@ -309,7 +307,8 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setTelefono(Integer.valueOf(txtTelefono.getText()));
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
-             if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()),funcion,cedula))  {
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, cedula)) {
+                setTxt();
                 lblError.setText("Usuario Actualizado con Éxito.");
             } else {
                 lblError.setText("Intente Nuevamenta.");
@@ -325,8 +324,9 @@ public class FrmSignIn extends javax.swing.JFrame {
 
     public void eliminar() {
         try {
-            UsuarioDAO udao = new UsuarioDAO();
-            if (udao.eliminarUsu(txtCedula.getText().trim())) {
+            UsuarioBo ubo = new UsuarioBo();
+            if (ubo.eliminarUsuario(txtCedula.getText().trim())) {
+                setTxt();
                 lblError.setText("Usuario Eliminado.");
             } else {
                 lblError.setText("Intente Nuevamente.");
@@ -361,6 +361,34 @@ public class FrmSignIn extends javax.swing.JFrame {
         btnRegistrar.setBorder(null);
         btnAtras.setContentAreaFilled(false);
         btnAtras.setBorder(null);
+    }
+
+    public void setIcon() {
+        switch (funcion) {
+            case 1:
+                lblBuscar.setVisible(false);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/addU.png")));
+                break;
+            case 2:
+                lblBuscar.setVisible(true);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modify.png")));
+                break;
+            case 3:
+                lblBuscar.setVisible(true);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove.png")));
+                break;
+        }
+    }
+    public void setTxt(){
+        txtApellido.setText("");
+        txtCedula.setText("");
+        txtContrasena.setText("");
+        txtEmail.setText("");
+        txtNacionalidad.setText("");
+        txtNombre.setText("");
+        txtReContrasena.setText("");
+        txtTelefono.setText("");
+        txtUserName.setText("");
     }
 
     /**

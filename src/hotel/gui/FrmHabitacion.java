@@ -5,11 +5,17 @@
  */
 package hotel.gui;
 
+import hotel.bo.HabitacionBo;
+import hotel.bo.TipoHabitacionBo;
+import hotel.dao.TipoHabitacionDAO;
+import hotel.entities.Habitacion;
+import hotel.entities.TipoHabitacion;
 import hotel.entities.Usuario;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -29,6 +35,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private Image img3;
     ImageIcon img4;
     private int funcion;
+    private int idHabitacion;
+    ArrayList<TipoHabitacion> tipo;
+
     /**
      * Creates new form FrmHabitacion
      */
@@ -39,14 +48,19 @@ public class FrmHabitacion extends javax.swing.JFrame {
         activoU = new Usuario();
         img = new ImageIcon();
         funcion = 1;
+        tipo = new ArrayList<>();
+        cargarTipos();
     }
-    public FrmHabitacion(Usuario u,int num) {
+
+    public FrmHabitacion(Usuario u, int num) {
         initComponents();
         setLocationRelativeTo(null);
         setButtons();
         activoU = u;
         img = new ImageIcon();
         funcion = num;
+        tipo = new ArrayList<>();
+        cargarTipos();
     }
 
     /**
@@ -74,9 +88,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         chcCaja = new javax.swing.JCheckBox();
         chcAire = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxTipo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         cbxEstado = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
@@ -187,10 +201,16 @@ public class FrmHabitacion extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Precio por noche:");
 
-        txtPrecio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTipoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Tipo:");
+
+        lblPrecio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -199,14 +219,18 @@ public class FrmHabitacion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPrecio)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                            .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel1))
+                                .addGap(0, 104, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -219,11 +243,11 @@ public class FrmHabitacion extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -291,10 +315,10 @@ public class FrmHabitacion extends javax.swing.JFrame {
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelHabitacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelHabitacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                        .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtTamano))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -308,6 +332,11 @@ public class FrmHabitacion extends javax.swing.JFrame {
         jPanel3.add(panelHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 780, 390));
 
         btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir.png"))); // NOI18N
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
@@ -374,6 +403,56 @@ public class FrmHabitacion extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
+        setCbx();
+        for (TipoHabitacion th : tipo) {
+            if (cbxTipo.getSelectedItem().toString().equals(th.getNombre())) {
+                idHabitacion = th.getId();
+                lblPrecio.setText("₡ " + String.valueOf(th.getPrecio()));
+                if (!th.isAireAcondicionado()) {
+                    chcAire.setSelected(false);
+                }
+                if (!th.isBaño()) {
+                    chcBano.setSelected(false);
+                }
+                if (!th.isCajaFuerte()) {
+                    chcCaja.setSelected(false);
+                }
+                if (!th.isRefri()) {
+                    chcRefri.setSelected(false);
+                }
+                if (!th.isReloj()) {
+                    chcReloj.setSelected(false);
+                }
+                if (!th.isTelefono()) {
+                    chcTelefono.setSelected(false);
+                }
+                if (!th.isTv()) {
+                    chcTV.setSelected(false);
+                }
+                if (!th.isVistaMar()) {
+                    chcVista.setSelected(false);
+                }
+            }
+        }
+    }//GEN-LAST:event_cbxTipoActionPerformed
+
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+        try{
+            Habitacion h = new Habitacion();
+            h.setFoto(img2);
+            h.setNumero(Integer.valueOf(txtNumero.getText()));
+            h.setTamaño(Float.valueOf(txtTamano.getText()));
+            h.setTipoHabitacion(idHabitacion);
+            HabitacionBo hbo = new HabitacionBo();
+            if(hbo.registrarHabitacion(h)){
+                
+            }
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
     public void setButtons() {
         btnAnadir.setContentAreaFilled(false);
         btnAnadir.setBorder(null);
@@ -382,6 +461,28 @@ public class FrmHabitacion extends javax.swing.JFrame {
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
     }
+
+    
+
+    public void setCbx() {
+        chcAire.setSelected(true);
+        chcBano.setSelected(true);
+        chcCaja.setSelected(true);
+        chcRefri.setSelected(true);
+        chcReloj.setSelected(true);
+        chcTV.setSelected(true);
+        chcTelefono.setSelected(true);
+        chcVista.setSelected(true);
+    }
+
+    public void cargarTipos() {
+        TipoHabitacionBo thbo = new TipoHabitacionBo();
+        tipo = thbo.cargarTodo();
+        for (TipoHabitacion th : tipo) {
+            cbxTipo.addItem(th.getNombre());
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -423,6 +524,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxNombre;
+    private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JCheckBox chcAire;
     private javax.swing.JCheckBox chcBano;
     private javax.swing.JCheckBox chcCaja;
@@ -432,7 +534,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JCheckBox chcTelefono;
     private javax.swing.JCheckBox chcVista;
     private javax.swing.JFileChooser fcFoto;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -443,9 +544,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblFotoHab;
+    private javax.swing.JLabel lblPrecio;
     private javax.swing.JPanel panelHabitacion;
     private javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtTamano;
     // End of variables declaration//GEN-END:variables
 }

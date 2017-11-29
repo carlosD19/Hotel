@@ -18,9 +18,10 @@ import java.util.ArrayList;
  * @author pc
  */
 public class FrmTipo extends javax.swing.JFrame {
-    
+
     private int funcion;
     private Usuario activoU;
+
     /**
      * Creates new form FrmTipo
      */
@@ -295,13 +296,13 @@ public class FrmTipo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        switch (funcion){
+        switch (funcion) {
             case 1:
                 registrar();
                 break;
             case 2:
                 break;
-            case 3: 
+            case 3:
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -309,8 +310,8 @@ public class FrmTipo extends javax.swing.JFrame {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
-    
-    public void registrar(){
+
+    public void registrar() {
         try {
             TipoHabitacion th = new TipoHabitacion();
             th.setAireAcondicionado(chcAire.isSelected());
@@ -326,6 +327,8 @@ public class FrmTipo extends javax.swing.JFrame {
             TipoHabitacionBo thbo = new TipoHabitacionBo();
             if (thbo.verificarRegistro(th)) {
                 lblError.setText("Tipo de Habitación Registrada con Éxito.");
+                setTxt();
+                cargarTipos();
             } else {
                 lblError.setText("Intente Nuevamenta.");
             }
@@ -337,23 +340,65 @@ public class FrmTipo extends javax.swing.JFrame {
             System.out.println("Error!!!");
         }
     }
-    public void setButtons(){
+
+    public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
     }
-    public void cargarTipos(){
-        TipoHabitacionDAO udao = new TipoHabitacionDAO();
-        ArrayList<TipoHabitacion> tipo = udao.cargarTipoHabitacion();
+
+    public void cargarTipos() {
+        TipoHabitacionBo thbo = new TipoHabitacionBo();
+        ArrayList<TipoHabitacion> tipo = thbo.cargarTodo();
         String resultado = "";
         for (TipoHabitacion th : tipo) {
-            resultado += "Nombre: "+ th.getNombre()+ "\n";
-            resultado += "Precio: "+ th.getPrecio()+ "\n";
-            resultado += "------------------------------------------------------------------------------------"+ "\n";
+                resultado += "---------------------TIPO HABITACIÓN-------------------\n";
+                resultado += "  Nombre: " + th.getNombre() + "\n";
+                resultado += "  Precio: ₡" + th.getPrecio() + "\n";
+                resultado += "------------------------DESCRIPCIÓN---------------------\n";
+                if (th.isAireAcondicionado()) {
+                    resultado += "  Aire Acondicionado." + "\n";
+                }
+                if (th.isBaño()) {
+                    resultado += "  Baño." + "\n";
+                }
+                if (th.isCajaFuerte()) {
+                    resultado += "  Caja Fuerte." + "\n";
+                }
+                if (th.isRefri()) {
+                    resultado += "  Refrigerador." + "\n";
+                }
+                if (th.isReloj()) {
+                    resultado += "  Reloj." + "\n";
+                }
+                if (th.isTelefono()) {
+                    resultado += "  Teléfono." + "\n";
+                }
+                if (th.isTv()) {
+                    resultado += "  Televisión." + "\n";
+                }
+                if (th.isVistaMar()) {
+                    resultado += "  Vista al mar." + "\n";
+                }
+                resultado += "\n";
         }
         txtRegistrados.setText(resultado);
     }
+
+    public void setTxt() {
+        txtPrecio.setText("");
+        txtTipo.setText("");
+        chcAire.setSelected(true);
+        chcBano.setSelected(true);
+        chcCaja.setSelected(true);
+        chcRefri.setSelected(true);
+        chcReloj.setSelected(true);
+        chcTV.setSelected(true);
+        chcTelefono.setSelected(true);
+        chcVista.setSelected(true);
+    }
+
     /**
      * @param args the command line arguments
      */

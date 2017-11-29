@@ -21,11 +21,13 @@ public class TipoHabitacion {
     private boolean aireAcondicionado;
     private boolean vistaMar;
     private int precio;
+    private boolean activo;
+    private int id;
 
     public TipoHabitacion() {
     }
 
-    public TipoHabitacion(String nombre, boolean baño, boolean tv, boolean reloj, boolean refri, boolean telefono, boolean cajaFuerte, boolean aireAcondicionado, boolean vistaMar, int precio) {
+    public TipoHabitacion(String nombre, boolean baño, boolean tv, boolean reloj, boolean refri, boolean telefono, boolean cajaFuerte, boolean aireAcondicionado, boolean vistaMar, int precio, boolean activo) {
         this.nombre = nombre;
         this.baño = baño;
         this.tv = tv;
@@ -36,8 +38,17 @@ public class TipoHabitacion {
         this.aireAcondicionado = aireAcondicionado;
         this.vistaMar = vistaMar;
         this.precio = precio;
+        this.activo = activo;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -118,9 +129,18 @@ public class TipoHabitacion {
         this.precio = precio;
     }
 
-    @Override
-    public String toString() {
-        return "TipoHabitacion{" + "nombre=" + nombre + ", ba\u00f1o=" + baño + ", tv=" + tv + ", reloj=" + reloj + ", refri=" + refri + ", telefono=" + telefono + ", cajaFuerte=" + cajaFuerte + ", aireAcondicionado=" + aireAcondicionado + ", vistaMar=" + vistaMar + ", precio=" + precio + '}';
+    public boolean isActivo() {
+        return activo;
     }
 
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    @Override
+    public String toString() {
+        return "TipoHabitacion{" + "nombre=" + nombre + ", ba\u00f1o=" + baño + ", tv=" + tv + ", reloj=" + reloj + ", refri=" + refri + ", telefono=" + telefono + ", cajaFuerte=" + cajaFuerte + ", aireAcondicionado=" + aireAcondicionado + ", vistaMar=" + vistaMar + ", precio=" + precio + ", activo=" + activo + ", id=" + id + '}';
+    }
+
+    
 }

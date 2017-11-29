@@ -178,10 +178,10 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtNumero" alignment="1" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="cbxNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="cbxEstado" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtNumero" alignment="1" pref="23" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="txtTamano" max="32767" attributes="0"/>
                                       </Group>

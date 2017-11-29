@@ -69,4 +69,12 @@ public class UsuarioBo {
         UsuarioDAO udao = new UsuarioDAO();
         return udao.verificarCorreo(userName);
     }
+    public Usuario cargarUsuario(String cedula){
+        UsuarioDAO udao = new UsuarioDAO();
+        return udao.cargarDatos(cedula);
+    }
+    public boolean eliminarUsuario(String cedula){
+        UsuarioDAO udao = new UsuarioDAO();
+        return udao.eliminarUsu(cedula);
+    }
 }
