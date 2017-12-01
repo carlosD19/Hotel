@@ -9,6 +9,7 @@ import hotel.bo.HabitacionBo;
 import hotel.bo.TipoHabitacionBo;
 import hotel.dao.TipoHabitacionDAO;
 import hotel.entities.Habitacion;
+import hotel.entities.MiError;
 import hotel.entities.TipoHabitacion;
 import hotel.entities.Usuario;
 import java.awt.Image;
@@ -31,9 +32,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
 
     private Usuario activoU;
     private Image img2;
-    ImageIcon img;
-    private Image img3;
-    ImageIcon img4;
+    private ImageIcon img;
     private int funcion;
     private int idHabitacion;
     ArrayList<TipoHabitacion> tipo;
@@ -46,8 +45,8 @@ public class FrmHabitacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         activoU = new Usuario();
-        img = new ImageIcon();
         funcion = 1;
+        img = new ImageIcon();
         tipo = new ArrayList<>();
         cargarTipos();
     }
@@ -57,7 +56,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         activoU = u;
-        img = new ImageIcon();
         funcion = num;
         tipo = new ArrayList<>();
         cargarTipos();
@@ -374,16 +372,16 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFotoHabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFotoHabMousePressed
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Image", "jpg");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Image", "jpg","png");
         fcFoto.setFileFilter(filtro);
         int option = fcFoto.showOpenDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
             try {
-                img4 = new ImageIcon(fcFoto.getSelectedFile().getAbsolutePath());
-                Icon icon = new ImageIcon(img4.getImage().getScaledInstance(lblFotoHab.getWidth(), lblFotoHab.getHeight(), Image.SCALE_DEFAULT));
+                img = new ImageIcon(fcFoto.getSelectedFile().getAbsolutePath());
+                Icon icon = new ImageIcon(img.getImage().getScaledInstance(lblFotoHab.getWidth(), lblFotoHab.getHeight(), Image.SCALE_DEFAULT));
                 File pathToFile = new File(fcFoto.getSelectedFile().getAbsolutePath());
                 Image image = ImageIO.read(pathToFile.getAbsoluteFile());
-                img3 = image;
+                img2 = image;
                 lblFotoHab.setText("");
                 lblFotoHab.setIcon(icon);
             } catch (IOException ex) {
@@ -444,12 +442,14 @@ public class FrmHabitacion extends javax.swing.JFrame {
             h.setNumero(Integer.valueOf(txtNumero.getText()));
             h.setTamaño(Float.valueOf(txtTamano.getText()));
             h.setTipoHabitacion(idHabitacion);
+            h.setEstado(cbxEstado.getSelectedItem().toString());
+            h.setNombre(cbxNombre.getSelectedItem().toString());
             HabitacionBo hbo = new HabitacionBo();
             if(hbo.registrarHabitacion(h)){
-                
+                System.out.println("Exitooo");
             }
-        }catch(Exception ex){
-            
+        }catch(MiError ex){
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnAnadirActionPerformed
 

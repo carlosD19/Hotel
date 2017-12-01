@@ -7,9 +7,15 @@ package hotel.dao;
 
 import hotel.entities.Habitacion;
 import hotel.entities.MiError;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -19,18 +25,22 @@ public class HabitacionDAO {
 
     public boolean registrar(Habitacion h) {
         try (Connection con = Conexion.conexion()) {
-            String sql = "insert into habitacion(nombre,tamano,numero,estado,id_tipo,foto) values(?,?,?,?,?,?)";
+            String sql = "insert into habitacion(numero,nombre,estado,tamano,foto,id_tipo) values(?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(sql);
-            stmt.setString(1, h.getNombre());
-            stmt.setFloat(2, h.getTamaño());
-            stmt.setInt(3, h.getNumero());
-            stmt.setBoolean(4, h.isEstado());
-            stmt.setInt(5, h.getTipoHabitacion());
-            
-            //Falta Guardar Imagen;
-            
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write((RenderedImage) h.getFoto(), "jpg", os);
+            InputStream fis = new ByteArrayInputStream(os.toByteArray());
+            stmt.setInt(1, h.getNumero());
+            stmt.setString(2, h.getNombre());
+            stmt.setString(3, h.getEstado());
+            stmt.setFloat(4, h.getTamaño());
+            stmt.setBinaryStream(5, fis);
+            stmt.setInt(6, h.getTipoHabitacion());
             return stmt.executeUpdate() > 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new MiError("Problemas SQL.");
+        }catch (Exception ex) {
             throw new MiError("Problemas al cargar Habitaciones.");
         }
     }

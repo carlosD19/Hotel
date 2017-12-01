@@ -16,14 +16,14 @@ public class Habitacion {
     private Image foto;
     private int numero;
     private String nombre;
-    private boolean estado;
+    private String estado;
     private float tamaño;
     private int tipoHabitacion;
 
     public Habitacion() {
     }
 
-    public Habitacion(Image foto, int numero, String nombre, boolean estado, float tamaño, int tipoHabitacion) {
+    public Habitacion(Image foto, int numero, String nombre, String estado, float tamaño, int tipoHabitacion) {
         this.foto = foto;
         this.numero = numero;
         this.nombre = nombre;
@@ -56,11 +56,11 @@ public class Habitacion {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
