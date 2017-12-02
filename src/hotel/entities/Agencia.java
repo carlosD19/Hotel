@@ -5,6 +5,8 @@
  */
 package hotel.entities;
 
+import java.awt.Image;
+
 /**
  *
  * @author pc
@@ -15,17 +17,27 @@ public class Agencia {
     private int telefono;
     private String email;
     private String paginaWeb;
+    private Image imagen;
 
     public Agencia() {
     }
 
-    public Agencia(String nombre, int telefono, String email, String paginaWeb) {
+    public Agencia(String nombre, int telefono, String email, String paginaWeb, Image imagen) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
         this.paginaWeb = paginaWeb;
+        this.imagen = imagen;
     }
 
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+    
     public String getNombre() {
         return nombre;
     }

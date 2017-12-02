@@ -99,6 +99,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
         btnAnadir = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -353,6 +354,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         });
         jPanel3.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 40));
 
+        lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel3.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 494, 460, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -372,7 +376,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFotoHabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFotoHabMousePressed
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Image", "jpg","png");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Image", "jpg", "png");
         fcFoto.setFileFilter(filtro);
         int option = fcFoto.showOpenDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
@@ -436,20 +440,24 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxTipoActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-        try{
+        try {
             Habitacion h = new Habitacion();
-            h.setFoto(img2);
+            h.setImagen(img2);
             h.setNumero(Integer.valueOf(txtNumero.getText()));
             h.setTamaño(Float.valueOf(txtTamano.getText()));
             h.setTipoHabitacion(idHabitacion);
             h.setEstado(cbxEstado.getSelectedItem().toString());
             h.setNombre(cbxNombre.getSelectedItem().toString());
             HabitacionBo hbo = new HabitacionBo();
-            if(hbo.registrarHabitacion(h)){
+            if (hbo.registrarHabitacion(h)) {
                 System.out.println("Exitooo");
             }
-        }catch(MiError ex){
-            System.out.println(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de tamaño o número de habitación incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        }catch(Exception ex){
+            lblError.setText("Problemas al guardar, favor intente nuevamente.");
         }
     }//GEN-LAST:event_btnAnadirActionPerformed
 
@@ -461,8 +469,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
     }
-
-    
 
     public void setCbx() {
         chcAire.setSelected(true);
@@ -543,6 +549,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFotoHab;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JPanel panelHabitacion;

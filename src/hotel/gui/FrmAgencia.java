@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 package hotel.gui;
+import hotel.bo.AgenciaBo;
+import hotel.entities.Agencia;
+import hotel.entities.MiError;
 import hotel.entities.Usuario;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -27,6 +32,9 @@ public class FrmAgencia extends javax.swing.JFrame {
     private Image img3;
     ImageIcon img4;
     private int funcion;
+    private ArrayList<Agencia> agencias;
+    private int index;
+    private AgenciaBo bo;
     /**
      * Creates new form FrmAgencia
      */
@@ -34,9 +42,12 @@ public class FrmAgencia extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setButtons();
+        bo = new AgenciaBo();
+        agencias = bo.cargarImagenes();
         activoU = new Usuario();
         img = new ImageIcon();
         funcion = 1;
+        cargarFoto();
     }
     public FrmAgencia(Usuario u) {
         initComponents();
@@ -75,6 +86,8 @@ public class FrmAgencia extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -201,7 +214,23 @@ public class FrmAgencia extends javax.swing.JFrame {
         panelAgencia.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         panelAgencia.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(785, 0, 50, 50));
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panelAgencia.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, -1, -1));
+
+        lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        panelAgencia.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 554, 450, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,11 +267,62 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblLogoMousePressed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       registrar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void registrar(){
+        try {
+            Agencia a = new Agencia();
+            a.setImagen(img2);
+            a.setNombre(txtNombre.getText().trim());
+            a.setEmail(txtEmail.getText().trim());
+            a.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            a.setPaginaWeb(txtPaginaWeb.getText().trim());
+            AgenciaBo abo = new AgenciaBo();
+            if (abo.registrarAgencia(a)) {
+                System.out.println("Exitooo");
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de teléfono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        }catch(Exception ex){
+            lblError.setText("Problemas al guardar, favor intente nuevamente.");
+        }
+    }
     public void setButtons(){
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
+    }
+    private void cargarFoto() {
+        if (agencias.size() > 0) {
+            lblFoto.setText("");
+            ImageIcon icon = new ImageIcon(agencias.get(index).getImagen());
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+            lblFoto.setIcon(icono);
+        }
+    }
+
+    private void siguiente() {
+        index++;
+        if (index >= agencias.size()) {
+            index = 0;
+        }
+        cargarFoto();
+    }
+    private void anterior(){
+        index--;
+        if (index < 0) {
+            index = agencias.size() - 1;
+        }
+        cargarFoto();
     }
     /**
      * @param args the command line arguments
@@ -285,12 +365,14 @@ public class FrmAgencia extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JFileChooser fcFoto;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JPanel panelAgencia;

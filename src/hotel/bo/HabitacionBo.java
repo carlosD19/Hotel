@@ -7,6 +7,7 @@ package hotel.bo;
 
 import hotel.dao.HabitacionDAO;
 import hotel.entities.Habitacion;
+import hotel.entities.MiError;
 
 /**
  *
@@ -15,6 +16,15 @@ import hotel.entities.Habitacion;
 public class HabitacionBo {
 
     public boolean registrarHabitacion(Habitacion h) {
+        if (h.getImagen() == null) {
+            throw new MiError("Favor seleccionar una imagen.");
+        }
+        if (h.getNumero()< 0) {
+            throw new MiError("Numero de habitacion requerido.");
+        }
+        if (h.getTamaño() < 0) {
+            throw new MiError("Tamaño de habitacion requerido.");
+        }
         HabitacionDAO hdao = new HabitacionDAO();
         return hdao.registrar(h);
     }

@@ -32,11 +32,11 @@ public class Habitacion {
         this.tipoHabitacion = tipoHabitacion;
     }
 
-    public Image getFoto() {
+    public Image getImagen() {
         return foto;
     }
 
-    public void setFoto(Image foto) {
+    public void setImagen(Image foto) {
         this.foto = foto;
     }
 

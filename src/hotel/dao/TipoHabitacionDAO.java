@@ -47,7 +47,7 @@ public class TipoHabitacionDAO {
             stmt.setBoolean(1, true);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                tipos.add(cargarUsuario(rs));
+                tipos.add(cargarTipoHabitacion(rs));
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -56,7 +56,7 @@ public class TipoHabitacionDAO {
         return tipos;
     }
 
-    private TipoHabitacion cargarUsuario(ResultSet rs) throws SQLException {
+    private TipoHabitacion cargarTipoHabitacion(ResultSet rs) throws SQLException {
         TipoHabitacion th = new TipoHabitacion();
         th.setId(rs.getInt("id"));
         th.setAireAcondicionado(rs.getBoolean("aire"));
