@@ -42,7 +42,6 @@ public class AgenciaDAO {
             stmt.setBinaryStream(6, fis);
             return stmt.executeUpdate() > 0;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             throw new MiError("Problemas al insertar agencia.");
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar agencias.");
@@ -60,7 +59,6 @@ public class AgenciaDAO {
                 agencias.add(cargarAgencia(rs));
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             throw new MiError("Problemas al cargar los usuarios");
         }
         return agencias;

@@ -158,14 +158,16 @@ public class FrmLogin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (bus) {
             try {
+                Usuario u;
                 UsuarioBo ubo = new UsuarioBo();
-                if (ubo.verificarLogin(txtUser.getText().trim(), String.valueOf(txtPass.getPassword()).trim())) {
-                    FrmPrincipal frm = new FrmPrincipal();
+                u = ubo.verificarLogin(txtUser.getText().trim(), String.valueOf(txtPass.getPassword()).trim());
+                if (u != null) {
+                    FrmPrincipal frm = new FrmPrincipal(u);
                     frm.setVisible(true);
                     frm.setLocationRelativeTo(null);
                     dispose();
                 } else {
-                    lblMensaje.setText("Intente nuevamenta.");
+                    lblMensaje.setText("Nombre de usuario o contraseña incorrectas.");
                 }
             } catch (MiError e) {
                 lblMensaje.setText(e.getMessage());
@@ -200,7 +202,7 @@ public class FrmLogin extends javax.swing.JFrame {
             c.setAsunto("Recuperar contraseña");
             c.setMensaje("Hola, " + u.getNombre() + " " + u.getApellido() + ":\n\n"
                     + "Recibimos una solicitud para recordar tu contraseña de Great Falls Hotel.\n\n"
-                    + "Contraseña: "+ u.getContrasena() +"\n\n");
+                    + "Contraseña: " + u.getContrasena() + "\n\n");
             c.setDestino(txtUser.getText().trim());
             Controlador co = new Controlador();
             if (co.enviarCorreo(c)) {

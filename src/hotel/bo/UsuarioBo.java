@@ -15,12 +15,12 @@ import hotel.entities.Usuario;
  */
 public class UsuarioBo {
 
-    public boolean verificarLogin(String userName, String pass) {
+    public Usuario verificarLogin(String userName, String pass) {
         if (userName.isEmpty()) {
-            throw new MiError("Nombre de Usuario Requerido.");
+            throw new MiError("Nombre de usuario requerido.");
         }
         if (pass.isEmpty()) {
-            throw new MiError("Contraseña Requerida.");
+            throw new MiError("Contraseña requerida.");
         }
         UsuarioDAO udao = new UsuarioDAO();
         return udao.verificarLogin(userName, pass);
@@ -28,28 +28,28 @@ public class UsuarioBo {
 
     public boolean verificarRegistro(Usuario u, String reContrasena, int funcion, String cedula) {
         if (u.getNombre().isEmpty()) {
-            throw new MiError("Nombre Completo Requerido.");
+            throw new MiError("Nombre completo requerido.");
         }
         if (u.getCedula().isEmpty()) {
-            throw new MiError("Cedula Requerida.");
+            throw new MiError("Cedula requerida.");
         }
         if (u.getEmail().isEmpty()) {
-            throw new MiError("Email Requerido.");
+            throw new MiError("Email requerido.");
         }
         if (u.getNacionalidad().isEmpty()) {
-            throw new MiError("Nacionalidad Requerida.");
+            throw new MiError("Nacionalidad requerida.");
         }
         if (u.getNombreUsu().isEmpty()) {
-            throw new MiError("Nombre de Usuario Requerido.");
+            throw new MiError("Nombre de usuario requerido.");
         }
         if (u.getPuesto().isEmpty()) {
-            throw new MiError("Nombre de Usuario Requerido.");
+            throw new MiError("Nombre de usuario requerido.");
         }
         if (u.getContrasena().isEmpty()) {
-            throw new MiError("Contraseña Requerida.");
+            throw new MiError("Contraseña requerida.");
         }
         if (reContrasena.isEmpty()) {
-            throw new MiError("Re-Contraseña Requerida.");
+            throw new MiError("Re-Contraseña requerida.");
         }
         if (!u.getContrasena().equals(reContrasena)) {
             throw new MiError("Las contraseñas no coinciden");

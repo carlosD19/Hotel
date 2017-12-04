@@ -37,6 +37,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private int idHabitacion;
     ArrayList<TipoHabitacion> tipo;
     ArrayList<Habitacion> habitaciones;
+
     /**
      * Creates new form FrmHabitacion
      */
@@ -388,6 +389,20 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxTipoActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+        switch (funcion) {
+            case 1:
+                registrar();
+                break;
+            case 2:
+                modificar();
+                break;
+            case 3:
+                eliminar();
+                break;
+        }
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
+    public void registrar() {
         try {
             Habitacion h = new Habitacion();
             h.setImagen(img2);
@@ -405,10 +420,18 @@ public class FrmHabitacion extends javax.swing.JFrame {
             lblError.setText("Formato de tamaño o número de habitación incorrecto.");
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             lblError.setText("Problemas al guardar, favor intente nuevamente.");
         }
-    }//GEN-LAST:event_btnAnadirActionPerformed
+    }
+
+    public void modificar() {
+
+    }
+
+    public void eliminar() {
+
+    }
 
     public void setButtons() {
         btnAnadir.setContentAreaFilled(false);
@@ -427,14 +450,15 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
-    public void setText(){
+    public void setText() {
         txtNumero.setText("");
         txtTamano.setText("");
         lblFotoHab.setIcon(null);
         lblFotoHab.setText("FOTO");
     }
+
     //Metodo para modificar / eliminar
-    public void cargarHabitaciones(){
+    public void cargarHabitaciones() {
         HabitacionBo hbo = new HabitacionBo();
         habitaciones = hbo.cargarHabitaciones();
         for (Habitacion h : habitaciones) {
@@ -445,6 +469,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
             System.out.println(h.getTipoHabitacion());
         }
     }
+
     /**
      * @param args the command line arguments
      */

@@ -63,8 +63,6 @@ public class FrmTipo extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -230,10 +228,6 @@ public class FrmTipo extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Modificar");
-
-        jButton5.setText("Eliminar");
-
         lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -251,11 +245,7 @@ public class FrmTipo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
                 .addComponent(jButton3)
-                .addGap(157, 157, 157)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(90, 90, 90))
+                .addGap(90, 567, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,10 +260,7 @@ public class FrmTipo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                 .addContainerGap())
@@ -301,8 +288,10 @@ public class FrmTipo extends javax.swing.JFrame {
                 registrar();
                 break;
             case 2:
+                modificar();
                 break;
             case 3:
+                eliminar();
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -341,6 +330,14 @@ public class FrmTipo extends javax.swing.JFrame {
         }
     }
 
+    public void modificar() {
+
+    }
+
+    public void eliminar() {
+
+    }
+
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -353,35 +350,35 @@ public class FrmTipo extends javax.swing.JFrame {
         ArrayList<TipoHabitacion> tipo = thbo.cargarTodo();
         String resultado = "";
         for (TipoHabitacion th : tipo) {
-                resultado += "---------------------TIPO HABITACIÓN-------------------\n";
-                resultado += "  Nombre: " + th.getNombre() + "\n";
-                resultado += "  Precio: ₡" + th.getPrecio() + "\n";
-                resultado += "------------------------DESCRIPCIÓN---------------------\n";
-                if (th.isAireAcondicionado()) {
-                    resultado += "  Aire Acondicionado." + "\n";
-                }
-                if (th.isBaño()) {
-                    resultado += "  Baño." + "\n";
-                }
-                if (th.isCajaFuerte()) {
-                    resultado += "  Caja Fuerte." + "\n";
-                }
-                if (th.isRefri()) {
-                    resultado += "  Refrigerador." + "\n";
-                }
-                if (th.isReloj()) {
-                    resultado += "  Reloj." + "\n";
-                }
-                if (th.isTelefono()) {
-                    resultado += "  Teléfono." + "\n";
-                }
-                if (th.isTv()) {
-                    resultado += "  Televisión." + "\n";
-                }
-                if (th.isVistaMar()) {
-                    resultado += "  Vista al mar." + "\n";
-                }
-                resultado += "\n";
+            resultado += "---------------------TIPO HABITACIÓN-------------------\n";
+            resultado += "  Nombre: " + th.getNombre() + "\n";
+            resultado += "  Precio: ₡" + th.getPrecio() + "\n";
+            resultado += "------------------------DESCRIPCIÓN---------------------\n";
+            if (th.isAireAcondicionado()) {
+                resultado += "  Aire Acondicionado." + "\n";
+            }
+            if (th.isBaño()) {
+                resultado += "  Baño." + "\n";
+            }
+            if (th.isCajaFuerte()) {
+                resultado += "  Caja Fuerte." + "\n";
+            }
+            if (th.isRefri()) {
+                resultado += "  Refrigerador." + "\n";
+            }
+            if (th.isReloj()) {
+                resultado += "  Reloj." + "\n";
+            }
+            if (th.isTelefono()) {
+                resultado += "  Teléfono." + "\n";
+            }
+            if (th.isTv()) {
+                resultado += "  Televisión." + "\n";
+            }
+            if (th.isVistaMar()) {
+                resultado += "  Vista al mar." + "\n";
+            }
+            resultado += "\n";
         }
         txtRegistrados.setText(resultado);
     }
@@ -446,8 +443,6 @@ public class FrmTipo extends javax.swing.JFrame {
     private javax.swing.JCheckBox chcTelefono;
     private javax.swing.JCheckBox chcVista;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;

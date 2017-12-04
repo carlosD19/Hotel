@@ -10,6 +10,7 @@ import hotel.entities.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,19 +18,29 @@ import java.sql.ResultSet;
  */
 public class UsuarioDAO {
 
-    public boolean verificarLogin(String userName, String pass) {
+    //revisar login
+    public Usuario verificarLogin(String userName, String pass) {
+        Usuario u = new Usuario();
         try (Connection con = Conexion.conexion()) {
-            String sql = "select * from usuario where nom_usuario = ? or email = ? or cedula = ? and contrasena = ? and puesto = 'Adm' or puesto = 'Recepcionista'";
+            String sql = "select * from usuario where (nom_usuario = ? or email = ? or cedula = ?) and (contrasena = ? and (puesto = 'Adm' or puesto = 'Recepcionista') and activo = ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, userName);
             stmt.setString(2, userName);
             stmt.setString(3, userName);
             stmt.setString(4, pass);
+            stmt.setBoolean(5, true);
             ResultSet rs = stmt.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+               u = cargarUsu(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            throw new MiError("Problemas al verificar usuario.");
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar los usuarios");
         }
+        return u;
     }
 
     public Usuario cargarDatos(String cedula) {
@@ -55,6 +66,20 @@ public class UsuarioDAO {
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar los usuarios");
         }
+        return u;
+    }
+
+    public Usuario cargarUsu(ResultSet rs) throws SQLException {
+        Usuario u = new Usuario();
+        u.setApellido(rs.getString("apellido"));
+        u.setCedula(rs.getString("cedula"));
+        u.setContrasena(rs.getString("contrasena"));
+        u.setEmail(rs.getString("email"));
+        u.setNacionalidad(rs.getString("nacionalidad"));
+        u.setNombre(rs.getString("nombre"));
+        u.setNombreUsu(rs.getString("nom_usuario"));
+        u.setPuesto(rs.getString("puesto"));
+        u.setTelefono(rs.getInt("telefono"));
         return u;
     }
 

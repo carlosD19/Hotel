@@ -44,6 +44,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         setButtons();
         u = u1;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
+        System.out.println(u.getNombre() + " " + u.getApellido());
     }
 
     /**
@@ -379,7 +380,8 @@ public class FrmSignIn extends javax.swing.JFrame {
                 break;
         }
     }
-    public void setTxt(){
+
+    public void setTxt() {
         txtApellido.setText("");
         txtCedula.setText("");
         txtContrasena.setText("");

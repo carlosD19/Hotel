@@ -43,6 +43,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         activoU = u;
+        bloquearBotones();
     }
 
     /**
@@ -65,9 +66,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         panelAgencia = new javax.swing.JPanel();
-        btnAnadir1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAnadirA = new javax.swing.JButton();
+        btnModificarA = new javax.swing.JButton();
+        btnEliminarA = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -80,6 +81,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        lblNomUsu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -175,11 +178,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         panelAgencia.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnAnadir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir2.png"))); // NOI18N
+        btnAnadirA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir2.png"))); // NOI18N
+        btnAnadirA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirAActionPerformed(evt);
+            }
+        });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificar2.png"))); // NOI18N
+        btnModificarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificar2.png"))); // NOI18N
+        btnModificarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarAActionPerformed(evt);
+            }
+        });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar2.png"))); // NOI18N
+        btnEliminarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar2.png"))); // NOI18N
+        btnEliminarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -201,14 +219,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addGroup(panelAgenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAnadir1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                    .addComponent(btnAnadirA, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(70, 70, 70)
                 .addGroup(panelAgenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(btnModificarA, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(panelAgenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(btnEliminarA, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(57, 57, 57))
         );
@@ -226,9 +244,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAgenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(btnAnadir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnModificarA, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(btnAnadirA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminarA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(189, Short.MAX_VALUE))
         );
 
@@ -334,6 +352,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Great Falls Hotel");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 500, 50));
+
+        lblNomUsu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNomUsu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel1.add(lblNomUsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, 220, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
         pack();
@@ -392,11 +420,47 @@ public class FrmPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnEliminarHActionPerformed
 
+    private void btnAnadirAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirAActionPerformed
+        FrmAgencia frm = new FrmAgencia(activoU, 1);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnAnadirAActionPerformed
+
+    private void btnModificarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAActionPerformed
+        FrmAgencia frm = new FrmAgencia(activoU, 2);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnModificarAActionPerformed
+
+    private void btnEliminarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAActionPerformed
+        FrmAgencia frm = new FrmAgencia(activoU, 3);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnEliminarAActionPerformed
+
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
+    }
+
+    public void bloquearBotones() {
+        lblNomUsu.setText(activoU.getNombre() + " " + activoU.getApellido() + ".");
+        if (!activoU.getPuesto().equals("Adm")) {
+            btnAnadirA.setEnabled(false);
+            btnEliminarA.setEnabled(false);
+            btnModificarA.setEnabled(false);
+            btnAgregarH.setEnabled(false);
+            btnModificarH.setEnabled(false);
+            btnEliminarH.setEnabled(false);
+            btnAgregarUsuario.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            btnModificar.setEnabled(false);
+        }
     }
 
     /**
@@ -437,15 +501,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarH;
     private javax.swing.JButton btnAgregarUsuario;
-    private javax.swing.JButton btnAnadir1;
+    private javax.swing.JButton btnAnadirA;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarA;
     private javax.swing.JButton btnEliminarH;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnModificarA;
     private javax.swing.JButton btnModificarH;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -454,11 +518,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblNomUsu;
     private javax.swing.JPanel panelAgencia;
     private javax.swing.JPanel panelUsuario;
     // End of variables declaration//GEN-END:variables
