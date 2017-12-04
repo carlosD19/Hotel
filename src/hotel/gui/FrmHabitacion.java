@@ -36,7 +36,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private int funcion;
     private int idHabitacion;
     ArrayList<TipoHabitacion> tipo;
-
+    ArrayList<Habitacion> habitaciones;
     /**
      * Creates new form FrmHabitacion
      */
@@ -47,8 +47,10 @@ public class FrmHabitacion extends javax.swing.JFrame {
         activoU = new Usuario();
         funcion = 1;
         img = new ImageIcon();
+        habitaciones = new ArrayList<>();
         tipo = new ArrayList<>();
         cargarTipos();
+//        cargarHabitaciones();
     }
 
     public FrmHabitacion(Usuario u, int num) {
@@ -77,14 +79,8 @@ public class FrmHabitacion extends javax.swing.JFrame {
         cbxNombre = new javax.swing.JComboBox<>();
         jPanel11 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        chcBano = new javax.swing.JCheckBox();
-        chcVista = new javax.swing.JCheckBox();
-        chcReloj = new javax.swing.JCheckBox();
-        chcTV = new javax.swing.JCheckBox();
-        chcRefri = new javax.swing.JCheckBox();
-        chcTelefono = new javax.swing.JCheckBox();
-        chcCaja = new javax.swing.JCheckBox();
-        chcAire = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         cbxTipo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -124,37 +120,10 @@ public class FrmHabitacion extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Descripción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
-        chcBano.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcBano.setText("Baño");
-        chcBano.setFocusable(false);
-
-        chcVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcVista.setText("Vista al mar");
-        chcVista.setFocusable(false);
-
-        chcReloj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcReloj.setText("Reloj");
-        chcReloj.setFocusable(false);
-
-        chcTV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcTV.setText("TV");
-        chcTV.setFocusable(false);
-
-        chcRefri.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcRefri.setText("Refrigerador");
-        chcRefri.setFocusable(false);
-
-        chcTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcTelefono.setText("Teléfono");
-        chcTelefono.setFocusable(false);
-
-        chcCaja.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcCaja.setText("Caja Fuerte");
-        chcCaja.setFocusable(false);
-
-        chcAire.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chcAire.setText("Aire Acondicionado");
-        chcAire.setFocusable(false);
+        txtDescripcion.setEditable(false);
+        txtDescripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtDescripcion.setTabSize(0);
+        jScrollPane1.setViewportView(txtDescripcion);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -162,39 +131,15 @@ public class FrmHabitacion extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(chcTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chcReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chcBano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chcTV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chcRefri, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chcVista, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chcAire)
-                    .addComponent(chcCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chcVista)
-                    .addComponent(chcBano))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chcRefri)
-                    .addComponent(chcReloj))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chcTelefono)
-                    .addComponent(chcAire))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chcTV)
-                    .addComponent(chcCaja))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -238,7 +183,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -246,8 +191,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 104, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -262,7 +208,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
 
         lblFotoHab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblFotoHab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFotoHab.setText("Foto");
+        lblFotoHab.setText("FOTO");
         lblFotoHab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblFotoHab.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -319,7 +265,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
                         .addComponent(cbxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtTamano))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
             .addGroup(panelHabitacionLayout.createSequentialGroup()
@@ -406,37 +352,39 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
-        setCbx();
+        txtDescripcion.setText("");
+        String resultado = "\n";
         for (TipoHabitacion th : tipo) {
             if (cbxTipo.getSelectedItem().toString().equals(th.getNombre())) {
                 idHabitacion = th.getId();
                 lblPrecio.setText("₡ " + String.valueOf(th.getPrecio()));
-                if (!th.isAireAcondicionado()) {
-                    chcAire.setSelected(false);
+                if (th.isAireAcondicionado()) {
+                    resultado += " - Aire Acondicionado.\n";
                 }
-                if (!th.isBaño()) {
-                    chcBano.setSelected(false);
+                if (th.isBaño()) {
+                    resultado += " - Baño.\n";
                 }
-                if (!th.isCajaFuerte()) {
-                    chcCaja.setSelected(false);
+                if (th.isCajaFuerte()) {
+                    resultado += " - Caja Fuerte.\n";
                 }
-                if (!th.isRefri()) {
-                    chcRefri.setSelected(false);
+                if (th.isRefri()) {
+                    resultado += " - Refrigerador.\n";
                 }
-                if (!th.isReloj()) {
-                    chcReloj.setSelected(false);
+                if (th.isReloj()) {
+                    resultado += " - Reloj.\n";
                 }
-                if (!th.isTelefono()) {
-                    chcTelefono.setSelected(false);
+                if (th.isTelefono()) {
+                    resultado += " - Teléfono.\n";
                 }
-                if (!th.isTv()) {
-                    chcTV.setSelected(false);
+                if (th.isTv()) {
+                    resultado += " - Televisión.\n";
                 }
-                if (!th.isVistaMar()) {
-                    chcVista.setSelected(false);
+                if (th.isVistaMar()) {
+                    resultado += " - Vista al mar.\n";
                 }
             }
         }
+        txtDescripcion.setText(resultado);
     }//GEN-LAST:event_cbxTipoActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
@@ -450,7 +398,8 @@ public class FrmHabitacion extends javax.swing.JFrame {
             h.setNombre(cbxNombre.getSelectedItem().toString());
             HabitacionBo hbo = new HabitacionBo();
             if (hbo.registrarHabitacion(h)) {
-                System.out.println("Exitooo");
+                lblError.setText("Habitación registrada con éxito.");
+                setText();
             }
         } catch (NumberFormatException ex) {
             lblError.setText("Formato de tamaño o número de habitación incorrecto.");
@@ -470,17 +419,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
         btnRegresar.setBorder(null);
     }
 
-    public void setCbx() {
-        chcAire.setSelected(true);
-        chcBano.setSelected(true);
-        chcCaja.setSelected(true);
-        chcRefri.setSelected(true);
-        chcReloj.setSelected(true);
-        chcTV.setSelected(true);
-        chcTelefono.setSelected(true);
-        chcVista.setSelected(true);
-    }
-
     public void cargarTipos() {
         TipoHabitacionBo thbo = new TipoHabitacionBo();
         tipo = thbo.cargarTodo();
@@ -489,6 +427,24 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    public void setText(){
+        txtNumero.setText("");
+        txtTamano.setText("");
+        lblFotoHab.setIcon(null);
+        lblFotoHab.setText("FOTO");
+    }
+    //Metodo para modificar / eliminar
+    public void cargarHabitaciones(){
+        HabitacionBo hbo = new HabitacionBo();
+        habitaciones = hbo.cargarHabitaciones();
+        for (Habitacion h : habitaciones) {
+            System.out.println(h.getEstado());
+            System.out.println(h.getNombre());
+            System.out.println(h.getNumero());
+            System.out.println(h.getTamaño());
+            System.out.println(h.getTipoHabitacion());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -531,14 +487,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxNombre;
     private javax.swing.JComboBox<String> cbxTipo;
-    private javax.swing.JCheckBox chcAire;
-    private javax.swing.JCheckBox chcBano;
-    private javax.swing.JCheckBox chcCaja;
-    private javax.swing.JCheckBox chcRefri;
-    private javax.swing.JCheckBox chcReloj;
-    private javax.swing.JCheckBox chcTV;
-    private javax.swing.JCheckBox chcTelefono;
-    private javax.swing.JCheckBox chcVista;
     private javax.swing.JFileChooser fcFoto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -549,10 +497,12 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFotoHab;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JPanel panelHabitacion;
+    private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtTamano;
     // End of variables declaration//GEN-END:variables

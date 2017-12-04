@@ -19,6 +19,7 @@ public class Habitacion {
     private String estado;
     private float tamaño;
     private int tipoHabitacion;
+    private int id;
 
     public Habitacion() {
     }
@@ -30,6 +31,14 @@ public class Habitacion {
         this.estado = estado;
         this.tamaño = tamaño;
         this.tipoHabitacion = tipoHabitacion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Image getImagen() {

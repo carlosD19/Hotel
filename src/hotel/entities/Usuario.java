@@ -14,6 +14,7 @@ public class Usuario extends Persona{
     private String nombreUsu;
     private String contrasena;
     private String puesto;
+    private int id;
 
     public Usuario() {
     }
@@ -25,8 +26,14 @@ public class Usuario extends Persona{
         this.puesto = puesto;
     }
 
-  
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNombreUsu() {
         return nombreUsu;
     }

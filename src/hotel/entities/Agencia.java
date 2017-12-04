@@ -18,6 +18,7 @@ public class Agencia {
     private String email;
     private String paginaWeb;
     private Image imagen;
+    private int id;
 
     public Agencia() {
     }
@@ -28,6 +29,14 @@ public class Agencia {
         this.email = email;
         this.paginaWeb = paginaWeb;
         this.imagen = imagen;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Image getImagen() {

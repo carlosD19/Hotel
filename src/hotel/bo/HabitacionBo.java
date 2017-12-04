@@ -8,6 +8,7 @@ package hotel.bo;
 import hotel.dao.HabitacionDAO;
 import hotel.entities.Habitacion;
 import hotel.entities.MiError;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +28,10 @@ public class HabitacionBo {
         }
         HabitacionDAO hdao = new HabitacionDAO();
         return hdao.registrar(h);
+    }
+    public ArrayList<Habitacion> cargarHabitaciones(){
+        HabitacionDAO hdao = new HabitacionDAO();
+        return hdao.cargarHabitacion();
     }
     
 }

@@ -7,14 +7,18 @@ package hotel.dao;
 
 import hotel.entities.Habitacion;
 import hotel.entities.MiError;
+import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
@@ -43,6 +47,35 @@ public class HabitacionDAO {
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar Habitaciones.");
         }
+    }
+    public ArrayList<Habitacion> cargarHabitacion() {
+        ArrayList<Habitacion> habitaciones = new ArrayList<>();
+        try (Connection con = Conexion.conexion()) {
+            String sql = "select * from habitacion where activo = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, true);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                habitaciones.add(cargarHabitacion(rs));
+            }
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar las habitaciones.");
+        }
+        return habitaciones;
+    }
+
+    private Habitacion cargarHabitacion(ResultSet rs) throws SQLException, IOException {
+        Habitacion h = new Habitacion();
+        h.setEstado(rs.getString("estado"));
+        h.setNombre(rs.getString("nombre"));
+        h.setNumero(rs.getInt("numero"));
+        h.setTamaño(rs.getFloat("tamano"));
+        h.setTipoHabitacion(rs.getInt("id_tipo"));
+        Image imgdb = null;
+        InputStream fis = rs.getBinaryStream("foto");
+        imgdb = ImageIO.read(fis);
+        h.setImagen(imgdb);
+        return h;
     }
 
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package hotel.gui;
+
 import hotel.bo.AgenciaBo;
 import hotel.entities.Agencia;
 import hotel.entities.MiError;
@@ -20,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author pc
@@ -29,12 +31,12 @@ public class FrmAgencia extends javax.swing.JFrame {
     private Usuario activoU;
     private Image img2;
     ImageIcon img;
-    private Image img3;
-    ImageIcon img4;
     private int funcion;
     private ArrayList<Agencia> agencias;
     private int index;
     private AgenciaBo bo;
+    private boolean bus;
+
     /**
      * Creates new form FrmAgencia
      */
@@ -49,13 +51,14 @@ public class FrmAgencia extends javax.swing.JFrame {
         funcion = 1;
         cargarFoto();
     }
-    public FrmAgencia(Usuario u) {
+
+    public FrmAgencia(Usuario u, int num) {
         initComponents();
         setLocationRelativeTo(null);
         setButtons();
         activoU = new Usuario();
         img = new ImageIcon();
-        funcion = 1;
+        funcion = num;
         activoU = u;
     }
 
@@ -98,26 +101,55 @@ public class FrmAgencia extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)), "Agencia de Viaje", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(255, 102, 0))); // NOI18N
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nombre de Agencia:");
+        jPanel8.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 183, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtNombreMousePressed(evt);
+            }
+        });
+        jPanel8.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 206, 235, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Email:");
+        jPanel8.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 238, -1, -1));
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtEmailMousePressed(evt);
+            }
+        });
+        jPanel8.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 261, 235, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Telefono:");
+        jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 293, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtTelefonoMousePressed(evt);
+            }
+        });
+        jPanel8.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 316, 235, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Página Web:");
+        jPanel8.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 348, -1, -1));
 
         txtPaginaWeb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPaginaWeb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtPaginaWebMousePressed(evt);
+            }
+        });
+        jPanel8.add(txtPaginaWeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 371, 235, -1));
 
         lblLogo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -128,85 +160,32 @@ public class FrmAgencia extends javax.swing.JFrame {
                 lblLogoMousePressed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre)
-                    .addComponent(txtEmail)
-                    .addComponent(txtTelefono)
-                    .addComponent(txtPaginaWeb)
-                    .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
-                .addContainerGap(48, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPaginaWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
+        jPanel8.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 35, 235, 142));
 
         panelAgencia.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 340, 420));
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)), "Agencias Registradas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(255, 102, 0))); // NOI18N
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras_1.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 288, -1, -1));
 
         btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/siguiente.png"))); // NOI18N
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 288, -1, -1));
 
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(btnAtras)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addComponent(btnSiguiente)))
-                .addGap(41, 41, 41))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAtras)
-                    .addComponent(btnSiguiente))
-                .addGap(22, 22, 22))
-        );
+        jPanel9.add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 35, 312, 227));
 
         panelAgencia.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 400, 420));
 
@@ -249,6 +228,7 @@ public class FrmAgencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLogoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoMousePressed
+        lblError.setText("");
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Image", "jpg");
         fcFoto.setFileFilter(filtro);
         int option = fcFoto.showOpenDialog(this);
@@ -272,10 +252,42 @@ public class FrmAgencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       registrar();
+        switch (funcion) {
+            case 1:
+                registrar();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void registrar(){
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        siguiente();
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        anterior();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void txtNombreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMousePressed
+        lblError.setText("");
+    }//GEN-LAST:event_txtNombreMousePressed
+
+    private void txtEmailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEmailMousePressed
+        lblError.setText("");
+    }//GEN-LAST:event_txtEmailMousePressed
+
+    private void txtTelefonoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoMousePressed
+        lblError.setText("");
+    }//GEN-LAST:event_txtTelefonoMousePressed
+
+    private void txtPaginaWebMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPaginaWebMousePressed
+        lblError.setText("");
+    }//GEN-LAST:event_txtPaginaWebMousePressed
+
+    public void registrar() {
         try {
             Agencia a = new Agencia();
             a.setImagen(img2);
@@ -285,28 +297,48 @@ public class FrmAgencia extends javax.swing.JFrame {
             a.setPaginaWeb(txtPaginaWeb.getText().trim());
             AgenciaBo abo = new AgenciaBo();
             if (abo.registrarAgencia(a)) {
-                System.out.println("Exitooo");
+                setText();
+                lblError.setText("Agencia registrada con éxito.");
+                cargarDatos();
             }
         } catch (NumberFormatException ex) {
             lblError.setText("Formato de teléfono incorrecto.");
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             lblError.setText("Problemas al guardar, favor intente nuevamente.");
         }
     }
-    public void setButtons(){
+
+    public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
     }
+
+    public void cargarDatos() {
+        agencias.clear();
+        index = 0;
+        agencias = bo.cargarImagenes();
+        cargarFoto();
+    }
+
     private void cargarFoto() {
         if (agencias.size() > 0) {
             lblFoto.setText("");
             ImageIcon icon = new ImageIcon(agencias.get(index).getImagen());
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
             lblFoto.setIcon(icono);
+            if (bus) {
+                Icon icono2 = new ImageIcon(icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
+                lblLogo.setText("");
+                lblLogo.setIcon(icono2);
+                txtEmail.setText(agencias.get(index).getEmail());
+                txtNombre.setText(agencias.get(index).getNombre());
+                txtPaginaWeb.setText(agencias.get(index).getPaginaWeb());
+                txtTelefono.setText(String.valueOf(agencias.get(index).getTelefono()));
+            }
         }
     }
 
@@ -317,13 +349,24 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
         cargarFoto();
     }
-    private void anterior(){
+
+    private void anterior() {
         index--;
         if (index < 0) {
             index = agencias.size() - 1;
         }
         cargarFoto();
     }
+
+    public void setText() {
+        txtEmail.setText("");
+        txtNombre.setText("");
+        txtPaginaWeb.setText("");
+        txtTelefono.setText("");
+        lblLogo.setIcon(null);
+        lblLogo.setText("LOGO");
+    }
+
     /**
      * @param args the command line arguments
      */

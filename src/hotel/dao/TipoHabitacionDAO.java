@@ -51,7 +51,7 @@ public class TipoHabitacionDAO {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            throw new MiError("Problemas al cargar los usuarios");
+            throw new MiError("Problemas al cargar los tipos de habitación.");
         }
         return tipos;
     }

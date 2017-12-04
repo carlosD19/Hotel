@@ -8,9 +8,11 @@ package hotel.dao;
 import hotel.entities.Agencia;
 import hotel.entities.MiError;
 import hotel.entities.TipoHabitacion;
+import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,26 +29,26 @@ public class AgenciaDAO {
 
     public boolean registrar(Agencia a) {
         try (Connection con = Conexion.conexion()) {
-            String sql = "insert into agencia(nombre,email,pagina,logo,telefono) values(?,?,?,?,?)";
-            PreparedStatement stmt = con.prepareCall(sql);
+            String sql = "insert into agencia(nombre,email,pagina,telefono,activo,logo) values(?,?,?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, a.getNombre());
             stmt.setString(2, a.getEmail());
             stmt.setString(3, a.getPaginaWeb());
-            
+            stmt.setInt(4, a.getTelefono());
+            stmt.setBoolean(5, true);
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write((RenderedImage) a.getImagen(), "jpg", os);
             InputStream fis = new ByteArrayInputStream(os.toByteArray());
-            
-            stmt.setBinaryStream(4, fis);
-            
-            stmt.setInt(5, a.getTelefono());
-            
+            stmt.setBinaryStream(6, fis);
             return stmt.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new MiError("Problemas al insertar agencia.");
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar agencias.");
         }
     }
-    
+
     public ArrayList<Agencia> cargarTodo() {
         ArrayList<Agencia> agencias = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -63,16 +65,18 @@ public class AgenciaDAO {
         }
         return agencias;
     }
-    
-    private Agencia cargarAgencia(ResultSet rs) throws SQLException {
+
+    private Agencia cargarAgencia(ResultSet rs) throws SQLException, IOException {
         Agencia a = new Agencia();
         a.setEmail(rs.getString("email"));
         a.setNombre(rs.getString("nombre"));
         a.setPaginaWeb(rs.getString("pagina"));
         a.setTelefono(rs.getInt("telefono"));
-        
+        Image imgdb = null;
+        InputStream fis = rs.getBinaryStream("logo");
+        imgdb = ImageIO.read(fis);
+        a.setImagen(imgdb);
         return a;
     }
 
-    
 }
