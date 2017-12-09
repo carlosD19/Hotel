@@ -21,7 +21,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     private Border line;
     private Usuario u;
     private int funcion;
-    private String cedula;
+    private Usuario uBuscado;
 
     /**
      * Creates new form FrmSignIn
@@ -44,7 +44,6 @@ public class FrmSignIn extends javax.swing.JFrame {
         setButtons();
         u = u1;
         line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
-        System.out.println(u.getNombre() + " " + u.getApellido());
     }
 
     /**
@@ -252,13 +251,12 @@ public class FrmSignIn extends javax.swing.JFrame {
     private void lblBuscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMousePressed
         try {
             if (!txtCedula.getText().trim().equals("")) {
-                UsuarioBo udao = new UsuarioBo();
-                Usuario u = udao.cargarUsuario(txtCedula.getText().trim());
-                if (!(u == null)) {
-                    cargarDatos(u);
-                    cedula = u.getCedula();
+                UsuarioBo ubo = new UsuarioBo();
+                uBuscado = ubo.cargarUsuario(txtCedula.getText().trim());
+                if (!(uBuscado == null)) {
+                    cargarDatos(uBuscado);
                 } else {
-                    lblError.setText("El Usuario no Existe.");
+                    lblError.setText("El Usuario no éxiste.");
                 }
             }
         } catch (MiError ex) {
@@ -279,8 +277,7 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setTelefono(Integer.valueOf(txtTelefono.getText()));
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
-
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, cedula)) {
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, 0)) {
                 setTxt();
                 lblError.setText("Usuario Registrado con Éxito.");
             } else {
@@ -308,7 +305,7 @@ public class FrmSignIn extends javax.swing.JFrame {
             u.setTelefono(Integer.valueOf(txtTelefono.getText()));
             u.setApellido(txtApellido.getText().trim());
             UsuarioBo ubo = new UsuarioBo();
-            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, cedula)) {
+            if (ubo.verificarRegistro(u, String.valueOf(txtReContrasena.getPassword()), funcion, uBuscado.getId())) {
                 setTxt();
                 lblError.setText("Usuario Actualizado con Éxito.");
             } else {
@@ -326,7 +323,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     public void eliminar() {
         try {
             UsuarioBo ubo = new UsuarioBo();
-            if (ubo.eliminarUsuario(txtCedula.getText().trim())) {
+            if (ubo.eliminarUsuario(uBuscado.getId())) {
                 setTxt();
                 lblError.setText("Usuario Eliminado.");
             } else {
@@ -338,17 +335,17 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
-    public void cargarDatos(Usuario u) {
-        txtApellido.setText(u.getApellido());
-        txtCedula.setText(u.getCedula());
-        txtContrasena.setText(u.getContrasena());
-        txtEmail.setText(u.getEmail());
-        txtNacionalidad.setText(u.getNacionalidad());
-        txtNombre.setText(u.getNombre());
-        txtReContrasena.setText(u.getContrasena());
-        txtTelefono.setText(String.valueOf(u.getTelefono()));
-        txtUserName.setText(u.getNombreUsu());
-        if (u.getPuesto().equals("Recepcionista")) {
+    public void cargarDatos(Usuario u2) {
+        txtApellido.setText(u2.getApellido());
+        txtCedula.setText(u2.getCedula());
+        txtContrasena.setText(u2.getContrasena());
+        txtEmail.setText(u2.getEmail());
+        txtNacionalidad.setText(u2.getNacionalidad());
+        txtNombre.setText(u2.getNombre());
+        txtReContrasena.setText(u2.getContrasena());
+        txtTelefono.setText(String.valueOf(u2.getTelefono()));
+        txtUserName.setText(u2.getNombreUsu());
+        if (u2.getPuesto().equals("Recepcionista")) {
             cbxPuesto.setSelectedIndex(0);
         } else {
             cbxPuesto.setSelectedIndex(1);

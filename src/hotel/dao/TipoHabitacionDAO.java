@@ -73,4 +73,38 @@ public class TipoHabitacionDAO {
         return th;
     }
 
+    public boolean modificar(TipoHabitacion th, int id) {
+        try (Connection con = Conexion.conexion()) {
+            String sql = "update tipo_habitacion set precio = ?, nombre = ?, bano= ?, tv = ?, aire = ?, refri= ?, reloj = ?, vista_mar = ?, telefono = ?, caja_fuerte = ?"
+                    + "where id = ?";
+            PreparedStatement stmt = con.prepareCall(sql);
+            stmt.setInt(1, th.getPrecio());
+            stmt.setString(2, th.getNombre());
+            stmt.setBoolean(3, th.isBaño());
+            stmt.setBoolean(4, th.isTv());
+            stmt.setBoolean(5, th.isAireAcondicionado());
+            stmt.setBoolean(6, th.isRefri());
+            stmt.setBoolean(7, th.isReloj());
+            stmt.setBoolean(8, th.isVistaMar());
+            stmt.setBoolean(9, th.isTelefono());
+            stmt.setBoolean(10, th.isCajaFuerte());
+            stmt.setInt(11, id);
+            return stmt.executeUpdate() > 0;
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar tipo de habitaciones.");
+        }
+    }
+
+    public boolean eliminar(int id) {
+        try (Connection con = Conexion.conexion()) {
+            String sql = "update tipo_habitacion set activo = ? where id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, false);
+            stmt.setInt(2, id);
+            return stmt.executeUpdate() > 0;
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar los tipo de habitaciones.");
+        }
+    }
+
 }

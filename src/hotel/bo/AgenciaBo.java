@@ -16,27 +16,33 @@ import java.util.ArrayList;
  */
 public class AgenciaBo {
 
-    public boolean registrarAgencia(Agencia a) {
-        if(a.getNombre().isEmpty()){
+    public boolean registrarAgencia(Agencia a, int f, int id) {
+        if (a.getNombre().isEmpty()) {
             throw new MiError("Nombre requerido.");
         }
-        if(a.getEmail().isEmpty()){
+        if (a.getEmail().isEmpty()) {
             throw new MiError("Email requerido.");
         }
-        if(a.getPaginaWeb().isEmpty()){
+        if (a.getPaginaWeb().isEmpty()) {
             throw new MiError("Pagina Web requerida.");
         }
         if (a.getImagen() == null) {
             throw new MiError("Favor seleccionar una imagen.");
         }
         AgenciaDAO adao = new AgenciaDAO();
+        if (f == 2) {
+            return adao.modificar(a, id);
+        }
         return adao.registrar(a);
     }
-    
+
     public ArrayList<Agencia> cargarImagenes() {
         AgenciaDAO adao = new AgenciaDAO();
-        return  adao.cargarTodo();
+        return adao.cargarTodo();
+    }
+    public boolean eliminarAgencia(int id) {
+        AgenciaDAO udao = new AgenciaDAO();
+        return udao.eliminar(id);
     }
 
-    
 }

@@ -112,6 +112,11 @@ public class FrmLogin extends javax.swing.JFrame {
                 txtPassMousePressed(evt);
             }
         });
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPassKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 200, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.jpg"))); // NOI18N
@@ -156,6 +161,20 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        enter();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPassMousePressed
+        lblMensaje.setText("");
+    }//GEN-LAST:event_txtPassMousePressed
+
+    private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
+        if(evt.getKeyCode() == 10){
+            enter();
+        }
+    }//GEN-LAST:event_txtPassKeyPressed
+
+    public void enter(){
         if (bus) {
             try {
                 Usuario u;
@@ -186,12 +205,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 lblMensaje.setText(e.getMessage());
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPassMousePressed
-        lblMensaje.setText("");
-    }//GEN-LAST:event_txtPassMousePressed
-
+    }
     public void enviarCorreo(Usuario u) {
         try {
             Correo c = new Correo();

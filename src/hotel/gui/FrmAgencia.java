@@ -55,11 +55,15 @@ public class FrmAgencia extends javax.swing.JFrame {
     public FrmAgencia(Usuario u, int num) {
         initComponents();
         setLocationRelativeTo(null);
-        setButtons();
-        activoU = new Usuario();
+        bo = new AgenciaBo();
+        agencias = bo.cargarImagenes();
         img = new ImageIcon();
         funcion = num;
         activoU = u;
+        bus = true;
+        setIcon();
+        setButtons();
+        cargarFoto();
     }
 
     /**
@@ -89,7 +93,7 @@ public class FrmAgencia extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnPrincipal = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -190,6 +194,11 @@ public class FrmAgencia extends javax.swing.JFrame {
         panelAgencia.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 400, 420));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         panelAgencia.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
@@ -200,13 +209,13 @@ public class FrmAgencia extends javax.swing.JFrame {
         });
         panelAgencia.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(785, 0, 50, 50));
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir.png"))); // NOI18N
+        btnPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPrincipalActionPerformed(evt);
             }
         });
-        panelAgencia.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, -1, -1));
+        panelAgencia.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, -1, -1));
 
         lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         panelAgencia.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 554, 450, 20));
@@ -251,17 +260,19 @@ public class FrmAgencia extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
         switch (funcion) {
             case 1:
                 registrar();
                 break;
             case 2:
+                modificar();
                 break;
             case 3:
+                eliminar();
                 break;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnPrincipalActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         siguiente();
@@ -287,6 +298,13 @@ public class FrmAgencia extends javax.swing.JFrame {
         lblError.setText("");
     }//GEN-LAST:event_txtPaginaWebMousePressed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        FrmPrincipal frm = new FrmPrincipal(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     public void registrar() {
         try {
             Agencia a = new Agencia();
@@ -296,7 +314,7 @@ public class FrmAgencia extends javax.swing.JFrame {
             a.setTelefono(Integer.valueOf(txtTelefono.getText()));
             a.setPaginaWeb(txtPaginaWeb.getText().trim());
             AgenciaBo abo = new AgenciaBo();
-            if (abo.registrarAgencia(a)) {
+            if (abo.registrarAgencia(a, funcion, 0)) {
                 setText();
                 lblError.setText("Agencia registrada con éxito.");
                 cargarDatos();
@@ -310,11 +328,64 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
     }
 
+    public void modificar() {
+        try {
+            Agencia a = new Agencia();
+            a.setImagen(img2);
+            a.setNombre(txtNombre.getText().trim());
+            a.setEmail(txtEmail.getText().trim());
+            a.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            a.setPaginaWeb(txtPaginaWeb.getText().trim());
+            AgenciaBo abo = new AgenciaBo();
+            if (abo.registrarAgencia(a, funcion, agencias.get(index).getId())) {
+                setText();
+                lblError.setText("Agencia modificada con éxito.");
+                cargarDatos();
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de teléfono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al modificar, favor intente nuevamente.");
+        }
+    }
+
+    public void eliminar() {
+        try {
+            AgenciaBo abo = new AgenciaBo();
+            if (abo.eliminarAgencia(agencias.get(index).getId())) {
+                setText();
+                cargarDatos();
+                lblError.setText("Agencia Eliminada.");
+            } else {
+                lblError.setText("Intente Nuevamente.");
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problema al cargar agencias");
+        }
+    }
+
+    public void setIcon() {
+        switch (funcion) {
+            case 2:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificarREA.png")));
+                break;
+            case 3:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminarREA.png")));
+                break;
+        }
+    }
+
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
+        btnPrincipal.setContentAreaFilled(false);
+        btnPrincipal.setBorder(null);
     }
 
     public void cargarDatos() {
@@ -325,6 +396,7 @@ public class FrmAgencia extends javax.swing.JFrame {
     }
 
     private void cargarFoto() {
+        lblFoto.setIcon(null);
         if (agencias.size() > 0) {
             lblFoto.setText("");
             ImageIcon icon = new ImageIcon(agencias.get(index).getImagen());
@@ -405,10 +477,10 @@ public class FrmAgencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JFileChooser fcFoto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

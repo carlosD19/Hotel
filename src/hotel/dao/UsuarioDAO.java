@@ -31,8 +31,8 @@ public class UsuarioDAO {
             stmt.setBoolean(5, true);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-               u = cargarUsu(rs);
-            }else{
+                u = cargarUsu(rs);
+            } else {
                 return null;
             }
         } catch (SQLException ex) {
@@ -46,9 +46,12 @@ public class UsuarioDAO {
     public Usuario cargarDatos(String cedula) {
         Usuario u = new Usuario();
         try (Connection con = Conexion.conexion()) {
-            String sql = "select * from usuario where cedula = ? and puesto = 'Recepcionista' or puesto = 'Mucama'";
+            String sql = "select * from usuario where cedula = ? and (puesto = ? or puesto = ?) and activo = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, cedula);
+            stmt.setString(2, "Recepcionista");
+            stmt.setString(3, "Mucama");
+            stmt.setBoolean(4, true);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 u.setApellido(rs.getString("apellido"));
@@ -60,6 +63,7 @@ public class UsuarioDAO {
                 u.setNombreUsu(rs.getString("nom_usuario"));
                 u.setPuesto(rs.getString("puesto"));
                 u.setTelefono(rs.getInt("telefono"));
+                u.setId(rs.getInt("id"));
             } else {
                 return null;
             }
@@ -102,22 +106,21 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean eliminarUsu(String cedula) {
+    public boolean eliminarUsu(int id) {
         try (Connection con = Conexion.conexion()) {
-            String sql = "update usuario set activo = false where cedula = ?";
+            String sql = "update usuario set activo = false where id = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, cedula);
+            stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             throw new MiError("Problemas al cargar los usuarios");
         }
     }
 
-    public boolean modificarUsu(Usuario u, String cedula) {
+    public boolean modificarUsu(Usuario u, int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update usuario SET nombre = ?,apellido = ?,cedula = ?,nacionalidad = ?,telefono = ?,email = ?,contrasena = ?,nom_usuario = ?,puesto = ?"
-                    + " where cedula = ?";
+                    + " where id = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, u.getNombre());
             stmt.setString(2, u.getApellido());
@@ -128,7 +131,7 @@ public class UsuarioDAO {
             stmt.setString(7, u.getContrasena());
             stmt.setString(8, u.getNombreUsu());
             stmt.setString(9, u.getPuesto());
-            stmt.setString(10, cedula);
+            stmt.setInt(10, id);
             return stmt.executeUpdate() > 0;
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar los usuarios");

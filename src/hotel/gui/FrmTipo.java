@@ -5,6 +5,7 @@
  */
 package hotel.gui;
 
+import com.sun.org.glassfish.external.statistics.TimeStatistic;
 import hotel.bo.TipoHabitacionBo;
 import hotel.bo.UsuarioBo;
 import hotel.dao.TipoHabitacionDAO;
@@ -21,7 +22,8 @@ public class FrmTipo extends javax.swing.JFrame {
 
     private int funcion;
     private Usuario activoU;
-
+    ArrayList<TipoHabitacion> tipo;
+     private int id;
     /**
      * Creates new form FrmTipo
      */
@@ -31,6 +33,16 @@ public class FrmTipo extends javax.swing.JFrame {
         setButtons();
         funcion = 1;
         activoU = new Usuario();
+        cargarTipos();
+    }
+
+    public FrmTipo(Usuario u, int num) {
+        initComponents();
+        setLocationRelativeTo(null);
+        funcion = num;
+        activoU = u;
+        setIcon();
+        setButtons();
         cargarTipos();
     }
 
@@ -62,7 +74,7 @@ public class FrmTipo extends javax.swing.JFrame {
         txtRegistrados = new javax.swing.JTextArea();
         btnExit = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnPrincipal = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,12 +171,17 @@ public class FrmTipo extends javax.swing.JFrame {
         );
 
         txtTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTipoKeyPressed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Precio por noche:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Tipo:");
+        jLabel1.setText("Nombre:");
 
         txtPrecio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -220,11 +237,16 @@ public class FrmTipo extends javax.swing.JFrame {
         });
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
-
-        jButton3.setText("Agregar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+        btnPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrincipalActionPerformed(evt);
             }
         });
 
@@ -239,16 +261,18 @@ public class FrmTipo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jButton3)
-                .addGap(90, 567, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108)
+                .addComponent(btnPrincipal)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -259,10 +283,10 @@ public class FrmTipo extends javax.swing.JFrame {
                     .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrincipal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -282,7 +306,7 @@ public class FrmTipo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
         switch (funcion) {
             case 1:
                 registrar();
@@ -294,11 +318,26 @@ public class FrmTipo extends javax.swing.JFrame {
                 eliminar();
                 break;
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnPrincipalActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void txtTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoKeyPressed
+        if (funcion == 2 || funcion == 3) {
+            if (evt.getKeyCode() == 10) {
+                buscarTipo();
+            }
+        }
+    }//GEN-LAST:event_txtTipoKeyPressed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        FrmPrincipal frm = new FrmPrincipal(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     public void registrar() {
         try {
@@ -314,7 +353,7 @@ public class FrmTipo extends javax.swing.JFrame {
             th.setNombre(txtTipo.getText().trim());
             th.setPrecio(Integer.valueOf(txtPrecio.getText().trim()));
             TipoHabitacionBo thbo = new TipoHabitacionBo();
-            if (thbo.verificarRegistro(th)) {
+            if (thbo.verificarRegistro(th, funcion, 0)) {
                 lblError.setText("Tipo de Habitación Registrada con Éxito.");
                 setTxt();
                 cargarTipos();
@@ -326,16 +365,89 @@ public class FrmTipo extends javax.swing.JFrame {
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
         } catch (Exception ex) {
-            System.out.println("Error!!!");
+            lblError.setText("Problemas al cargar tipo de habitaciones.");
         }
     }
 
     public void modificar() {
-
+        try {
+            TipoHabitacion th = new TipoHabitacion();
+            th.setAireAcondicionado(chcAire.isSelected());
+            th.setBaño(chcBano.isSelected());
+            th.setCajaFuerte(chcCaja.isSelected());
+            th.setRefri(chcRefri.isSelected());
+            th.setReloj(chcReloj.isSelected());
+            th.setTelefono(chcTelefono.isSelected());
+            th.setTv(chcTV.isSelected());
+            th.setVistaMar(chcVista.isSelected());
+            th.setNombre(txtTipo.getText().trim());
+            th.setPrecio(Integer.valueOf(txtPrecio.getText().trim()));
+            TipoHabitacionBo thbo = new TipoHabitacionBo();
+            if (thbo.verificarRegistro(th, funcion, id)) {
+                lblError.setText("Tipo de habitación modificada con éxito.");
+                setTxt();
+                cargarTipos();
+            } else {
+                lblError.setText("Intente Nuevamenta.");
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de precio incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al cargar tipo de habitaciones.");
+        }
     }
 
     public void eliminar() {
+        try {
+            TipoHabitacionBo abo = new TipoHabitacionBo();
+            if (abo.eliminarTipo(id)) {
+                setTxt();
+                cargarTipos();
+                lblError.setText("Tipo de habitación Eliminada.");
+            } else {
+                lblError.setText("Intente Nuevamente.");
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problema al cargar tipo de habitación");
+        }
+    }
 
+    public void buscarTipo() {
+        for (TipoHabitacion th : tipo) {
+            if (th.getNombre().equals(txtTipo.getText())) {
+                txtPrecio.setText(String.valueOf(th.getPrecio()));
+                txtTipo.setText(th.getNombre());
+                if (!th.isAireAcondicionado()) {
+                    chcAire.setSelected(false);
+                }
+                if (!th.isBaño()) {
+                    chcBano.setSelected(false);
+                }
+                if (!th.isCajaFuerte()) {
+                    chcCaja.setSelected(false);
+                }
+                if (!th.isRefri()) {
+                    chcRefri.setSelected(false);
+                }
+                if (!th.isReloj()) {
+                    chcReloj.setSelected(false);
+                }
+                if (!th.isTv()) {
+                    chcTV.setSelected(false);
+                }
+                if (!th.isTelefono()) {
+                    chcTelefono.setSelected(false);
+                }
+                if (!th.isVistaMar()) {
+                    chcVista.setSelected(false);
+                }
+                id = th.getId();
+            }
+        }
     }
 
     public void setButtons() {
@@ -343,11 +455,13 @@ public class FrmTipo extends javax.swing.JFrame {
         btnExit.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setBorder(null);
+        btnPrincipal.setContentAreaFilled(false);
+        btnPrincipal.setBorder(null);
     }
 
     public void cargarTipos() {
         TipoHabitacionBo thbo = new TipoHabitacionBo();
-        ArrayList<TipoHabitacion> tipo = thbo.cargarTodo();
+        tipo = thbo.cargarTodo();
         String resultado = "";
         for (TipoHabitacion th : tipo) {
             resultado += "---------------------TIPO HABITACIÓN-------------------\n";
@@ -396,6 +510,17 @@ public class FrmTipo extends javax.swing.JFrame {
         chcVista.setSelected(true);
     }
 
+    public void setIcon() {
+        switch (funcion) {
+            case 2:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificarREA.png")));
+                break;
+            case 3:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminarREA.png")));
+                break;
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -433,6 +558,7 @@ public class FrmTipo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JCheckBox chcAire;
     private javax.swing.JCheckBox chcBano;
@@ -442,7 +568,6 @@ public class FrmTipo extends javax.swing.JFrame {
     private javax.swing.JCheckBox chcTV;
     private javax.swing.JCheckBox chcTelefono;
     private javax.swing.JCheckBox chcVista;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;

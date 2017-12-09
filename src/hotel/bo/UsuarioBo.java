@@ -26,7 +26,7 @@ public class UsuarioBo {
         return udao.verificarLogin(userName, pass);
     }
 
-    public boolean verificarRegistro(Usuario u, String reContrasena, int funcion, String cedula) {
+    public boolean verificarRegistro(Usuario u, String reContrasena, int funcion, int id) {
         if (u.getNombre().isEmpty()) {
             throw new MiError("Nombre completo requerido.");
         }
@@ -57,8 +57,8 @@ public class UsuarioBo {
 
         UsuarioDAO udao = new UsuarioDAO();
         if (funcion == 2) {
-            return udao.modificarUsu(u, cedula);
-        }
+            return udao.modificarUsu(u, id);
+        } 
         return udao.insertarUsu(u);
     }
 
@@ -69,12 +69,15 @@ public class UsuarioBo {
         UsuarioDAO udao = new UsuarioDAO();
         return udao.verificarCorreo(userName);
     }
-    public Usuario cargarUsuario(String cedula){
+
+    public Usuario cargarUsuario(String cedula) {
         UsuarioDAO udao = new UsuarioDAO();
         return udao.cargarDatos(cedula);
     }
-    public boolean eliminarUsuario(String cedula){
+
+    public boolean eliminarUsuario(int id) {
         UsuarioDAO udao = new UsuarioDAO();
-        return udao.eliminarUsu(cedula);
+        return udao.eliminarUsu(id);
     }
+    
 }

@@ -37,6 +37,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private int idHabitacion;
     ArrayList<TipoHabitacion> tipo;
     ArrayList<Habitacion> habitaciones;
+    private Habitacion hBuscado;
 
     /**
      * Creates new form FrmHabitacion
@@ -51,15 +52,15 @@ public class FrmHabitacion extends javax.swing.JFrame {
         habitaciones = new ArrayList<>();
         tipo = new ArrayList<>();
         cargarTipos();
-//        cargarHabitaciones();
     }
 
     public FrmHabitacion(Usuario u, int num) {
         initComponents();
         setLocationRelativeTo(null);
-        setButtons();
         activoU = u;
         funcion = num;
+        setIcon();
+        setButtons();
         tipo = new ArrayList<>();
         cargarTipos();
     }
@@ -93,7 +94,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
         lblFotoHab = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
-        btnAnadir = new javax.swing.JButton();
+        btnPrincipal = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
@@ -221,6 +222,11 @@ public class FrmHabitacion extends javax.swing.JFrame {
         jLabel12.setText("N° Habitación:");
 
         txtNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelHabitacionLayout = new javax.swing.GroupLayout(panelHabitacion);
         panelHabitacion.setLayout(panelHabitacionLayout);
@@ -277,13 +283,13 @@ public class FrmHabitacion extends javax.swing.JFrame {
 
         jPanel3.add(panelHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 780, 390));
 
-        btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir.png"))); // NOI18N
-        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+        btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir.png"))); // NOI18N
+        btnPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnadirActionPerformed(evt);
+                btnPrincipalActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+        jPanel3.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, 90));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -388,7 +394,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
         txtDescripcion.setText(resultado);
     }//GEN-LAST:event_cbxTipoActionPerformed
 
-    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+    private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
         switch (funcion) {
             case 1:
                 registrar();
@@ -400,7 +406,68 @@ public class FrmHabitacion extends javax.swing.JFrame {
                 eliminar();
                 break;
         }
-    }//GEN-LAST:event_btnAnadirActionPerformed
+    }//GEN-LAST:event_btnPrincipalActionPerformed
+
+    private void txtNumeroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyPressed
+        if (funcion == 2 || funcion == 3) {
+            if (evt.getKeyCode() == 10) {
+                try {
+                    if (!txtNumero.equals("")) {
+                        HabitacionBo hbo = new HabitacionBo();
+                        hBuscado = hbo.cargarHabitacion(Integer.valueOf(txtNumero.getText()));
+                        if (!(hBuscado == null)) {
+                            cargarDatos(hBuscado);
+                        } else {
+                            lblError.setText("La habitacion no éxiste.");
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    lblError.setText("Formato de número de habitación incorrecto.");
+                } catch (MiError ex) {
+                    lblError.setText(ex.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_txtNumeroKeyPressed
+
+    public void setIcon() {
+        switch (funcion) {
+            case 2:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificarREA.png")));
+                break;
+            case 3:
+                btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminarREA.png")));
+                break;
+        }
+    }
+
+    public void cargarDatos(Habitacion h) {
+        lblFotoHab.setText("");
+        txtNumero.setText(String.valueOf(h.getNumero()));
+        txtTamano.setText(String.valueOf(h.getTamaño()));
+        ImageIcon icon = new ImageIcon(h.getImagen());
+        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFotoHab.getWidth(), lblFotoHab.getHeight(), Image.SCALE_DEFAULT));
+        lblFotoHab.setIcon(icono);
+        if (h.getNombre().equals("Habitación Simple")) {
+            cbxNombre.setSelectedIndex(0);
+        } else if (h.getNombre().equals("Habitación Doble")) {
+            cbxNombre.setSelectedIndex(1);
+        } else if (h.getNombre().equals("Habitación Triple")) {
+            cbxNombre.setSelectedIndex(2);
+        } else {
+            cbxNombre.setSelectedIndex(3);
+        }
+        if (h.getEstado().equals("Disponible")) {
+            cbxEstado.setSelectedIndex(0);
+        } else {
+            cbxEstado.setSelectedIndex(1);
+        }
+        for (TipoHabitacion th : tipo) {
+            if (th.getId() == h.getTipoHabitacion()) {
+                cbxTipo.setSelectedItem(th.getNombre());
+            }
+        }
+    }
 
     public void registrar() {
         try {
@@ -412,7 +479,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
             h.setEstado(cbxEstado.getSelectedItem().toString());
             h.setNombre(cbxNombre.getSelectedItem().toString());
             HabitacionBo hbo = new HabitacionBo();
-            if (hbo.registrarHabitacion(h)) {
+            if (hbo.registrarHabitacion(h, funcion, 0)) {
                 lblError.setText("Habitación registrada con éxito.");
                 setText();
             }
@@ -426,16 +493,47 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }
 
     public void modificar() {
-
+        try {
+            Habitacion h = new Habitacion();
+            h.setImagen(img2);
+            h.setNumero(Integer.valueOf(txtNumero.getText()));
+            h.setTamaño(Float.valueOf(txtTamano.getText()));
+            h.setTipoHabitacion(idHabitacion);
+            h.setEstado(cbxEstado.getSelectedItem().toString());
+            h.setNombre(cbxNombre.getSelectedItem().toString());
+            HabitacionBo hbo = new HabitacionBo();
+            if (hbo.registrarHabitacion(h, funcion, hBuscado.getId())) {
+                lblError.setText("Habitación modificada con éxito.");
+                setText();
+            }
+        } catch (NumberFormatException ex) {
+            lblError.setText("Formato de tamaño o número de habitación incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al guardar, favor intente nuevamente.");
+        }
     }
 
     public void eliminar() {
-
+        try {
+            HabitacionBo hbo = new HabitacionBo();
+            if (hbo.eliminarHabitacion(hBuscado.getId())) {
+                setText();
+                lblError.setText("Habitacion Eliminada.");
+            } else {
+                lblError.setText("Intente Nuevamente.");
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problema al cargar habitacion");
+        }
     }
 
     public void setButtons() {
-        btnAnadir.setContentAreaFilled(false);
-        btnAnadir.setBorder(null);
+        btnPrincipal.setContentAreaFilled(false);
+        btnPrincipal.setBorder(null);
         btnSalir.setContentAreaFilled(false);
         btnSalir.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
@@ -455,19 +553,6 @@ public class FrmHabitacion extends javax.swing.JFrame {
         txtTamano.setText("");
         lblFotoHab.setIcon(null);
         lblFotoHab.setText("FOTO");
-    }
-
-    //Metodo para modificar / eliminar
-    public void cargarHabitaciones() {
-        HabitacionBo hbo = new HabitacionBo();
-        habitaciones = hbo.cargarHabitaciones();
-        for (Habitacion h : habitaciones) {
-            System.out.println(h.getEstado());
-            System.out.println(h.getNombre());
-            System.out.println(h.getNumero());
-            System.out.println(h.getTamaño());
-            System.out.println(h.getTipoHabitacion());
-        }
     }
 
     /**
@@ -506,7 +591,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxEstado;

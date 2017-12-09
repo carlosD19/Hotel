@@ -48,6 +48,7 @@ public class HabitacionDAO {
             throw new MiError("Problemas al cargar Habitaciones.");
         }
     }
+
     public ArrayList<Habitacion> cargarHabitacion() {
         ArrayList<Habitacion> habitaciones = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -56,7 +57,7 @@ public class HabitacionDAO {
             stmt.setBoolean(1, true);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                habitaciones.add(cargarHabitacion(rs));
+                habitaciones.add(cargarHabitacion2(rs));
             }
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar las habitaciones.");
@@ -64,7 +65,7 @@ public class HabitacionDAO {
         return habitaciones;
     }
 
-    private Habitacion cargarHabitacion(ResultSet rs) throws SQLException, IOException {
+    private Habitacion cargarHabitacion2(ResultSet rs) throws SQLException, IOException {
         Habitacion h = new Habitacion();
         h.setEstado(rs.getString("estado"));
         h.setNombre(rs.getString("nombre"));
@@ -76,6 +77,67 @@ public class HabitacionDAO {
         imgdb = ImageIO.read(fis);
         h.setImagen(imgdb);
         return h;
+    }
+
+    public Habitacion cargarDatos(int num) {
+        Habitacion h = new Habitacion();
+        try (Connection con = Conexion.conexion()) {
+            String sql = "select * from habitacion where numero = ? and activo = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, num);
+            stmt.setBoolean(2, true);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                h.setEstado(rs.getString("estado"));
+                h.setId(rs.getInt("id"));
+                h.setNombre(rs.getString("nombre"));
+                h.setNumero(rs.getInt("numero"));
+                h.setTamaño(rs.getFloat("tamano"));
+                h.setTipoHabitacion(rs.getInt("id_tipo"));
+                Image imgdb = null;
+                InputStream fis = rs.getBinaryStream("foto");
+                imgdb = ImageIO.read(fis);
+                h.setImagen(imgdb);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar los usuarios");
+        }
+        return h;
+    }
+    
+    public boolean modificar(Habitacion h, int id){
+        try (Connection con = Conexion.conexion()) {
+            String sql = "update habitacion SET numero = ?, nombre = ?, estado = ?, tamano = ?, foto = ?, id_tipo = ?"
+                    + " where id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, h.getNumero());
+            stmt.setString(2, h.getNombre());
+            stmt.setString(3, h.getEstado());
+            stmt.setFloat(4, h.getTamaño());
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write((RenderedImage) h.getImagen(), "jpg", os);
+            InputStream fis = new ByteArrayInputStream(os.toByteArray());
+            stmt.setBinaryStream(5, fis);
+            stmt.setInt(6, h.getTipoHabitacion());
+            stmt.setInt(7, id);
+            return stmt.executeUpdate() > 0;
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar las habitaciones");
+        }
+    }
+
+    public boolean eliminar(int id) {
+        try (Connection con = Conexion.conexion()) {
+            String sql = "update habitacion set activo = ? where id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, false);
+            stmt.setInt(2, id);
+            return stmt.executeUpdate() > 0;
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar las habitaciones.");
+        }
     }
 
 }

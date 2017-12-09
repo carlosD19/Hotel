@@ -16,16 +16,24 @@ import java.util.ArrayList;
  */
 public class TipoHabitacionBo {
     
-    public boolean verificarRegistro(TipoHabitacion th){
+    public boolean verificarRegistro(TipoHabitacion th, int f, int id){
         if(th.getNombre().isEmpty()){
             throw new MiError("El tipo es requerido.");
         }
         TipoHabitacionDAO thdao = new TipoHabitacionDAO();
+        if(f == 2){
+            return thdao.modificar(th, id);
+        }
         return thdao.registrar(th);
     }
     
     public ArrayList<TipoHabitacion> cargarTodo(){
         TipoHabitacionDAO udao = new TipoHabitacionDAO();
         return udao.cargarTipoHabitacion();
+    }
+    
+    public boolean eliminarTipo(int id){
+        TipoHabitacionDAO tdao = new TipoHabitacionDAO();
+        return tdao.eliminar(id);
     }
 }
