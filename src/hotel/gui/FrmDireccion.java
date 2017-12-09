@@ -5,7 +5,15 @@
  */
 package hotel.gui;
 
+import hotel.bo.PaisBo;
+import hotel.bo.ProvinciaBo;
+import hotel.entities.Canton;
+import hotel.entities.Distrito;
+import hotel.entities.MiError;
+import hotel.entities.Pais;
+import hotel.entities.Provincia;
 import hotel.entities.Usuario;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,6 +23,11 @@ public class FrmDireccion extends javax.swing.JFrame {
 
     private Usuario activoU;
     private int funcion;
+    private ArrayList<Pais> paises;
+    private ArrayList<Provincia> provincias;
+    private ArrayList<Distrito> distritos;
+    private ArrayList<Canton> cantones;
+
     /**
      * Creates new form FrmDireccion
      */
@@ -24,13 +37,17 @@ public class FrmDireccion extends javax.swing.JFrame {
         activoU = new Usuario();
         funcion = 1;
         setButtons();
+        cargarPaises();
+        cargarProvincias();
     }
+
     public FrmDireccion(Usuario u, int num) {
         initComponents();
         setLocationRelativeTo(null);
         activoU = new Usuario();
         funcion = num;
         setButtons();
+        cargarPaises();
     }
 
     /**
@@ -45,20 +62,49 @@ public class FrmDireccion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtPais = new javax.swing.JTextField();
+        btnAgregarPais = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtPaisesR = new javax.swing.JTextArea();
+        jLabel13 = new javax.swing.JLabel();
+        lblErrorPais = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxPais = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtProvincia = new javax.swing.JTextField();
+        btnAgregarPro = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaPro = new javax.swing.JTextArea();
+        jLabel14 = new javax.swing.JLabel();
+        lblErrorPro = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        cbxPaisDis = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnAgregarDis = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
+        cbxProvincia = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        txtDistrito = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        cbxPaisCan = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        btnAgregarCan = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        cbxProvinciaCan = new javax.swing.JComboBox<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtCantonesR = new javax.swing.JTextArea();
+        cbxDistrito = new javax.swing.JComboBox<>();
+        txtCanton = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
 
@@ -73,63 +119,89 @@ public class FrmDireccion extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("País:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Paises Registrados");
+        txtPais.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtPaisMousePressed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAgregarPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+        btnAgregarPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPaisActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("País:");
+        txtPaisesR.setColumns(20);
+        txtPaisesR.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPaisesR.setRows(5);
+        txtPaisesR.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
+        jScrollPane5.setViewportView(txtPaisesR);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setText("Paises Registrados:");
+
+        lblErrorPais.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(31, 31, 31)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12)
+                                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btnAgregarPais)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(123, 123, 123)))
+                        .addContainerGap()
+                        .addComponent(lblErrorPais, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarPais)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblErrorPais, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("País", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        cbxPais.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPaisActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("País:");
@@ -137,9 +209,25 @@ public class FrmDireccion extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Provincia:");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtProvincia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+        btnAgregarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+        btnAgregarPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProActionPerformed(evt);
+            }
+        });
+
+        txtAreaPro.setColumns(20);
+        txtAreaPro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtAreaPro.setRows(5);
+        txtAreaPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
+        jScrollPane2.setViewportView(txtAreaPro);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Provincias Registradas:");
+
+        lblErrorPro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -149,19 +237,21 @@ public class FrmDireccion extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel3)
-                                .addGap(133, 133, 133)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel4)
+                                .addComponent(txtProvincia)
+                                .addComponent(cbxPais, 0, 243, Short.MAX_VALUE))
+                            .addComponent(btnAgregarPro)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jButton2)))
-                .addContainerGap(375, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(lblErrorPro, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,44 +259,218 @@ public class FrmDireccion extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(cbxPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarPro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblErrorPro, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Provincia", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        cbxPaisDis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxPaisDis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPaisDisActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("País:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Provincia:");
+
+        btnAgregarDis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextArea3.setRows(5);
+        jTextArea3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
+        jScrollPane3.setViewportView(jTextArea3);
+
+        cbxProvincia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Distrito:");
+
+        txtDistrito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Distritos Registrados:");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(cbxPaisDis, 0, 243, Short.MAX_VALUE)
+                                .addComponent(cbxProvincia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtDistrito))
+                            .addComponent(btnAgregarDis)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(cbxPaisDis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarDis)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Distrito", jPanel4);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
+        cbxPaisCan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxPaisCan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPaisCanActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setText("Provincia:");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("Distrito:");
+
+        btnAgregarCan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadirRAE.png"))); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("País:");
+
+        cbxProvinciaCan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtCantonesR.setColumns(20);
+        txtCantonesR.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCantonesR.setRows(5);
+        txtCantonesR.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
+        jScrollPane4.setViewportView(txtCantonesR);
+
+        cbxDistrito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtCanton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Cantón:");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Cantones Registrados:");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel9)
+                                .addComponent(cbxPaisCan, 0, 243, Short.MAX_VALUE)
+                                .addComponent(cbxProvinciaCan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbxDistrito, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addComponent(txtCanton))
+                            .addComponent(btnAgregarCan)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(cbxPaisCan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxProvinciaCan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCanton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarCan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Cantón", jPanel5);
@@ -261,13 +525,123 @@ public class FrmDireccion extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void btnAgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPaisActionPerformed
+        agregarPais();
+    }//GEN-LAST:event_btnAgregarPaisActionPerformed
+
+    private void txtPaisMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPaisMousePressed
+        lblErrorPais.setText("");
+    }//GEN-LAST:event_txtPaisMousePressed
+
+    private void btnAgregarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProActionPerformed
+        agregarProvincia();
+    }//GEN-LAST:event_btnAgregarProActionPerformed
+
+    private void cbxPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPaisActionPerformed
+        cargarProvincias();
+    }//GEN-LAST:event_cbxPaisActionPerformed
+
+    private void cbxPaisDisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPaisDisActionPerformed
+//         cargarProvincias();
+    }//GEN-LAST:event_cbxPaisDisActionPerformed
+
+    private void cbxPaisCanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPaisCanActionPerformed
+//         cargarProvincias();
+    }//GEN-LAST:event_cbxPaisCanActionPerformed
+
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
         btnAtras.setContentAreaFilled(false);
         btnAtras.setBorder(null);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setBorder(null);
+        btnAgregarCan.setContentAreaFilled(false);
+        btnAgregarCan.setBorder(null);
+        btnAgregarDis.setContentAreaFilled(false);
+        btnAgregarDis.setBorder(null);
+        btnAgregarPais.setContentAreaFilled(false);
+        btnAgregarPais.setBorder(null);
+        btnAgregarPro.setContentAreaFilled(false);
+        btnAgregarPro.setBorder(null);
+    }
+
+    public void agregarPais() {
+        try {
+            Pais p = new Pais();
+            p.setNombre(txtPais.getText());
+            PaisBo pbo = new PaisBo();
+            if (pbo.registrar(p)) {
+                lblErrorPais.setText("País registrado.");
+                setText();
+                cargarPaises();
+            }
+        } catch (MiError ex) {
+            lblErrorPais.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblErrorPais.setText("Problemas al registrar país.");
+        }
+    }
+
+    public void agregarProvincia() {
+        try {
+            Provincia p = new Provincia();
+            p.setNombre(txtProvincia.getText());
+            p.setIdPais(paises.get(cbxPais.getSelectedIndex()).getId());
+            ProvinciaBo pbo = new ProvinciaBo();
+            if (pbo.registrar(p)) {
+                lblErrorPro.setText("Provincia registrado.");
+                setText();
+                cargarProvincias();
+            }
+        } catch (MiError ex) {
+            lblErrorPro.setText(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            lblErrorPro.setText("Problemas al registrar provincia.");
+        }
+    }
+
+    public void setText() {
+        txtPais.setText("");
+        txtCanton.setText("");
+        txtDistrito.setText("");
+        txtProvincia.setText("");
+    }
+
+    public void cargarPaises() {
+        String resultado = "";
+        cbxPais.removeAll();
+        cbxPaisCan.removeAll();
+        cbxPaisDis.removeAll();
+        PaisBo pbo = new PaisBo();
+        paises = pbo.cargarTodo();
+        if (paises.size() > 0) {
+            for (Pais p : paises) {
+                resultado += "  Nombre: " + p.getNombre() + "\n";
+                cbxPais.addItem(p.getNombre());
+                cbxPaisDis.addItem(p.getNombre());
+                cbxPaisCan.addItem(p.getNombre());
+            }
+        }
+        txtPaisesR.setText(resultado);
+    }
+    //Arreglar Provincias
+    public void cargarProvincias() {
+        String resultado = "";
+        cbxPais.removeAll();
+        cbxProvincia.removeAll();
+        cbxProvinciaCan.removeAll();
+        ProvinciaBo pbo = new ProvinciaBo();
+        provincias = pbo.cargarTodo();
+        if (provincias.size() > 0) {
+            for (Provincia p : provincias) {
+                if (paises.get(cbxPais.getSelectedIndex()).getId() == p.getIdPais()) {
+                    resultado += "  Nombre: " + p.getNombre() + "\n";
+                    cbxProvincia.addItem(p.getNombre());
+                    cbxProvinciaCan.addItem(p.getNombre());
+                }
+            }
+        }
+        txtAreaPro.setText(resultado);
     }
 
     /**
@@ -306,24 +680,53 @@ public class FrmDireccion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarCan;
+    private javax.swing.JButton btnAgregarDis;
+    private javax.swing.JButton btnAgregarPais;
+    private javax.swing.JButton btnAgregarPro;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> cbxDistrito;
+    private javax.swing.JComboBox<String> cbxPais;
+    private javax.swing.JComboBox<String> cbxPaisCan;
+    private javax.swing.JComboBox<String> cbxPaisDis;
+    private javax.swing.JComboBox<String> cbxProvincia;
+    private javax.swing.JComboBox<String> cbxProvinciaCan;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JLabel lblErrorPais;
+    private javax.swing.JLabel lblErrorPro;
+    private javax.swing.JTextArea txtAreaPro;
+    private javax.swing.JTextField txtCanton;
+    private javax.swing.JTextArea txtCantonesR;
+    private javax.swing.JTextField txtDistrito;
+    private javax.swing.JTextField txtPais;
+    private javax.swing.JTextArea txtPaisesR;
+    private javax.swing.JTextField txtProvincia;
     // End of variables declaration//GEN-END:variables
 }
