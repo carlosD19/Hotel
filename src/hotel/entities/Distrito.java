@@ -13,14 +13,39 @@ public class Distrito {
 
     private int id;
     private String nombre;
-    private int idProvincia;
+    private int idCanton;
 
     public Distrito() {
     }
 
-    public Distrito(String nombre, int idProvincia) {
+    public Distrito(String nombre, int idCanton) {
         this.nombre = nombre;
-        this.idProvincia = idProvincia;
+        this.idCanton = idCanton;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getIdCanton() {
+        return idCanton;
+    }
+
+    public void setIdCanton(int idCanton) {
+        this.idCanton = idCanton;
+    }
+    
 
 }

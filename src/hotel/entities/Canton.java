@@ -13,14 +13,14 @@ public class Canton {
 
     private int id;
     private String nombre;
-    private int idDistrito;
+    private int idProvincia;
 
     public Canton() {
     }
 
-    public Canton(String nombre, int idDistrito) {
+    public Canton(String nombre, int idProvincia) {
         this.nombre = nombre;
-        this.idDistrito = idDistrito;
+        this.idProvincia = idProvincia;
     }
 
     public int getId() {
@@ -39,12 +39,12 @@ public class Canton {
         this.nombre = nombre;
     }
 
-    public int getIdDistrito() {
-        return idDistrito;
+    public int getIdProvincia() {
+        return idProvincia;
     }
 
-    public void setIdDistrito(int idDistrito) {
-        this.idDistrito = idDistrito;
+    public void setIdProvincia(int idProvincia) {
+        this.idProvincia = idProvincia;
     }
 
 }

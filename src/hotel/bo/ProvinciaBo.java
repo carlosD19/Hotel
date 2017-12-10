@@ -20,6 +20,9 @@ public class ProvinciaBo {
         if (p.getNombre().isEmpty()) {
             throw new MiError("Nombre de la provincia requerido.");
         }
+        if (p.getIdPais() < 0) {
+            throw new MiError("País requerido.");
+        }
         ProvinciaDAO pdao = new ProvinciaDAO();
         return pdao.insertar(p);
     }
