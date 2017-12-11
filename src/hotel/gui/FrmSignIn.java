@@ -18,7 +18,6 @@ import javax.swing.border.Border;
  */
 public class FrmSignIn extends javax.swing.JFrame {
 
-    private Border line;
     private Usuario u;
     private int funcion;
     private Usuario uBuscado;
@@ -32,7 +31,6 @@ public class FrmSignIn extends javax.swing.JFrame {
         funcion = 1;
         setButtons();
         u = new Usuario();
-        line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
         lblBuscar.setVisible(false);
     }
 
@@ -43,7 +41,6 @@ public class FrmSignIn extends javax.swing.JFrame {
         setIcon();
         setButtons();
         u = u1;
-        line = BorderFactory.createLineBorder(java.awt.Color.BLUE, 1);
     }
 
     /**
@@ -81,14 +78,14 @@ public class FrmSignIn extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         btnAtras = new javax.swing.JButton();
         lblBuscar = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel2.setForeground(new java.awt.Color(255, 102, 0));
         jLabel2.setText("Sign In");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 80, -1));
 
@@ -153,14 +150,6 @@ public class FrmSignIn extends javax.swing.JFrame {
 
         btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/addU.png"))); // NOI18N
-        btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnRegistrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnRegistrarMouseExited(evt);
-            }
-        });
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -208,9 +197,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         });
         getContentPane().add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, -1, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoI.jpg"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -232,14 +221,6 @@ public class FrmSignIn extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void btnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseEntered
-        btnRegistrar.setBorder(line);
-    }//GEN-LAST:event_btnRegistrarMouseEntered
-
-    private void btnRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseExited
-        btnRegistrar.setBorder(null);
-    }//GEN-LAST:event_btnRegistrarMouseExited
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         FrmPrincipal frm = new FrmPrincipal(u);
@@ -288,7 +269,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
         } catch (Exception ex) {
-            System.out.println("Error!!!");
+            lblError.setText("Problemas al registrar usuario.");
         }
     }
 
@@ -316,7 +297,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
         } catch (Exception ex) {
-            System.out.println("Error!!!");
+            lblError.setText("Problemas al modificar usuario.");
         }
     }
 
@@ -332,6 +313,7 @@ public class FrmSignIn extends javax.swing.JFrame {
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
         } catch (Exception ex) {
+            lblError.setText("Problemas al eliminar usuario.");
         }
     }
 
@@ -430,7 +412,6 @@ public class FrmSignIn extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbxPuesto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -442,6 +423,7 @@ public class FrmSignIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblError;
     private javax.swing.JTextField txtApellido;

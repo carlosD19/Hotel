@@ -108,9 +108,10 @@ public class UsuarioDAO {
 
     public boolean eliminarUsu(int id) {
         try (Connection con = Conexion.conexion()) {
-            String sql = "update usuario set activo = false where id = ?";
+            String sql = "update usuario set activo = ? where id = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setBoolean(1, false);
+            stmt.setInt(2, id);
             return stmt.executeUpdate() > 0;
         } catch (Exception ex) {
             throw new MiError("Problemas al cargar los usuarios");

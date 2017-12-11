@@ -36,7 +36,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private int funcion;
     private int idHabitacion;
     ArrayList<TipoHabitacion> tipo;
-    ArrayList<Habitacion> habitaciones;
+//    ArrayList<Habitacion> habitaciones;
     private Habitacion hBuscado;
 
     /**
@@ -49,7 +49,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
         activoU = new Usuario();
         funcion = 1;
         img = new ImageIcon();
-        habitaciones = new ArrayList<>();
+//        habitaciones = new ArrayList<>();
         tipo = new ArrayList<>();
         cargarTipos();
     }

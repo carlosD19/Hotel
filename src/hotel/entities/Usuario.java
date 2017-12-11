@@ -14,26 +14,21 @@ public class Usuario extends Persona{
     private String nombreUsu;
     private String contrasena;
     private String puesto;
+    private String nacionalidad;
     private int id;
 
     public Usuario() {
     }
 
-    public Usuario(String nombreUsu, String contrasena, String puesto, String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
-        super(nombre, cedula, nacionalidad, email, telefono, apellido);
+    public Usuario(String nombreUsu, String contrasena, String puesto, String nacionalidad, int id, String nombre, String cedula, String email, int telefono, String apellido) {
+        super(nombre, cedula, email, telefono, apellido);
         this.nombreUsu = nombreUsu;
         this.contrasena = contrasena;
         this.puesto = puesto;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+        this.nacionalidad = nacionalidad;
         this.id = id;
     }
-    
+
     public String getNombreUsu() {
         return nombreUsu;
     }
@@ -58,9 +53,21 @@ public class Usuario extends Persona{
         this.puesto = puesto;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" + "nombreUsu=" + nombreUsu + ", contrasena=" + contrasena + ", puesto=" + puesto + '}';
+    public String getNacionalidad() {
+        return nacionalidad;
     }
 
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 }

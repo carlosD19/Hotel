@@ -850,15 +850,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarUbiActionPerformed
 
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
-        // TODO add your handling code here:
+        FrmCliente frm = new FrmCliente(activoU, 1);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
 
     private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
-        // TODO add your handling code here:
+        FrmCliente frm = new FrmCliente(activoU, 2);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
     }//GEN-LAST:event_btnModificarClienteActionPerformed
 
     private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
-        // TODO add your handling code here:
+        FrmCliente frm = new FrmCliente(activoU, 3);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
 
     private void btnAgregarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarReservaActionPerformed

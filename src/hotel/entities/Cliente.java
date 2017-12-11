@@ -9,19 +9,20 @@ package hotel.entities;
  *
  * @author pc
  */
-public class Cliente extends Persona{
-    
-    private int tarjeta;
-    private String pais;
-    private String provincia;
-    private String canton;
+public class Cliente extends Persona {
+
+    private String tarjeta;
+    private int pais;
+    private int provincia;
+    private int canton;
     private String direccion;
+    private int id;
 
     public Cliente() {
     }
 
-    public Cliente(int tarjeta, String pais, String provincia, String canton, String direccion, String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
-        super(nombre, cedula, nacionalidad, email, telefono, apellido);
+    public Cliente(String tarjeta, int pais, int provincia, int canton, String direccion, String nombre, String cedula, String nacionalidad, String email, int telefono, String apellido) {
+        super(nombre, cedula, email, telefono, apellido);
         this.tarjeta = tarjeta;
         this.pais = pais;
         this.provincia = provincia;
@@ -29,35 +30,43 @@ public class Cliente extends Persona{
         this.direccion = direccion;
     }
 
-    public int getTarjeta() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTarjeta() {
         return tarjeta;
     }
 
-    public void setTarjeta(int tarjeta) {
+    public void setTarjeta(String tarjeta) {
         this.tarjeta = tarjeta;
     }
 
-    public String getPais() {
+    public int getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(int pais) {
         this.pais = pais;
     }
 
-    public String getProvincia() {
+    public int getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(String provincia) {
+    public void setProvincia(int provincia) {
         this.provincia = provincia;
     }
 
-    public String getCanton() {
+    public int getCanton() {
         return canton;
     }
 
-    public void setCanton(String canton) {
+    public void setCanton(int canton) {
         this.canton = canton;
     }
 
@@ -73,5 +82,5 @@ public class Cliente extends Persona{
     public String toString() {
         return "Cliente{" + "tarjeta=" + tarjeta + ", pais=" + pais + ", provincia=" + provincia + ", canton=" + canton + ", direccion=" + direccion + '}';
     }
- 
+
 }

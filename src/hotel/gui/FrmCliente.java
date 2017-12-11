@@ -5,17 +5,54 @@
  */
 package hotel.gui;
 
+import hotel.bo.CantonBo;
+import hotel.bo.ClienteBo;
+import hotel.bo.PaisBo;
+import hotel.bo.ProvinciaBo;
+import hotel.entities.Canton;
+import hotel.entities.Cliente;
+import hotel.entities.MiError;
+import hotel.entities.Pais;
+import hotel.entities.Provincia;
+import hotel.entities.Usuario;
+import java.util.ArrayList;
+
 /**
  *
  * @author pc
  */
 public class FrmCliente extends javax.swing.JFrame {
 
+    private int funcion;
+    private Usuario u;
+    private Cliente cBuscado;
+    private ArrayList<Pais> paises;
+    private ArrayList<Provincia> provincias;
+    private ArrayList<Canton> cantones;
+
     /**
      * Creates new form FrmCliente
      */
     public FrmCliente() {
         initComponents();
+        setLocationRelativeTo(null);
+        funcion = 3;
+        u = new Usuario();
+        setIcon();
+        setButtons();
+        cargarListas();
+        cargarPaises();
+    }
+
+    public FrmCliente(Usuario u1, int num) {
+        initComponents();
+        setLocationRelativeTo(null);
+        funcion = num;
+        u = u1;
+        setIcon();
+        setButtons();
+        cargarListas();
+        cargarPaises();
     }
 
     /**
@@ -28,20 +65,245 @@ public class FrmCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        txtEmail = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
+        txtCedula = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JTextField();
+        btnAtras = new javax.swing.JButton();
+        lblBuscar = new javax.swing.JLabel();
+        cbxPais = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cbxProvincia = new javax.swing.JComboBox<>();
+        cbxCanton = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        txtTarjeta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Nombre:");
+
+        txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setText("Dirección:");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("Tarjeta:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Email:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("País:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Teléfono:");
+
+        txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txtCedula.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Cedula:");
+
+        btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/addU.png"))); // NOI18N
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Apellido:");
+
+        txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+
+        lblBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
+        lblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblBuscarMousePressed(evt);
+            }
+        });
+
+        cbxPais.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPaisActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel1.setText("CLIENTE");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Provincia:");
+
+        cbxProvincia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProvinciaActionPerformed(evt);
+            }
+        });
+
+        cbxCanton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Cantón:");
+
+        txtTarjeta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cbxPais, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(10, 10, 10)
+                                .addComponent(lblBuscar))
+                            .addComponent(jLabel2)
+                            .addComponent(cbxProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(211, 211, 211))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxCanton, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtTarjeta))
+                                .addGap(71, 71, 71))))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(205, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(272, 272, 272))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAtras, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxCanton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel8))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(btnRegistrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -52,11 +314,257 @@ public class FrmCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        switch (funcion) {
+            case 1:
+                registrar();
+                break;
+            case 2:
+                modificar();
+                break;
+            case 3:
+                eliminar();
+                break;
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        FrmPrincipal frm = new FrmPrincipal(u);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void lblBuscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMousePressed
+        try {
+            if (!txtCedula.getText().trim().equals("")) {
+                ClienteBo cbo = new ClienteBo();
+                cBuscado = cbo.cargarCliente(txtCedula.getText().trim());
+                if (!(cBuscado == null)) {
+                    cargarDatos(cBuscado);
+                } else {
+                    lblError.setText("El cliente no éxiste.");
+                }
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_lblBuscarMousePressed
+
+    private void cbxPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPaisActionPerformed
+        cargarProvincias();
+    }//GEN-LAST:event_cbxPaisActionPerformed
+
+    private void cbxProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProvinciaActionPerformed
+        cargarCantones();
+    }//GEN-LAST:event_cbxProvinciaActionPerformed
+
+    public void registrar() {
+        try {
+            Cliente c = new Cliente();
+            c.setCedula(txtCedula.getText().trim());
+            c.setEmail(txtEmail.getText().trim());
+            c.setNombre(txtNombre.getText().trim());
+            c.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            c.setApellido(txtApellido.getText().trim());
+            c.setPais(paises.get(cbxPais.getSelectedIndex()).getId());
+            c.setTarjeta(txtTarjeta.getText().trim());
+            c.setDireccion(txtDireccion.getText().trim());
+            for (Provincia p : provincias) {
+                if (paises.get(cbxPais.getSelectedIndex()).getId() == p.getIdPais()) {
+                    c.setProvincia(p.getId());
+                }
+            }
+            for (Canton can : cantones) {
+                if (c.getProvincia() == can.getIdProvincia() && cbxCanton.getSelectedItem().toString().equals(can.getNombre())) {
+                    c.setCanton(can.getId());
+                }
+            }
+            ClienteBo cbo = new ClienteBo();
+            if (cbo.verificarRegistro(c, funcion, 0)) {
+                setTxt();
+                lblError.setText("Cliente registrado con éxito.");
+            } else {
+                lblError.setText("Intente Nuevamenta.");
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+            lblError.setText("Formato de telefono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al registrar cliente");
+        }
+    }
+    
+    public void modificar(){
+        try {
+            Cliente c = new Cliente();
+            c.setCedula(txtCedula.getText().trim());
+            c.setEmail(txtEmail.getText().trim());
+            c.setNombre(txtNombre.getText().trim());
+            c.setTelefono(Integer.valueOf(txtTelefono.getText()));
+            c.setApellido(txtApellido.getText().trim());
+            c.setPais(paises.get(cbxPais.getSelectedIndex()).getId());
+            c.setTarjeta(txtTarjeta.getText().trim());
+            c.setDireccion(txtDireccion.getText().trim());
+            for (Provincia p : provincias) {
+                if (paises.get(cbxPais.getSelectedIndex()).getId() == p.getIdPais()) {
+                    c.setProvincia(p.getId());
+                }
+            }
+            for (Canton can : cantones) {
+                if (c.getProvincia() == can.getIdProvincia() && cbxCanton.getSelectedItem().toString().equals(can.getNombre())) {
+                    c.setCanton(can.getId());
+                }
+            }
+            ClienteBo cbo = new ClienteBo();
+            if (cbo.verificarRegistro(c, funcion, cBuscado.getId())) {
+                setTxt();
+                lblError.setText("Cliente modificado con éxito.");
+            } else {
+                lblError.setText("Intente Nuevamenta.");
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+            lblError.setText("Formato de telefono incorrecto.");
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al modificar cliente");
+        }
+    }
+    public void eliminar(){
+        try {
+            ClienteBo cbo = new ClienteBo();
+            if (cbo.eliminarCliente(cBuscado.getId())) {
+                setTxt();
+                lblError.setText("Cliente eliminado.");
+            } else {
+                lblError.setText("Intente Nuevamente.");
+            }
+        } catch (MiError ex) {
+            lblError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            lblError.setText("Problemas al eliminar cliente.");
+        }
+    }
+
+    public void setTxt() {
+        txtApellido.setText("");
+        txtCedula.setText("");
+        txtEmail.setText("");
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        txtDireccion.setText("");
+        txtTarjeta.setText("");
+    }
+
+    public void setIcon() {
+        switch (funcion) {
+            case 1:
+                lblBuscar.setVisible(false);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/addU.png")));
+                break;
+            case 2:
+                lblBuscar.setVisible(true);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modify.png")));
+                break;
+            case 3:
+                lblBuscar.setVisible(true);
+                btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove.png")));
+                break;
+        }
+    }
+
+    public void setButtons() {
+        btnExit.setContentAreaFilled(false);
+        btnExit.setBorder(null);
+        btnRegistrar.setContentAreaFilled(false);
+        btnRegistrar.setBorder(null);
+        btnAtras.setContentAreaFilled(false);
+        btnAtras.setBorder(null);
+    }
+
+    public void cargarListas() {
+        PaisBo pbo = new PaisBo();
+        paises = pbo.cargarTodo();
+        ProvinciaBo pbo2 = new ProvinciaBo();
+        provincias = pbo2.cargarTodo();
+        CantonBo cdao = new CantonBo();
+        cantones = cdao.cargarTodo();
+    }
+
+    public void cargarPaises() {
+        cbxPais.removeAllItems();
+        if (paises.size() > 0) {
+            for (Pais p : paises) {
+                cbxPais.addItem(p.getNombre());
+            }
+        }
+    }
+
+    public void cargarProvincias() {
+        cbxProvincia.removeAllItems();
+        if (provincias.size() > 0) {
+            for (Provincia p : provincias) {
+                if (paises.get(cbxPais.getSelectedIndex()).getId() == p.getIdPais()) {
+                    cbxProvincia.addItem(p.getNombre());
+                }
+            }
+        }
+    }
+
+    public void cargarCantones() {
+        cbxCanton.removeAllItems();
+        if (cantones.size() > 0) {
+            for (Provincia p : provincias) {
+                if (paises.get(cbxPais.getSelectedIndex()).getId() == p.getIdPais()) {
+                    for (Canton c : cantones) {
+                        if (p.getId() == c.getIdProvincia()) {
+                            cbxCanton.addItem(c.getNombre());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void cargarDatos(Cliente c) {
+        txtApellido.setText(c.getApellido());
+        txtCedula.setText(c.getCedula());
+        txtEmail.setText(c.getEmail());
+        txtNombre.setText(c.getNombre());
+        txtTelefono.setText(String.valueOf(c.getTelefono()));
+        for (Pais p : paises) {
+            if (p.getId() == c.getPais()) {
+                cbxPais.setSelectedItem(p.getNombre());
+            }
+        }
+        for (Provincia pr : provincias) {
+            if (pr.getId() == c.getProvincia()) {
+                cbxProvincia.setSelectedItem(pr.getNombre());
+            }
+        }
+        for (Canton can : cantones) {
+            if (can.getId() == c.getCanton()) {
+                cbxCanton.setSelectedItem(can.getNombre());
+            }
+        }
+        txtDireccion.setText(c.getDireccion());
+        txtTarjeta.setText(c.getTarjeta());
+
+    }
 
     /**
      * @param args the command line arguments
@@ -94,6 +602,32 @@ public class FrmCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cbxCanton;
+    private javax.swing.JComboBox<String> cbxPais;
+    private javax.swing.JComboBox<String> cbxProvincia;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTarjeta;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
