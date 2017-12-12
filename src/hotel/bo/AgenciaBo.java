@@ -36,9 +36,9 @@ public class AgenciaBo {
         return adao.registrar(a);
     }
 
-    public ArrayList<Agencia> cargarImagenes() {
+    public ArrayList<Agencia> cargarTodo() {
         AgenciaDAO adao = new AgenciaDAO();
-        return adao.cargarTodo();
+        return adao.cargar();
     }
     public boolean eliminarAgencia(int id) {
         AgenciaDAO udao = new AgenciaDAO();

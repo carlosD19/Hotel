@@ -45,7 +45,7 @@ public class FrmAgencia extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setButtons();
         bo = new AgenciaBo();
-        agencias = bo.cargarImagenes();
+        agencias = bo.cargarTodo();
         activoU = new Usuario();
         img = new ImageIcon();
         funcion = 1;
@@ -56,7 +56,7 @@ public class FrmAgencia extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         bo = new AgenciaBo();
-        agencias = bo.cargarImagenes();
+        agencias = bo.cargarTodo();
         img = new ImageIcon();
         funcion = num;
         activoU = u;
@@ -391,7 +391,7 @@ public class FrmAgencia extends javax.swing.JFrame {
     public void cargarDatos() {
         agencias.clear();
         index = 0;
-        agencias = bo.cargarImagenes();
+        agencias = bo.cargarTodo();
         cargarFoto();
     }
 

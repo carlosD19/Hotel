@@ -5,28 +5,29 @@
  */
 package hotel.entities;
 
+import java.util.Date;
+
 /**
  *
  * @author pc
  */
 public class Reserva {
 
-    private int codigo;
-    private String fechaInicio;
-    private String fechaFinal;
-    private String fechaReserva;
-    private boolean desayuno;
+    private int id;
+    private Date fechaInicio;
+    private Date fechaFinal;
+    private Date fechaReserva;
+    private int desayuno;
     private int cantPersona;
-    private Habitacion habitacion;
-    private Cliente cliente;
-    private String agencia;
-    private float precio;
+    private int habitacion;
+    private int cliente;
+    private int agencia;
+    private int precio;
 
     public Reserva() {
     }
 
-    public Reserva(int codigo, String fechaInicio, String fechaFinal, String fechaReserva, boolean desayuno, int cantPersona, Habitacion habitacion, Cliente cliente, String agencia, float precio) {
-        this.codigo = codigo;
+    public Reserva(Date fechaInicio, Date fechaFinal, Date fechaReserva, int desayuno, int cantPersona, int habitacion, int cliente, int agencia, int precio) {
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.fechaReserva = fechaReserva;
@@ -38,43 +39,43 @@ public class Reserva {
         this.precio = precio;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFinal() {
+    public Date getFechaFinal() {
         return fechaFinal;
     }
 
-    public void setFechaFinal(String fechaFinal) {
+    public void setFechaFinal(Date fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
-    public String getFechaReserva() {
+    public Date getFechaReserva() {
         return fechaReserva;
     }
 
-    public void setFechaReserva(String fechaReserva) {
+    public void setFechaReserva(Date fechaReserva) {
         this.fechaReserva = fechaReserva;
     }
 
-    public boolean isDesayuno() {
+    public int getDesayuno() {
         return desayuno;
     }
 
-    public void setDesayuno(boolean desayuno) {
+    public void setDesayuno(int desayuno) {
         this.desayuno = desayuno;
     }
 
@@ -86,42 +87,41 @@ public class Reserva {
         this.cantPersona = cantPersona;
     }
 
-    public Habitacion getHabitacion() {
+    public int getHabitacion() {
         return habitacion;
     }
 
-    public void setHabitacion(Habitacion habitacion) {
+    public void setHabitacion(int habitacion) {
         this.habitacion = habitacion;
     }
 
-    public Cliente getCliente() {
+    public int getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(int cliente) {
         this.cliente = cliente;
     }
 
-    public String getAgencia() {
+    public int getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(String agencia) {
+    public void setAgencia(int agencia) {
         this.agencia = agencia;
     }
 
-    public float getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "codigo=" + codigo + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", fechaReserva=" + fechaReserva + ", desayuno=" + desayuno + ", cantPersona=" + cantPersona + ", habitacion=" + habitacion + ", cliente=" + cliente + ", agencia=" + agencia + ", precio=" + precio + '}';
+        return "Reserva{" + "id=" + id + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", fechaReserva=" + fechaReserva + ", desayuno=" + desayuno + ", cantPersona=" + cantPersona + ", habitacion=" + habitacion + ", cliente=" + cliente + ", agencia=" + agencia + ", precio=" + precio + '}';
     }
-    
-    
+
 }

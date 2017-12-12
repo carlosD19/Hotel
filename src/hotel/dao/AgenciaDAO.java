@@ -48,7 +48,7 @@ public class AgenciaDAO {
         }
     }
     
-    public ArrayList<Agencia> cargarTodo() {
+    public ArrayList<Agencia> cargar() {
         ArrayList<Agencia> agencias = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
             String sql = "select * from agencia where activo = ?";
