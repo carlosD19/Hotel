@@ -9,7 +9,7 @@ package hotel.entities;
  *
  * @author pc
  */
-public class Usuario extends Persona{
+public class Usuario extends Persona {
 
     private String nombreUsu;
     private String contrasena;
@@ -28,6 +28,7 @@ public class Usuario extends Persona{
         this.nacionalidad = nacionalidad;
         this.id = id;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public String getNombreUsu() {
         return nombreUsu;
@@ -68,6 +69,5 @@ public class Usuario extends Persona{
     public void setId(int id) {
         this.id = id;
     }
-    
-    
+
 }

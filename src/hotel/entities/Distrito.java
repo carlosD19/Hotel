@@ -22,6 +22,7 @@ public class Distrito {
         this.nombre = nombre;
         this.idCanton = idCanton;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;
@@ -46,6 +47,5 @@ public class Distrito {
     public void setIdCanton(int idCanton) {
         this.idCanton = idCanton;
     }
-    
 
 }

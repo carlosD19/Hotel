@@ -19,8 +19,14 @@ import java.util.ArrayList;
  */
 public class PaisDAO {
 
+    /**
+     * Inserta un pais
+     *
+     * @param p pais que se va a registrar
+     * @return true = si se registro y false = si no
+     */
     public boolean insertar(Pais p) {
-       try (Connection con = Conexion.conexion()) {
+        try (Connection con = Conexion.conexion()) {
             String sql = "insert into pais(descripcion) values(?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, p.getNombre());
@@ -31,7 +37,13 @@ public class PaisDAO {
             throw new MiError("Problemas al cargar paises.");
         }
     }
-    public ArrayList<Pais> cargar(){
+
+    /**
+     * Carga una lista de paises
+     *
+     * @return una lis de paises
+     */
+    public ArrayList<Pais> cargar() {
         ArrayList<Pais> paises = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
             String sql = "select * from pais";
@@ -46,11 +58,18 @@ public class PaisDAO {
         return paises;
     }
 
+    /**
+     * Carga la entidad pais
+     *
+     * @param rs atributos que se van a cargar
+     * @return la entidad pais
+     * @throws SQLException
+     */
     private Pais cargarPais(ResultSet rs) throws SQLException {
         Pais p = new Pais();
         p.setNombre(rs.getString("descripcion"));
         p.setId(rs.getInt("id"));
         return p;
     }
-    
+
 }

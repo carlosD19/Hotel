@@ -11,6 +11,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -18,7 +30,13 @@ import java.sql.SQLException;
  */
 public class UsuarioDAO {
 
-    //revisar login
+    /**
+     * Verifica que el login sea correcto
+     *
+     * @param userName nombre de usuario de la persona
+     * @param pass contraseña de la persona
+     * @return la entidad Usuario
+     */
     public Usuario verificarLogin(String userName, String pass) {
         Usuario u = new Usuario();
         try (Connection con = Conexion.conexion()) {
@@ -43,6 +61,12 @@ public class UsuarioDAO {
         return u;
     }
 
+    /**
+     * Carga los datos de la persona
+     *
+     * @param cedula de la persona
+     * @return la entidad Usuario
+     */
     public Usuario cargarDatos(String cedula) {
         Usuario u = new Usuario();
         try (Connection con = Conexion.conexion()) {
@@ -54,9 +78,10 @@ public class UsuarioDAO {
             stmt.setBoolean(4, true);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                String pass = desencriptar(rs.getString("contrasena"));
                 u.setApellido(rs.getString("apellido"));
                 u.setCedula(rs.getString("cedula"));
-                u.setContrasena(rs.getString("contrasena"));
+                u.setContrasena(pass);
                 u.setEmail(rs.getString("email"));
                 u.setNacionalidad(rs.getString("nacionalidad"));
                 u.setNombre(rs.getString("nombre"));
@@ -73,11 +98,20 @@ public class UsuarioDAO {
         return u;
     }
 
-    public Usuario cargarUsu(ResultSet rs) throws SQLException {
+    /**
+     * Carga los datos de la persona
+     *
+     * @param rs atributos que se van a cargar
+     * @return la entidad Usuario
+     * @throws SQLException
+     * @throws Exception
+     */
+    public Usuario cargarUsu(ResultSet rs) throws SQLException, Exception {
         Usuario u = new Usuario();
+        String pass = desencriptar(rs.getString("contrasena"));
         u.setApellido(rs.getString("apellido"));
         u.setCedula(rs.getString("cedula"));
-        u.setContrasena(rs.getString("contrasena"));
+        u.setContrasena(pass);
         u.setEmail(rs.getString("email"));
         u.setNacionalidad(rs.getString("nacionalidad"));
         u.setNombre(rs.getString("nombre"));
@@ -87,6 +121,12 @@ public class UsuarioDAO {
         return u;
     }
 
+    /**
+     * Registra un usuario
+     *
+     * @param u usuario que se va a guardar
+     * @return true = si se guardo y false = si no
+     */
     public boolean insertarUsu(Usuario u) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into usuario(nombre,apellido,cedula,nacionalidad,telefono,email,contrasena,nom_usuario,puesto) values(?,?,?,?,?,?,?,?,?)";
@@ -106,6 +146,12 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * elimina el usuario
+     *
+     * @param id del usuario que se va a eliminar
+     * @return true = si se elimino y false = si no
+     */
     public boolean eliminarUsu(int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update usuario set activo = ? where id = ?";
@@ -118,6 +164,13 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * modifica el usuario
+     *
+     * @param u usuario que se va a modificar
+     * @param id de la persona
+     * @return true = si se modifico y false = si no
+     */
     public boolean modificarUsu(Usuario u, int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update usuario SET nombre = ?,apellido = ?,cedula = ?,nacionalidad = ?,telefono = ?,email = ?,contrasena = ?,nom_usuario = ?,puesto = ?"
@@ -139,16 +192,25 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Verifica si el correo existe
+     *
+     * @param userName correo de la persona
+     * @return la entidad Usuario
+     */
     public Usuario verificarCorreo(String userName) {
         Usuario u = new Usuario();
         try (Connection con = Conexion.conexion()) {
-            String sql = "select * from usuario where email = ? and puesto = 'Adm' or puesto = 'Recepcionista'";
+            String sql = "select * from usuario where email = ? and (puesto = 'Adm' or puesto = 'Recepcionista') and activo = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, userName);
+            stmt.setBoolean(2, true);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                u.setApellido(rs.getString("apellido"));
                 u.setContrasena(rs.getString("contrasena"));
+                String pass = desencriptar(u.getContrasena());
+                u.setApellido(rs.getString("apellido"));
+                u.setContrasena(pass);
                 u.setNombre(rs.getString("nombre"));
             } else {
                 return null;
@@ -157,6 +219,37 @@ public class UsuarioDAO {
             throw new MiError("Problemas al cargar los usuarios");
         }
         return u;
+    }
+
+    /**
+     * Desencripta la contraseña
+     *
+     * @param textoEncriptado contraseña que se va desencriptar
+     * @return la contraseña desencriptada
+     * @throws Exception
+     */
+    public String desencriptar(String textoEncriptado) throws Exception {
+
+        String secretKey = "qualityinfosolutions"; //llave para encriptar datos
+        String base64EncryptedString = "";
+
+        try {
+            byte[] message = Base64.decodeBase64(textoEncriptado.getBytes("utf-8"));
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digestOfPassword = md.digest(secretKey.getBytes("utf-8"));
+            byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
+            SecretKey key = new SecretKeySpec(keyBytes, "DESede");
+
+            Cipher decipher = Cipher.getInstance("DESede");
+            decipher.init(Cipher.DECRYPT_MODE, key);
+
+            byte[] plainText = decipher.doFinal(message);
+
+            base64EncryptedString = new String(plainText, "UTF-8");
+
+        } catch (UnsupportedEncodingException | InvalidKeyException | NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException ex) {
+        }
+        return base64EncryptedString;
     }
 
 }

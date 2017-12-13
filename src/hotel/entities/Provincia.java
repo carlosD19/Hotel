@@ -22,6 +22,7 @@ public class Provincia {
         this.nombre = nombre;
         this.idPais = idPais;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;

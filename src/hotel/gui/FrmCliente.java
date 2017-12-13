@@ -368,7 +368,9 @@ public class FrmCliente extends javax.swing.JFrame {
     private void cbxProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProvinciaActionPerformed
         cargarCantones();
     }//GEN-LAST:event_cbxProvinciaActionPerformed
-
+    /**
+     * Registra al cliente
+     */
     public void registrar() {
         try {
             Cliente c = new Cliente();
@@ -406,7 +408,9 @@ public class FrmCliente extends javax.swing.JFrame {
             lblError.setText("Problemas al registrar cliente");
         }
     }
-    
+    /**
+     * Modifica al cliente
+     */
     public void modificar(){
         try {
             Cliente c = new Cliente();
@@ -444,6 +448,9 @@ public class FrmCliente extends javax.swing.JFrame {
             lblError.setText("Problemas al modificar cliente");
         }
     }
+    /**
+     * Elimina al cliente
+     */
     public void eliminar(){
         try {
             ClienteBo cbo = new ClienteBo();
@@ -459,7 +466,9 @@ public class FrmCliente extends javax.swing.JFrame {
             lblError.setText("Problemas al eliminar cliente.");
         }
     }
-
+    /**
+     * Limpia los campos de texto
+     */
     public void setTxt() {
         txtApellido.setText("");
         txtCedula.setText("");
@@ -469,7 +478,9 @@ public class FrmCliente extends javax.swing.JFrame {
         txtDireccion.setText("");
         txtTarjeta.setText("");
     }
-
+    /**
+     * Cambia los iconos de los botones
+     */
     public void setIcon() {
         switch (funcion) {
             case 1:
@@ -486,7 +497,9 @@ public class FrmCliente extends javax.swing.JFrame {
                 break;
         }
     }
-
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -495,7 +508,9 @@ public class FrmCliente extends javax.swing.JFrame {
         btnAtras.setContentAreaFilled(false);
         btnAtras.setBorder(null);
     }
-
+    /**
+     * Carga las listas
+     */
     public void cargarListas() {
         PaisBo pbo = new PaisBo();
         paises = pbo.cargarTodo();
@@ -504,7 +519,9 @@ public class FrmCliente extends javax.swing.JFrame {
         CantonBo cdao = new CantonBo();
         cantones = cdao.cargarTodo();
     }
-
+    /**
+     * Carga los Paises
+     */
     public void cargarPaises() {
         cbxPais.removeAllItems();
         if (paises.size() > 0) {
@@ -513,7 +530,9 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         }
     }
-
+/**
+     * Carga las provincias
+     */
     public void cargarProvincias() {
         cbxProvincia.removeAllItems();
         if (provincias.size() > 0) {
@@ -524,7 +543,9 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Carga los cantones
+     */
     public void cargarCantones() {
         cbxCanton.removeAllItems();
         if (cantones.size() > 0) {
@@ -539,7 +560,10 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Carga los datos del cliente
+     * @param c el cliente que desea cargar
+     */
     public void cargarDatos(Cliente c) {
         txtApellido.setText(c.getApellido());
         txtCedula.setText(c.getCedula());

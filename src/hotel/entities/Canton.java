@@ -18,6 +18,7 @@ public class Canton {
     public Canton() {
     }
 
+    //Metodos getters y setters que modifican o obtienen datos
     public Canton(String nombre, int idProvincia) {
         this.nombre = nombre;
         this.idProvincia = idProvincia;

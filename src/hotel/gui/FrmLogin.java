@@ -169,12 +169,14 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassMousePressed
 
     private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
-        if(evt.getKeyCode() == 10){
+        if (evt.getKeyCode() == 10) {
             enter();
         }
     }//GEN-LAST:event_txtPassKeyPressed
-
-    public void enter(){
+    /**
+     * Verifica que el login sea correcto
+     */
+    public void enter() {
         if (bus) {
             try {
                 Usuario u;
@@ -206,6 +208,12 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Envia un correo si se lo olvido la contraseña
+     *
+     * @param u usuario al que se le envia el correo
+     */
     public void enviarCorreo(Usuario u) {
         try {
             Correo c = new Correo();
@@ -232,6 +240,9 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);

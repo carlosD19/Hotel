@@ -15,24 +15,45 @@ import java.util.ArrayList;
  * @author pc
  */
 public class TipoHabitacionBo {
-    
-    public boolean verificarRegistro(TipoHabitacion th, int f, int id){
-        if(th.getNombre().isEmpty()){
+
+    /**
+     * Este metodo verifica que los atributos esten correctos y llama al de
+     * modificar o agregar
+     *
+     * @param th la entidad Tipo Habitacion
+     * @param f la funcion que va a realizar
+     * @param id del tipo de habitacion
+     * @return true = si se logro modificar o agregar y false = si ocurrio un
+     * error
+     */
+    public boolean verificarRegistro(TipoHabitacion th, int f, int id) {
+        if (th.getNombre().isEmpty()) {
             throw new MiError("El tipo es requerido.");
         }
         TipoHabitacionDAO thdao = new TipoHabitacionDAO();
-        if(f == 2){
+        if (f == 2) {
             return thdao.modificar(th, id);
         }
         return thdao.registrar(th);
     }
-    
-    public ArrayList<TipoHabitacion> cargarTodo(){
+
+    /**
+     * Este metodo llama al de cargar tipo de habitaciones
+     *
+     * @return una lista de tipo de habitaciones
+     */
+    public ArrayList<TipoHabitacion> cargarTodo() {
         TipoHabitacionDAO udao = new TipoHabitacionDAO();
         return udao.cargarTipoHabitacion();
     }
-    
-    public boolean eliminarTipo(int id){
+
+    /**
+     * Este metodo llama al de eliminar tipo de habitacion
+     *
+     * @param id del tipo de habitacion
+     * @return la entidad Tipo de Habitacion
+     */
+    public boolean eliminarTipo(int id) {
         TipoHabitacionDAO tdao = new TipoHabitacionDAO();
         return tdao.eliminar(id);
     }

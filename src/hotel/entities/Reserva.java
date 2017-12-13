@@ -38,6 +38,7 @@ public class Reserva {
         this.agencia = agencia;
         this.precio = precio;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;

@@ -98,8 +98,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        btnModificarReserva = new javax.swing.JButton();
+        btnAgregarReserva = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        btnModificarReserva1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -569,11 +572,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnModificarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir2.png"))); // NOI18N
-        btnModificarReserva.setFocusable(false);
-        btnModificarReserva.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/añadir2.png"))); // NOI18N
+        btnAgregarReserva.setFocusable(false);
+        btnAgregarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarReservaActionPerformed(evt);
+                btnAgregarReservaActionPerformed(evt);
             }
         });
 
@@ -588,7 +591,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(320, 320, 320)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(btnAgregarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(325, Short.MAX_VALUE))
         );
@@ -598,25 +601,82 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(120, 120, 120)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reserva", jPanel7);
 
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Check In / Check Out");
+
+        btnModificarReserva1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/modificar2.png"))); // NOI18N
+        btnModificarReserva1.setFocusable(false);
+        btnModificarReserva1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarReserva1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(320, 320, 320)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnModificarReserva1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnModificarReserva1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(189, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Check", jPanel9);
+
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/desayuno.png"))); // NOI18N
         jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/habitacion.png"))); // NOI18N
         jButton2.setFocusable(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/comision.png"))); // NOI18N
         jButton3.setFocusable(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/limpiar.png"))); // NOI18N
         jButton4.setFocusable(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -827,13 +887,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnModificarHActionPerformed
 
-    private void btnModificarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarReservaActionPerformed
+    private void btnAgregarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarReservaActionPerformed
         FrmReserva frm = new FrmReserva(activoU);
         frm.setVisible(true);
         frm.setLocationRelativeTo(null);
         dispose();
-    }//GEN-LAST:event_btnModificarReservaActionPerformed
+    }//GEN-LAST:event_btnAgregarReservaActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FrmComision frm = new FrmComision(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FrmDesayuno frm = new FrmDesayuno(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FrmCapacidad frm = new FrmCapacidad(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        FrmLimpieza frm = new FrmLimpieza(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnModificarReserva1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarReserva1ActionPerformed
+        FrmCheck frm = new FrmCheck(activoU);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnModificarReserva1ActionPerformed
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -841,6 +938,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRegresar.setBorder(null);
     }
 
+    /**
+     * Bloquea los botones si el usuario no es Administrador
+     */
     public void bloquearBotones() {
         lblNomUsu.setText(activoU.getNombre() + " " + activoU.getApellido() + ".");
         if (activoU.getNombreUsu() != null && !activoU.getPuesto().equals("Adm")) {
@@ -898,6 +998,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCliente;
     private javax.swing.JButton btnAgregarH;
+    private javax.swing.JButton btnAgregarReserva;
     private javax.swing.JButton btnAgregarT;
     private javax.swing.JButton btnAgregarUbi;
     private javax.swing.JButton btnAgregarUsuario;
@@ -912,7 +1013,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarA;
     private javax.swing.JButton btnModificarCliente;
     private javax.swing.JButton btnModificarH;
-    private javax.swing.JButton btnModificarReserva;
+    private javax.swing.JButton btnModificarReserva1;
     private javax.swing.JButton btnModificarT;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton1;
@@ -934,6 +1035,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -949,6 +1051,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblNomUsu;
     private javax.swing.JPanel panelAgencia;

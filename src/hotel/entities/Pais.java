@@ -20,6 +20,7 @@ public class Pais {
     public Pais(String nombre) {
         this.nombre = nombre;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;

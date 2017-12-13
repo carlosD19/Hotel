@@ -25,6 +25,10 @@ public class Conexion {
     public static final String USER = "postgres";
     public static final String PASS = "postgres";
     
+    /**
+     * Realiza la conexion a la base de datos
+     * @return la conexion
+     */
     public static Connection conexion(){
         Connection conn = null;
         String url = DRIVER + SERVER + DB; 

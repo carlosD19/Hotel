@@ -11,6 +11,8 @@ import hotel.entities.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +20,12 @@ import java.sql.ResultSet;
  */
 public class ClienteDAO {
 
+    /**
+     * Inserta al Cliente
+     *
+     * @param c cliente que se va a insertar
+     * @return true = si se inserto y false = si no
+     */
     public boolean insertar(Cliente c) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into cliente(nombre, apellido, cedula, telefono, email, direccion,"
@@ -39,6 +47,13 @@ public class ClienteDAO {
         }
     }
 
+    /**
+     * modifica el cliente
+     *
+     * @param c cliente que se va a modificar
+     * @param id del cliente
+     * @return true = si se modifico y false = si no
+     */
     public boolean modificar(Cliente c, int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update cliente SET nombre = ?, apellido = ?, cedula = ?, telefono = ?, email = ?, direccion = ?,"
@@ -61,6 +76,12 @@ public class ClienteDAO {
         }
     }
 
+    /**
+     * Carga el cliente
+     *
+     * @param cedula del cliente que se desea cargar
+     * @return el cliente
+     */
     public Cliente cargarDatos(String cedula) {
         Cliente c = new Cliente();
         try (Connection con = Conexion.conexion()) {
@@ -90,6 +111,12 @@ public class ClienteDAO {
         return c;
     }
 
+    /**
+     * Elimina el cliente
+     *
+     * @param id del cliente que se desea eliminar
+     * @return true = si se elimino y false = si no
+     */
     public boolean eliminar(int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update cliente set activo = ? where id = ?";
@@ -102,4 +129,47 @@ public class ClienteDAO {
         }
     }
 
+    /**
+     * Carga una lista con los clientes
+     *
+     * @return una lista de clientes
+     */
+    public ArrayList<Cliente> cargar() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        try (Connection con = Conexion.conexion()) {
+            String sql = "select * from cliente where activo = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, true);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                clientes.add(cargarCliente(rs));
+            }
+        } catch (Exception ex) {
+            throw new MiError("Problemas al cargar los clientes");
+        }
+        return clientes;
+    }
+
+    /**
+     * cargar la entidad cliente
+     *
+     * @param rs atributos que se van a cargar
+     * @return Cliente
+     * @throws SQLException
+     */
+    public Cliente cargarCliente(ResultSet rs) throws SQLException {
+        Cliente c = new Cliente();
+        c.setApellido(rs.getString("apellido"));
+        c.setCedula(rs.getString("cedula"));
+        c.setEmail(rs.getString("email"));
+        c.setNombre(rs.getString("nombre"));
+        c.setTelefono(rs.getInt("telefono"));
+        c.setCanton(rs.getInt("id_canton"));
+        c.setPais(rs.getInt("id_pais"));
+        c.setProvincia(rs.getInt("id_provincia"));
+        c.setDireccion(rs.getString("direccion"));
+        c.setTarjeta(rs.getString("tarjeta"));
+        c.setId(rs.getInt("id"));
+        return c;
+    }
 }

@@ -244,7 +244,9 @@ public class FrmSignIn extends javax.swing.JFrame {
             lblError.setText(ex.getMessage());
         }
     }//GEN-LAST:event_lblBuscarMousePressed
-
+    /**
+     * Registra un usuario
+     */
     public void registrar() {
         try {
             Usuario u = new Usuario();
@@ -273,6 +275,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Modifica un usuario
+     */
     public void modificar() {
         try {
             Usuario u = new Usuario();
@@ -301,6 +306,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina un usuario
+     */
     public void eliminar() {
         try {
             UsuarioBo ubo = new UsuarioBo();
@@ -317,6 +325,11 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Carga los datos del usuario
+     *
+     * @param u2 usuario buscado
+     */
     public void cargarDatos(Usuario u2) {
         txtApellido.setText(u2.getApellido());
         txtCedula.setText(u2.getCedula());
@@ -334,6 +347,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -343,6 +359,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         btnAtras.setBorder(null);
     }
 
+    /**
+     * Cambia el icono de los botones
+     */
     public void setIcon() {
         switch (funcion) {
             case 1:
@@ -360,6 +379,9 @@ public class FrmSignIn extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Limpia los campos de texto
+     */
     public void setTxt() {
         txtApellido.setText("");
         txtCedula.setText("");

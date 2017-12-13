@@ -16,6 +16,12 @@ import java.util.ArrayList;
  */
 public class PaisBo {
 
+    /**
+     * Este metodo llama al de registrar pais
+     *
+     * @param p pais que se desea registrar
+     * @return true = si se registro y false = si no
+     */
     public boolean registrar(Pais p) {
         if (p.getNombre().isEmpty()) {
             throw new MiError("Nombre del país requerido.");
@@ -23,8 +29,13 @@ public class PaisBo {
         PaisDAO pdao = new PaisDAO();
         return pdao.insertar(p);
     }
-    
-    public ArrayList<Pais> cargarTodo(){
+
+    /**
+     * Este metodo manda a llamar al de cargar todos los paises
+     *
+     * @return una lista de paises
+     */
+    public ArrayList<Pais> cargarTodo() {
         PaisDAO pdao = new PaisDAO();
         return pdao.cargar();
     }

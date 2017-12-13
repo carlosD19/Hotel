@@ -40,6 +40,7 @@ public class TipoHabitacion {
         this.precio = precio;
         this.activo = activo;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;
@@ -48,7 +49,7 @@ public class TipoHabitacion {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -142,5 +143,4 @@ public class TipoHabitacion {
         return "TipoHabitacion{" + "nombre=" + nombre + ", ba\u00f1o=" + baño + ", tv=" + tv + ", reloj=" + reloj + ", refri=" + refri + ", telefono=" + telefono + ", cajaFuerte=" + cajaFuerte + ", aireAcondicionado=" + aireAcondicionado + ", vistaMar=" + vistaMar + ", precio=" + precio + ", activo=" + activo + ", id=" + id + '}';
     }
 
-    
 }

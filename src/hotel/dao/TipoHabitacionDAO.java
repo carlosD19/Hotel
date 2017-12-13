@@ -19,6 +19,12 @@ import java.util.ArrayList;
  */
 public class TipoHabitacionDAO {
 
+    /**
+     * Registra un tipo de habitacion
+     *
+     * @param th tipo de habitacion que se va a guardar
+     * @return true = si se guardo y false = si no
+     */
     public boolean registrar(TipoHabitacion th) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into tipo_habitacion(precio,nombre,bano,tv,aire,refri,reloj,vista_mar,telefono,caja_fuerte) values(?,?,?,?,?,?,?,?,?,?)";
@@ -39,6 +45,11 @@ public class TipoHabitacionDAO {
         }
     }
 
+    /**
+     * Carga una lista de tipo de habitaciones
+     *
+     * @return una lista de tipo de habitaciones
+     */
     public ArrayList<TipoHabitacion> cargarTipoHabitacion() {
         ArrayList<TipoHabitacion> tipos = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -56,6 +67,13 @@ public class TipoHabitacionDAO {
         return tipos;
     }
 
+    /**
+     * Carga la entidad tipo de habitacion
+     *
+     * @param rs atributos que se van a cargar
+     * @return la entidad tipo de habitacion
+     * @throws SQLException
+     */
     private TipoHabitacion cargarTipoHabitacion(ResultSet rs) throws SQLException {
         TipoHabitacion th = new TipoHabitacion();
         th.setId(rs.getInt("id"));
@@ -73,6 +91,13 @@ public class TipoHabitacionDAO {
         return th;
     }
 
+    /**
+     * modifica el tipo de habitacion
+     *
+     * @param th tipo que se va a modificar
+     * @param id del tipo que se va a modificar
+     * @return true = si se modifico y false = si no
+     */
     public boolean modificar(TipoHabitacion th, int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update tipo_habitacion set precio = ?, nombre = ?, bano= ?, tv = ?, aire = ?, refri= ?, reloj = ?, vista_mar = ?, telefono = ?, caja_fuerte = ?"
@@ -95,6 +120,12 @@ public class TipoHabitacionDAO {
         }
     }
 
+    /**
+     * elimina el tipo de habitacion
+     *
+     * @param id del tipo que se va a eliminar
+     * @return true = si se elimino y false = si no
+     */
     public boolean eliminar(int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update tipo_habitacion set activo = ? where id = ?";

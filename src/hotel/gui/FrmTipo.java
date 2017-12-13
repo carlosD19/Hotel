@@ -22,8 +22,9 @@ public class FrmTipo extends javax.swing.JFrame {
 
     private int funcion;
     private Usuario activoU;
-    ArrayList<TipoHabitacion> tipo;
-     private int id;
+    private ArrayList<TipoHabitacion> tipo;
+    private int id;
+
     /**
      * Creates new form FrmTipo
      */
@@ -339,6 +340,9 @@ public class FrmTipo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    /**
+     * Registra un tipo de habitacion
+     */
     public void registrar() {
         try {
             TipoHabitacion th = new TipoHabitacion();
@@ -369,6 +373,9 @@ public class FrmTipo extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * modifica un tipo de habitacion
+     */
     public void modificar() {
         try {
             TipoHabitacion th = new TipoHabitacion();
@@ -399,6 +406,9 @@ public class FrmTipo extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina un tipo de habitacion
+     */
     public void eliminar() {
         try {
             TipoHabitacionBo abo = new TipoHabitacionBo();
@@ -416,6 +426,9 @@ public class FrmTipo extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Busca el tipo de habitacion
+     */
     public void buscarTipo() {
         for (TipoHabitacion th : tipo) {
             if (th.getNombre().equals(txtTipo.getText())) {
@@ -450,6 +463,9 @@ public class FrmTipo extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -459,6 +475,9 @@ public class FrmTipo extends javax.swing.JFrame {
         btnPrincipal.setBorder(null);
     }
 
+    /**
+     * Carga los tipos de habitaciones registrados
+     */
     public void cargarTipos() {
         TipoHabitacionBo thbo = new TipoHabitacionBo();
         tipo = thbo.cargarTodo();
@@ -497,6 +516,9 @@ public class FrmTipo extends javax.swing.JFrame {
         txtRegistrados.setText(resultado);
     }
 
+    /**
+     * Limpia los campos de texto
+     */
     public void setTxt() {
         txtPrecio.setText("");
         txtTipo.setText("");
@@ -510,6 +532,9 @@ public class FrmTipo extends javax.swing.JFrame {
         chcVista.setSelected(true);
     }
 
+    /**
+     * Cambia los iconos de los botones
+     */
     public void setIcon() {
         switch (funcion) {
             case 2:

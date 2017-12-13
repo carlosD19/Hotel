@@ -27,6 +27,7 @@ public class Persona {
         this.telefono = telefono;
         this.apellido = apellido;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public String getNombre() {
         return nombre;
@@ -68,5 +69,4 @@ public class Persona {
         this.apellido = apellido;
     }
 
-    
 }

@@ -29,6 +29,7 @@ public class Cliente extends Persona {
         this.canton = canton;
         this.direccion = direccion;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;

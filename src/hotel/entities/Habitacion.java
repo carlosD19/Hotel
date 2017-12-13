@@ -32,6 +32,7 @@ public class Habitacion {
         this.tamaño = tamaño;
         this.tipoHabitacion = tipoHabitacion;
     }
+    //Metodos getters y setters que modifican o obtienen datos
 
     public int getId() {
         return id;
@@ -93,5 +94,5 @@ public class Habitacion {
     public String toString() {
         return "Habitacion{" + "foto=" + foto + ", numero=" + numero + ", nombre=" + nombre + ", estado=" + estado + ", tama\u00f1o=" + tamaño + ", tipoHabitacion=" + tipoHabitacion + '}';
     }
-    
+
 }

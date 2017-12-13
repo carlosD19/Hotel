@@ -442,7 +442,9 @@ public class FrmDireccion extends javax.swing.JFrame {
     private void txtPaisMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPaisMousePressed
         lblErrorPais.setText("");
     }//GEN-LAST:event_txtPaisMousePressed
-
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -456,6 +458,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         btnAgregarPro.setBorder(null);
     }
 
+    /**
+     * Carga las listas
+     */
     public void cargarListas() {
         PaisBo pbo = new PaisBo();
         paises = pbo.cargarTodo();
@@ -465,6 +470,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         cantones = cdao.cargarTodo();
     }
 
+    /**
+     * Agrega paises
+     */
     public void agregarPais() {
         try {
             Pais p = new Pais();
@@ -486,6 +494,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Agrega provincias
+     */
     public void agregarProvincia() {
         try {
             Provincia p = new Provincia();
@@ -507,6 +518,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Agrega cantones
+     */
     public void agregarCanton() {
         try {
             Canton c = new Canton();
@@ -531,13 +545,18 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina los campos de textos
+     */
     public void setText() {
         txtPais.setText("");
         txtCanton.setText("");
         txtProvincia.setText("");
     }
 
-    //Revisar
+    /**
+     * Carga los paises en los combo box
+     */
     public void cargarPaises() {
         String resultado = "";
         cbxPais.removeAllItems();
@@ -552,6 +571,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         txtPaisesR.setText(resultado);
     }
 
+    /**
+     * Carga las provincias en los combo box
+     */
     public void cargarProvincias() {
         cbxProvincia.removeAllItems();
         if (provincias.size() > 0) {
@@ -563,6 +585,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Carga las provincias en los text Area
+     */
     public void cargarProvinciasText() {
         String resultado = "";
         txtAreaPro.setText("");
@@ -576,6 +601,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         txtAreaPro.setText(resultado);
     }
 
+    /**
+     * Carga los cantones en los text Area
+     */
     public void cargarCantonesText() {
         String resultado = "";
         txtCantonesR.setText("");
@@ -593,22 +621,6 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
         txtCantonesR.setText(resultado);
     }
-
-//    public void cargarCantones() {
-//        cbxCanton.removeAllItems();
-//        if (cantones.size() > 0) {
-//            for (Provincia p : provincias) {
-//                if (paises.get(cbxPaisDis.getSelectedIndex()).getId() == p.getIdPais()) {
-//                    for (Canton c : cantones) {
-//                        if (p.getId() == c.getIdProvincia()) {
-//                            cbxCanton.addItem(c.getNombre());
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 
     /**
      * @param args the command line arguments

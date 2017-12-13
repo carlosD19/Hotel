@@ -36,7 +36,7 @@ public class FrmReserva extends javax.swing.JFrame {
     private ArrayList<Habitacion> habitaciones;
     private ArrayList<TipoHabitacion> tipos;
     private ArrayList<Agencia> agencias;
-    DefaultTableModel modelo;
+    private DefaultTableModel modelo;
     private int total;
     private int capacidad;
     private int dias;
@@ -50,6 +50,7 @@ public class FrmReserva extends javax.swing.JFrame {
         setButtons();
         u = new Usuario();
         dias = -1;
+        total = 0;
         formateador = new SimpleDateFormat("dd/MM/yyyy");
         habitaciones = new ArrayList<>();
         tipos = new ArrayList<>();
@@ -65,11 +66,13 @@ public class FrmReserva extends javax.swing.JFrame {
         setButtons();
         u = u1;
         dias = -1;
+        total = 0;
         formateador = new SimpleDateFormat("dd/MM/yyyy");
         habitaciones = new ArrayList<>();
         tipos = new ArrayList<>();
         agencias = new ArrayList<>();
         modelo = (DefaultTableModel) jTable1.getModel();
+        cargarListas();
         fechaMin();
     }
 
@@ -88,7 +91,6 @@ public class FrmReserva extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCed = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        lblCliente = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -111,6 +113,7 @@ public class FrmReserva extends javax.swing.JFrame {
         jCheckOut = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         btnAñadir = new javax.swing.JButton();
+        lblCliente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -141,8 +144,6 @@ public class FrmReserva extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Cliente:");
-
-        lblCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblError.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -220,6 +221,9 @@ public class FrmReserva extends javax.swing.JFrame {
             }
         });
 
+        lblCliente.setEditable(false);
+        lblCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -237,7 +241,7 @@ public class FrmReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addComponent(jButton1)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -295,12 +299,11 @@ public class FrmReserva extends javax.swing.JFrame {
                     .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -386,7 +389,9 @@ public class FrmReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cargarTextArea();
+        if (txtHabitacion.getText().equals("") && dias > 0) {
+            cargarTextArea();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -400,10 +405,7 @@ public class FrmReserva extends javax.swing.JFrame {
                         dias++;
                         fecha_inicio.add(Calendar.DATE, 1);
                     }
-                } else {
-                    System.out.println("Error");
                 }
-
             }
         } else {
             System.out.println("Debe seleccionar la fecha deseada");
@@ -431,7 +433,9 @@ public class FrmReserva extends javax.swing.JFrame {
             r.setPrecio(Integer.valueOf(lblPrecio.getText()));
             ReservaBo rbo = new ReservaBo();
             if (rbo.registrar(r)) {
-                lblError.setText("Bien");
+                lblError.setText("Reserva realizada con exito.");
+                setText();
+                cargarListas();
             }
         } catch (MiError ex) {
             lblError.setText(ex.getMessage());
@@ -443,6 +447,9 @@ public class FrmReserva extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAñadirActionPerformed
 
+    /**
+     * Carga el text area con la habitacion seleccionada
+     */
     public void cargarTextArea() {
         int row = jTable1.getSelectedRow();
         if (row >= 0) {
@@ -460,6 +467,9 @@ public class FrmReserva extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Buscada al cliente y carga los datos
+     */
     public void buscarCliente() {
         try {
             ClienteBo cbo = new ClienteBo();
@@ -474,6 +484,20 @@ public class FrmReserva extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Limpia los campo de texto
+     */
+    public void setText() {
+        txtCed.setText("");
+        txtHabitacion.setText("");
+        lblCliente.setText("");
+        lblNoches.setText("");
+        lblPrecio.setText("");
+    }
+
+    /**
+     * Limita el calendario como fecha minima la actual
+     */
     public void fechaMin() {
         cal.add(Calendar.YEAR, +2000);
         Date min = cal.getTime();
@@ -482,6 +506,9 @@ public class FrmReserva extends javax.swing.JFrame {
         jCheckOut.setSelectableDateRange(max, min);
     }
 
+    /**
+     * Carga todas las lista y la tabla
+     */
     public void cargarListas() {
         int capacidad = 0;
         String nombre = "";
@@ -522,6 +549,9 @@ public class FrmReserva extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -596,7 +626,7 @@ public class FrmReserva extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblCliente;
+    private javax.swing.JTextField lblCliente;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblNoches;
     private javax.swing.JLabel lblPrecio;

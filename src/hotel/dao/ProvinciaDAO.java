@@ -19,6 +19,12 @@ import java.util.ArrayList;
  */
 public class ProvinciaDAO {
 
+    /**
+     * Inserta un provincia
+     *
+     * @param p provincia que se va a registrar
+     * @return true = si se registro y false = si no
+     */
     public boolean insertar(Provincia p) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into provincia(descripcion,id_pais) values(?,?)";
@@ -34,6 +40,11 @@ public class ProvinciaDAO {
         }
     }
 
+    /**
+     * Carga una lista de provincias
+     *
+     * @return una lista de provincias
+     */
     public ArrayList<Provincia> cargar() {
         ArrayList<Provincia> provincias = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -49,6 +60,13 @@ public class ProvinciaDAO {
         return provincias;
     }
 
+    /**
+     * Carga la entidad provincia
+     *
+     * @param rs atributos que se van a cargar
+     * @return la entidad provincia
+     * @throws SQLException
+     */
     private Provincia cargarProvincia(ResultSet rs) throws SQLException {
         Provincia p = new Provincia();
         p.setId(rs.getInt("id"));

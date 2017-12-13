@@ -32,6 +32,7 @@ public class Correo {
         this.mensaje = mensaje;
     }
 
+    //Metodos getters y setters que modifican o obtienen datos
     public String getUsuarioCorreo() {
         return usuarioCorreo;
     }

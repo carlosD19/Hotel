@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -30,7 +29,7 @@ public class FrmAgencia extends javax.swing.JFrame {
 
     private Usuario activoU;
     private Image img2;
-    ImageIcon img;
+    private ImageIcon img;
     private int funcion;
     private ArrayList<Agencia> agencias;
     private int index;
@@ -304,7 +303,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         frm.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+    /**
+     * Registra la agencia
+     */
     public void registrar() {
         try {
             Agencia a = new Agencia();
@@ -328,6 +329,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Modifica la agencia
+     */
     public void modificar() {
         try {
             Agencia a = new Agencia();
@@ -351,6 +355,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina la agencia
+     */
     public void eliminar() {
         try {
             AgenciaBo abo = new AgenciaBo();
@@ -368,6 +375,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Cambia los iconos dependiendo de la funcion
+     */
     public void setIcon() {
         switch (funcion) {
             case 2:
@@ -378,7 +388,9 @@ public class FrmAgencia extends javax.swing.JFrame {
                 break;
         }
     }
-
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorder(null);
@@ -387,33 +399,41 @@ public class FrmAgencia extends javax.swing.JFrame {
         btnPrincipal.setContentAreaFilled(false);
         btnPrincipal.setBorder(null);
     }
-
+    /**
+     * Carga la lista de agancias
+     */
     public void cargarDatos() {
         agencias.clear();
         index = 0;
         agencias = bo.cargarTodo();
         cargarFoto();
     }
-
+    /**
+     * Carga la foto en el label
+     */
     private void cargarFoto() {
-        lblFoto.setIcon(null);
-        if (agencias.size() > 0) {
-            lblFoto.setText("");
-            ImageIcon icon = new ImageIcon(agencias.get(index).getImagen());
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-            lblFoto.setIcon(icono);
-            if (bus) {
-                Icon icono2 = new ImageIcon(icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
-                lblLogo.setText("");
-                lblLogo.setIcon(icono2);
-                txtEmail.setText(agencias.get(index).getEmail());
-                txtNombre.setText(agencias.get(index).getNombre());
-                txtPaginaWeb.setText(agencias.get(index).getPaginaWeb());
-                txtTelefono.setText(String.valueOf(agencias.get(index).getTelefono()));
+        if (funcion != 1) {
+            lblFoto.setIcon(null);
+            if (agencias.size() > 0) {
+                lblFoto.setText("");
+                ImageIcon icon = new ImageIcon(agencias.get(index).getImagen());
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                lblFoto.setIcon(icono);
+                if (bus) {
+                    Icon icono2 = new ImageIcon(icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
+                    lblLogo.setText("");
+                    lblLogo.setIcon(icono2);
+                    txtEmail.setText(agencias.get(index).getEmail());
+                    txtNombre.setText(agencias.get(index).getNombre());
+                    txtPaginaWeb.setText(agencias.get(index).getPaginaWeb());
+                    txtTelefono.setText(String.valueOf(agencias.get(index).getTelefono()));
+                }
             }
         }
     }
-
+    /**
+     * Pasa a la siguiente agencia
+     */
     private void siguiente() {
         index++;
         if (index >= agencias.size()) {
@@ -421,7 +441,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
         cargarFoto();
     }
-
+    /**
+     * Pasa a la agencia anterior
+     */
     private void anterior() {
         index--;
         if (index < 0) {
@@ -429,7 +451,9 @@ public class FrmAgencia extends javax.swing.JFrame {
         }
         cargarFoto();
     }
-
+    /**
+     * Limpia los campos de texto
+     */
     public void setText() {
         txtEmail.setText("");
         txtNombre.setText("");

@@ -35,6 +35,17 @@ public class FrmComision extends javax.swing.JFrame {
         modelo = (DefaultTableModel) jTable1.getModel();
         cargarAgencias();
         setLocationRelativeTo(null);
+        setButtons();
+    }
+
+    public FrmComision(Usuario u1) {
+        initComponents();
+        agencias = new ArrayList<>();
+        u = u1;
+        modelo = (DefaultTableModel) jTable1.getModel();
+        cargarAgencias();
+        setLocationRelativeTo(null);
+        setButtons();
     }
 
     /**
@@ -53,8 +64,12 @@ public class FrmComision extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
+        btnAtras = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -86,6 +101,24 @@ public class FrmComision extends javax.swing.JFrame {
         txtMonto.setEditable(false);
         txtMonto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel3.setText("COMISIONES");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -101,11 +134,25 @@ public class FrmComision extends javax.swing.JFrame {
                     .addComponent(cbxAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(113, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(193, 193, 193)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnAtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel3)))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,6 +183,19 @@ public class FrmComision extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_cbxAgenciaActionPerformed
 
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        FrmPrincipal frm = new FrmPrincipal(u);
+        frm.setVisible(true);
+        frm.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+    /**
+     * Carga las agencias
+     */
     public void cargarAgencias() {
         AgenciaBo abo = new AgenciaBo();
         agencias = abo.cargarTodo();
@@ -146,21 +206,34 @@ public class FrmComision extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Carga la tabla con las agencias
+     */
     public void cargarTabla() {
         modelo.setRowCount(0);
+        total = 0;
         for (Agencia ag : agencias) {
             if (cbxAgencia.getSelectedItem().toString().equals(ag.getNombre())) {
                 for (Reserva r : reservas) {
                     if (ag.getId() == r.getAgencia()) {
-                        total += r.getPrecio() * 0.13;
+                        total += r.getPrecio() * 0.10;
                         modelo.addRow(new Object[]{
-                            r.getPrecio(), "13 %", (r.getPrecio() * 0.13)
+                            r.getPrecio(), "10 %", (r.getPrecio() * 0.10)
                         });
                         txtMonto.setText(String.valueOf(total));
                     }
                 }
             }
         }
+    }
+    /**
+     * Elimina el fondo de los botones
+     */
+    public void setButtons() {
+        btnExit.setContentAreaFilled(false);
+        btnExit.setBorder(null);
+        btnAtras.setContentAreaFilled(false);
+        btnAtras.setBorder(null);
     }
 
     /**
@@ -199,9 +272,12 @@ public class FrmComision extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnExit;
     private javax.swing.JComboBox<String> cbxAgencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

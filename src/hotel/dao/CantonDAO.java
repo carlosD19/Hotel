@@ -18,6 +18,13 @@ import java.util.ArrayList;
  * @author pc
  */
 public class CantonDAO {
+
+    /**
+     * Inserta el canton
+     *
+     * @param c el canton que se va a insertar
+     * @return true = si se guardo y false = si no
+     */
     public boolean insertar(Canton c) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into canton(descripcion,id_provincia) values(?,?)";
@@ -32,6 +39,11 @@ public class CantonDAO {
         }
     }
 
+    /**
+     * Cargar los cantones
+     *
+     * @return una lista de cantones
+     */
     public ArrayList<Canton> cargar() {
         ArrayList<Canton> cantones = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -47,6 +59,13 @@ public class CantonDAO {
         return cantones;
     }
 
+    /**
+     * Carga la entidad Canton
+     *
+     * @param rs atributos que se van a cargar en la entidad
+     * @return la entidad Canton
+     * @throws SQLException
+     */
     private Canton cargarCanton(ResultSet rs) throws SQLException {
         Canton c = new Canton();
         c.setId(rs.getInt("id"));

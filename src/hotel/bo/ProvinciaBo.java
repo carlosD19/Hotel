@@ -16,6 +16,12 @@ import java.util.ArrayList;
  */
 public class ProvinciaBo {
 
+    /**
+     * Este metodo llama al de registrar provincia
+     *
+     * @param p provincia que se desea registrar
+     * @return true = si se registro y false = si no
+     */
     public boolean registrar(Provincia p) {
         if (p.getNombre().isEmpty()) {
             throw new MiError("Nombre de la provincia requerido.");
@@ -26,7 +32,11 @@ public class ProvinciaBo {
         ProvinciaDAO pdao = new ProvinciaDAO();
         return pdao.insertar(p);
     }
-
+    /**
+     * Este metodo manda a llamar al de cargar todos las provincias
+     *
+     * @return una lista de provincias
+     */
     public ArrayList<Provincia> cargarTodo() {
         ProvinciaDAO pdao = new ProvinciaDAO();
         return pdao.cargar();

@@ -30,7 +30,8 @@ public class Agencia {
         this.paginaWeb = paginaWeb;
         this.imagen = imagen;
     }
-
+    
+    //Metodos getters y setters que modifican o obtienen datos
     public int getId() {
         return id;
     }

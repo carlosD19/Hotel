@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package hotel.dao;
+
 import hotel.entities.Correo;
 import hotel.entities.MiError;
 import java.util.Properties;
@@ -17,12 +18,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
 /**
  *
  * @author pc
  */
 public class Controlador {
 
+    /**
+     * Este metodo envia un correo
+     *
+     * @param c correo que se desea enviar
+     * @return true = si se envio y false = si no
+     */
     public boolean enviarCorreo(Correo c) {
         try {
             Properties p = new Properties();
@@ -58,7 +66,7 @@ public class Controlador {
 
         } catch (MiError ex) {
             throw new MiError("Problemas al realizar la conexión");
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
 

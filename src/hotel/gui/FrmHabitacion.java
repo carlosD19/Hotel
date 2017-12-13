@@ -35,8 +35,7 @@ public class FrmHabitacion extends javax.swing.JFrame {
     private ImageIcon img;
     private int funcion;
     private int idHabitacion;
-    ArrayList<TipoHabitacion> tipo;
-//    ArrayList<Habitacion> habitaciones;
+    private ArrayList<TipoHabitacion> tipo;
     private Habitacion hBuscado;
 
     /**
@@ -429,7 +428,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtNumeroKeyPressed
-
+    /**
+     * Cambia el icono de los botones
+     */
     public void setIcon() {
         switch (funcion) {
             case 2:
@@ -441,6 +442,11 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Carga los datos de la habitacion
+     *
+     * @param h habitacion que se desea cargar
+     */
     public void cargarDatos(Habitacion h) {
         lblFotoHab.setText("");
         txtNumero.setText(String.valueOf(h.getNumero()));
@@ -469,6 +475,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Registra la habitacion
+     */
     public void registrar() {
         try {
             Habitacion h = new Habitacion();
@@ -492,6 +501,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Modifica la habitacion
+     */
     public void modificar() {
         try {
             Habitacion h = new Habitacion();
@@ -515,6 +527,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina la habitacion
+     */
     public void eliminar() {
         try {
             HabitacionBo hbo = new HabitacionBo();
@@ -531,6 +546,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Elimina el fondo de los botones
+     */
     public void setButtons() {
         btnPrincipal.setContentAreaFilled(false);
         btnPrincipal.setBorder(null);
@@ -540,6 +558,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         btnRegresar.setBorder(null);
     }
 
+    /**
+     * Carga los tipo de habitaciones
+     */
     public void cargarTipos() {
         TipoHabitacionBo thbo = new TipoHabitacionBo();
         tipo = thbo.cargarTodo();
@@ -548,6 +569,9 @@ public class FrmHabitacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Limpia los campos de texto
+     */
     public void setText() {
         txtNumero.setText("");
         txtTamano.setText("");

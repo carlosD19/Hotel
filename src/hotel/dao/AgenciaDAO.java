@@ -26,7 +26,13 @@ import javax.imageio.ImageIO;
  * @author pc
  */
 public class AgenciaDAO {
-    
+
+    /**
+     * Este metodo registar la agencia
+     *
+     * @param a agencia que se desea registrar
+     * @return true = si se registro y false = si no
+     */
     public boolean registrar(Agencia a) {
         try (Connection con = Conexion.conexion()) {
             String sql = "insert into agencia(nombre,email,pagina,telefono,activo,logo) values(?,?,?,?,?,?)";
@@ -47,7 +53,12 @@ public class AgenciaDAO {
             throw new MiError("Problemas al cargar agencias.");
         }
     }
-    
+
+    /**
+     * Carga las agencias
+     *
+     * @return una lista de agencias
+     */
     public ArrayList<Agencia> cargar() {
         ArrayList<Agencia> agencias = new ArrayList<>();
         try (Connection con = Conexion.conexion()) {
@@ -63,7 +74,15 @@ public class AgenciaDAO {
         }
         return agencias;
     }
-    
+
+    /**
+     * Carga los atributos de la entidad Agencia
+     *
+     * @param rs los datos que van ser cargados en la entidad
+     * @return la entidad Agencia
+     * @throws SQLException
+     * @throws IOException
+     */
     private Agencia cargarAgencia(ResultSet rs) throws SQLException, IOException {
         Agencia a = new Agencia();
         a.setEmail(rs.getString("email"));
@@ -77,7 +96,14 @@ public class AgenciaDAO {
         a.setImagen(imgdb);
         return a;
     }
-    
+
+    /**
+     * Modifica la agencia que recibe por parametro
+     *
+     * @param a agencia que se va a modificar
+     * @param id de la agencia
+     * @return true = si se modifico y false = si no se modifico
+     */
     public boolean modificar(Agencia a, int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update agencia SET nombre = ? ,email = ? ,pagina = ? ,telefono = ? ,logo = ? "
@@ -97,7 +123,13 @@ public class AgenciaDAO {
             throw new MiError("Problemas al cargar las agencias");
         }
     }
-    
+
+    /**
+     * Elimina la agencia
+     *
+     * @param id de la agencia que se va a eliminar
+     * @return true= si se elimino y false = si no
+     */
     public boolean eliminar(int id) {
         try (Connection con = Conexion.conexion()) {
             String sql = "update agencia set activo = false where id = ?";
@@ -109,5 +141,5 @@ public class AgenciaDAO {
             throw new MiError("Problemas al cargar las agencias");
         }
     }
-    
+
 }
