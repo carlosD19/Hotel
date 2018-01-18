@@ -90,6 +90,7 @@ public class HabitacionDAO {
         h.setNombre(rs.getString("nombre"));
         h.setNumero(rs.getInt("numero"));
         h.setTamaño(rs.getFloat("tamano"));
+        h.setId(rs.getInt("id"));
         h.setTipoHabitacion(rs.getInt("id_tipo"));
         Image imgdb = null;
         InputStream fis = rs.getBinaryStream("foto");
