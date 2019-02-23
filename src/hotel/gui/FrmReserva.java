@@ -404,6 +404,7 @@ public class FrmReserva extends javax.swing.JFrame {
                     while (fecha_inicio.before(fecha_final)) {
                         dias++;
                         fecha_inicio.add(Calendar.DATE, 1);
+                        System.out.println("");
                     }
                 }
             }

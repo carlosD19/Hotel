@@ -7,12 +7,11 @@ package hotel.gui;
 
 import hotel.bo.UsuarioBo;
 import hotel.dao.Controlador;
-import hotel.entities.Correo;
 import hotel.entities.MiError;
 import hotel.entities.Usuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
-
+import hotel.entities.Correo;
 /**
  *
  * @author pc
@@ -219,7 +218,7 @@ public class FrmLogin extends javax.swing.JFrame {
             Correo c = new Correo();
             c.setNombreArchivo("tarjeta.jpg");
             c.setRutaArchivo("tarjeta.jpg");
-            c.setContraseña("hqexpdqyexxcslnn");
+            c.setContraseña("contraseña del correo que lo envia");
             c.setUsuarioCorreo("greatfallshotel@gmail.com");
             c.setAsunto("Recuperar contraseña");
             c.setMensaje("Hola, " + u.getNombre() + " " + u.getApellido() + ":\n\n"
